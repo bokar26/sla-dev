@@ -10,13 +10,13 @@ export default function SocFlowChatUI() {
           <div className="flex items-center gap-4">
             <span className="font-semibold text-black">SLA</span>
             <span>Your single dashboard for global manufacturing partners</span>
-          </div>
+      </div>
           <div className="flex items-center gap-2">
             <span className="text-xs bg-gray-200 px-2 py-1 rounded">landing - development - {new Date().toLocaleTimeString()}</span>
             <span className="font-semibold text-black">sourcing simplified.</span>
-          </div>
         </div>
-      </div>
+                </div>
+        </div>
 
       {/* Main Content */}
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-4">
@@ -27,10 +27,10 @@ export default function SocFlowChatUI() {
           
           {/* Description */}
           <p className="text-gray-600 mb-8 leading-relaxed">
-            Unify sourcing, fulfillment, logistics, and financials in one AI-powered platform. 
-            end-to-end supply chain management
-          </p>
-          
+          Unify sourcing, fulfillment, logistics, and financials in one AI-powered platform.
+          end-to-end supply chain management
+        </p>
+                      
           {/* Navigation Links */}
           <div className="flex flex-wrap justify-center gap-6 mb-8">
             <a href="/supply-center" className="text-gray-700 hover:text-black transition-colors">
@@ -45,11 +45,11 @@ export default function SocFlowChatUI() {
             <a href="/admin" className="border border-gray-300 px-4 py-2 rounded hover:bg-gray-50 transition-colors">
               Login
             </a>
-          </div>
-          
+                      </div>
+                    
           {/* Book Demo Button */}
           <a href="/supply-center" className="bg-black text-white px-8 py-4 rounded-lg hover:bg-gray-800 transition-colors text-lg font-semibold mb-6 inline-block">
-            Book Demo
+                          Book Demo
           </a>
           
           {/* Hover to Discover */}
@@ -57,10 +57,10 @@ export default function SocFlowChatUI() {
             <p>HOVER TO DISCOVER</p>
             <div className="flex justify-center mt-2">
               <span className="text-2xl">⚡</span>
-            </div>
-          </div>
-        </div>
+              </div>
+                </div>
       </div>
+    </div>
 
       {/* Footer */}
       <div className="bg-gray-100 border-t border-gray-200 px-4 py-3">
@@ -69,12 +69,12 @@ export default function SocFlowChatUI() {
             <span>🌍</span>
             <span>🔍</span>
             <span>📦</span>
-          </div>
-          <div>
+            </div>
+              <div>
             <span>Copyright</span>
-          </div>
-        </div>
-      </div>
-    </div>
+              </div>
+              </div>
+              </div>
+              </div>
   );
 }
