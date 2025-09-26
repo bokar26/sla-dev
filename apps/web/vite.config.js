@@ -21,6 +21,14 @@ export default defineConfig({
   resolve: {
     alias: [
       {
+        find: /^\/src\/SocFlowChatUI\.jsx$/,
+        replacement: path.resolve(__dirname, "./src/__stubs__/SocFlowChatUI.jsx"),
+      },
+      {
+        find: /^\/src\/SocFlowChatUI$/,
+        replacement: path.resolve(__dirname, "./src/__stubs__/SocFlowChatUI.jsx"),
+      },
+      {
         find: '@',
         replacement: path.resolve(__dirname, 'src'),
       },

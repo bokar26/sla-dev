@@ -1,10 +1,10 @@
-import React, { useState, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Header from './components/Header';
-import DesktopNav from './components/DesktopNav';
-import MobileNav from './components/MobileNav';
-import Dashboard from './pages/Dashboard';
-import About from './pages/About';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import AppAdmin from './admin/AppAdmin';
+import Integrations from './pages/Integrations';
+const SocFlowChatUI = React.lazy(() => import('./SocFlowChatUI'));
+const SettingsGoals = React.lazy(() => import('./pages/settings/SettingsGoals'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -12,175 +12,69 @@ const queryClient = new QueryClient({
   },
 });
 
-// Original Hero/Landing Page Component - Restored from original design
-function HeroPage({ setHasStartedChat, setActiveDashboardTab }) {
-  return (
-    <div className="min-h-screen bg-white">
-      {/* Top Bar */}
-      <div className="bg-gray-100 border-b border-gray-200 px-4 py-2 text-sm text-gray-600">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <span className="font-semibold text-black">SLA</span>
-            <span>Your single dashboard for global manufacturing partners</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs bg-gray-200 px-2 py-1 rounded">landing - development - {new Date().toLocaleTimeString()}</span>
-            <span className="font-semibold text-black">sourcing simplified.</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-4">
-        <div className="text-center max-w-2xl">
-          {/* Logo */}
-          <h1 className="text-6xl font-bold text-black mb-4">SLA</h1>
-          <p className="text-2xl font-semibold text-black mb-6">supply made simple</p>
-          
-          {/* Description */}
-          <p className="text-gray-600 mb-8 leading-relaxed">
-            Unify sourcing, fulfillment, logistics, and financials in one AI-powered platform. 
-            end-to-end supply chain management
+// Robust error boundary to avoid white screen
+class AppErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, err: null };
+  }
+  static getDerivedStateFromError(err) {
+    return { hasError: true, err };
+  }
+  componentDidCatch(error, info) {
+    console.error('AppErrorBoundary caught:', error, info);
+    // keep last error for quick inspect
+    window.__APP_LAST_ERROR__ = { error, info };
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: 24, fontFamily: 'ui-sans-serif, system-ui' }}>
+          <h2 style={{ fontWeight: 700, marginBottom: 8 }}>Something went wrong.</h2>
+          <p style={{ opacity: 0.7, marginBottom: 12 }}>
+            Check the console for details. You can continue by reloading or navigating.
           </p>
-          
-          {/* Navigation Links */}
-          <div className="flex flex-wrap justify-center gap-6 mb-8">
-            <button 
-              onClick={() => {
-                setHasStartedChat(true);
-                setActiveDashboardTab('Dashboard');
-              }}
-              className="text-gray-700 hover:text-black transition-colors"
-            >
-              Overview
-            </button>
-            <button 
-              onClick={() => {
-                setHasStartedChat(true);
-                setActiveDashboardTab('SLA Search');
-              }}
-              className="text-gray-700 hover:text-black transition-colors"
-            >
-              Features
-            </button>
-            <button 
-              onClick={() => {
-                setHasStartedChat(true);
-                setActiveDashboardTab('About');
-              }}
-              className="text-gray-700 hover:text-black transition-colors"
-            >
-              About
-            </button>
-            <button 
-              onClick={() => {
-                setHasStartedChat(true);
-                setActiveDashboardTab('Dashboard');
-              }}
-              className="border border-gray-300 px-4 py-2 rounded hover:bg-gray-50 transition-colors"
-            >
-              Login
-            </button>
-          </div>
-          
-          {/* Book Demo Button */}
-          <button 
-            onClick={() => {
-              setHasStartedChat(true);
-              setActiveDashboardTab('Dashboard');
-            }}
-            className="bg-black text-white px-8 py-4 rounded-lg hover:bg-gray-800 transition-colors text-lg font-semibold mb-6"
+          <button
+            onClick={() => this.setState({ hasError: false, err: null })}
+            style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #ddd' }}
           >
-            Book Demo
+            Try to recover (reset boundary)
           </button>
-          
-          {/* Hover to Discover */}
-          <div className="text-gray-500 text-sm">
-            <p>HOVER TO DISCOVER</p>
-            <div className="flex justify-center mt-2">
-              <span className="text-2xl">⚡</span>
-            </div>
-          </div>
+          {process.env.NODE_ENV !== 'production' && this.state.err && (
+            <pre style={{ marginTop: 16, background: '#fafafa', padding: 12, borderRadius: 8, overflow: 'auto' }}>
+              {String(this.state.err?.stack || this.state.err)}
+            </pre>
+          )}
         </div>
-      </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
-      {/* Footer */}
-      <div className="bg-gray-100 border-t border-gray-200 px-4 py-3">
-        <div className="flex items-center justify-between text-sm text-gray-600">
-          <div className="flex items-center gap-4">
-            <span>🌍</span>
-            <span>🔍</span>
-            <span>📦</span>
-          </div>
-          <div>
-            <span>Copyright</span>
-          </div>
-        </div>
-      </div>
-    </div>
+// Forces re-mount on route change to recover from stale HMR state
+function RoutedApp() {
+  const location = useLocation();
+  return (
+    <Suspense fallback={<div style={{ padding: 24 }}>Loading app…</div>}>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/admin/*" element={<AppAdmin />} />
+        <Route path="/integrations" element={<Integrations />} />
+        <Route path="/settings/goals" element={<SettingsGoals />} />
+        <Route path="/*" element={<SocFlowChatUI />} />
+      </Routes>
+    </Suspense>
   );
 }
 
 function App() {
-  const [hasStartedChat, setHasStartedChat] = useState(false);
-  const [activeDashboardTab, setActiveDashboardTab] = useState('Dashboard');
-  const [messages, setMessages] = useState([]);
-  const [showOverviewPage, setShowOverviewPage] = useState(false);
-  const [showAboutPage, setShowAboutPage] = useState(false);
-
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-slate-50 dark:bg-neutral-900">
-        {hasStartedChat && (
-          <>
-            <Header 
-              hasStartedChat={hasStartedChat}
-              activeDashboardTab={activeDashboardTab}
-              setActiveDashboardTab={setActiveDashboardTab}
-              setHasStartedChat={setHasStartedChat}
-              setMessages={setMessages}
-              setShowOverviewPage={setShowOverviewPage}
-              setShowAboutPage={setShowAboutPage}
-            />
-            
-            <DesktopNav 
-              hasStartedChat={hasStartedChat}
-              activeDashboardTab={activeDashboardTab}
-              setActiveDashboardTab={setActiveDashboardTab}
-              setHasStartedChat={setHasStartedChat}
-              setMessages={setMessages}
-              setShowOverviewPage={setShowOverviewPage}
-              setShowAboutPage={setShowAboutPage}
-            />
-            
-            <MobileNav 
-              hasStartedChat={hasStartedChat}
-              activeDashboardTab={activeDashboardTab}
-              setActiveDashboardTab={setActiveDashboardTab}
-              setHasStartedChat={setHasStartedChat}
-              setMessages={setMessages}
-              setShowOverviewPage={setShowOverviewPage}
-              setShowAboutPage={setShowAboutPage}
-            />
-          </>
-        )}
-
-        <main className="flex-1">
-          {!hasStartedChat ? (
-            <HeroPage 
-              setHasStartedChat={setHasStartedChat}
-              setActiveDashboardTab={setActiveDashboardTab}
-            />
-          ) : (
-            <Suspense fallback={<div className="p-8 text-center">Loading dashboard...</div>}>
-              <Dashboard 
-                activeDashboardTab={activeDashboardTab}
-                setActiveDashboardTab={setActiveDashboardTab}
-              />
-            </Suspense>
-          )}
-        </main>
-      </div>
+      <AppErrorBoundary>
+        <BrowserRouter>
+          <RoutedApp />
+        </BrowserRouter>
+      </AppErrorBoundary>
     </QueryClientProvider>
   );
 }
