@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import AppAdmin from './admin/AppAdmin';
 import Integrations from './pages/Integrations';
-const SocFlowChatUI = React.lazy(() => import('./SocFlowChatUI'));
+import Dashboard from './pages/Dashboard';
 const SettingsGoals = React.lazy(() => import('./pages/settings/SettingsGoals'));
 
 const queryClient = new QueryClient({
@@ -61,7 +61,7 @@ function RoutedApp() {
         <Route path="/admin/*" element={<AppAdmin />} />
         <Route path="/integrations" element={<Integrations />} />
         <Route path="/settings/goals" element={<SettingsGoals />} />
-        <Route path="/*" element={<SocFlowChatUI />} />
+        <Route path="/*" element={<Dashboard />} />
       </Routes>
     </Suspense>
   );
