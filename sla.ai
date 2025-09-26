@@ -1,0 +1,128 @@
+# SLA Supply Chain Operating System (SCOS) — AI Orchestration Spec
+version: 0.1
+
+description: >
+  Defines the SCOS agent: tools, data ingestion, ranking calls,
+  and response templates. This file is the single source of truth for
+  how the LLM interacts with SLA services.
+
+llm:
+  provider: local_ollama
+  model: mistral
+  temperature: 0.2
+  top_p: 0.9
+
+tools:
+  - name: rank_candidates
+    method: POST
+    openapi: /rank
+    input_schema:
+      sku_spec: object
+      qty: integer
+      hs_code: string
+      duty_pct: number
+      usage_per_unit: number
+      unit_volume_or_weight: number
+      seasonal_penalty: number
+    output_schema:
+      type: array
+      items:
+        type: object
+        properties:
+          factory_id: {type: string}
+          lane_id: {type: string}
+          total: {type: number}
+          match: {type: number}
+          cost: {type: number}
+          logistics: {type: number}
+          risk: {type: number}
+          fob: {type: number}
+          transit_days: {type: number}
+          on_time: {type: number}
+  - name: ingest_rescan
+    method: POST
+    openapi: /ingest/rescan
+    input_schema: {}
+    output_schema:
+      type: object
+      properties:
+        status: {type: string}
+        message: {type: string}
+        files_processed: {type: integer}
+  - name: ai_search
+    method: POST
+    openapi: /ai/search
+    input_schema:
+      query: string
+      qty: integer
+      profile: string
+      duty_pct: number
+      seasonal_penalty: number
+    output_schema:
+      type: object
+      properties:
+        sku_spec: {type: object}
+        enriched: {type: object}
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              factory_id: {type: string}
+              lane_id: {type: string}
+              total: {type: number}
+              match: {type: number}
+              cost: {type: number}
+              logistics: {type: number}
+              risk: {type: number}
+              fob: {type: number}
+              transit_days: {type: number}
+              on_time: {type: number}
+        top_index: {type: integer}
+  - name: fulfillment_options
+    method: POST
+    openapi: /ai/fulfillment/options
+    input_schema:
+      sku_spec: object
+      qty_units: integer
+      origin_country: string
+      dest_country: string
+      transport_modes: array
+      profile: string
+      lane_limit: integer
+    output_schema:
+      type: object
+      properties:
+        routes: { type: array, items: { type: object } }
+        top_index: { type: integer }
+
+flows:
+  - name: search_and_rank
+    description: Parse user intent (SKU spec, qty, corridor) -> call /rank -> format cards
+    steps:
+      - parse_spec_from_text
+      - call_tool: rank_candidates
+      - render: result_cards
+
+ingestion:
+  factories:
+    source: db.factories
+    freshness: on_update
+  materials:
+    source: db.material_prices
+    freshness: daily
+  lanes:
+    source: db.shipper_rates
+    freshness: daily
+
+response_templates:
+  result_cards: |
+    For each candidate:
+    - **Factory**: {{factory_id}}  • **Lane**: {{lane_id}}
+    - **Score**: {{total | round(3)}}
+    - **Match**: {{match | pct}} • **ETA**: {{transit_days}} days • **On-time**: {{on_time | pct}}
+    - **Est. Cost**: ${{cost | money}}  (FOB: ${{fob | money}})
+    - Why picked:
+      - Spec fit above peers
+      - Logistics {{on_time | pct}} on-time with {{transit_days}}d ETA
+      - Cost normalized: {{1 - cost_norm | pct}} advantage

@@ -1,0 +1,57 @@
+
+[STATIC] User: hey
+[STATIC] Bot: Hi there! I'm SocFlow.AI, your go-to expert assistant for all things related to manufacturing, sourcing, shipping, and Incoterms. What's on your mind? Do you have a specific question or concern about supply chain management, logistics, or international trade? Let me know, and I'll do my best to help you flow smoothly through the process!
+
+[Matched: 'hey' | Score: 100.0]
+
+[LLM_GREETING_OR_OTHER] User: how are yo
+[LLM_GREETING_OR_OTHER] Bot: I'm doing great, thanks for asking! As SocFlow.AI, I'm always ready to assist with any questions or challenges you may have related to manufacturing, sourcing, shipping, and Incoterms. Whether it's helping you navigate the complexities of global trade, optimizing your supply chain, or providing guidance on logistics and transportation, I'm here to help.
+
+So, what's on your mind? Do you have a specific question or topic in mind that you'd like to discuss?
+
+[Matched: 'how are yo' | Score: 95.0]
+
+[LLM_FALLBACK] User: yes i want to find a specific factory
+[LLM_FALLBACK] Bot: [FALLBACK] User: yes i want to find a specific factory
+[FALLBACK] Bot: No relevant data found in dataset/static after LLM entity extraction. Used LLM to answer.
+[FALLBACK] LLM entities: {}
+[FALLBACK] LLM response: Exciting! Finding the right factory can be a challenging but crucial step in your manufacturing process.
+
+To help me narrow down the search, could you please provide more information about what you're looking for? Please consider sharing the following details:
+
+1. What type of product are you looking to manufacture (e.g., textiles, electronics, machinery)?
+2. Where are you located or where would you like to source from (e.g., Asia, Europe, Americas)?
+3. Do you have a specific industry or market in mind (e.g., automotive, healthcare, consumer goods)?
+4. What's your desired factory size, experience level, and certifications (e.g., ISO 9001, CE marking)?
+5. Are there any particular countries or regions you'd like to focus on?
+6. Do you have a specific budget or cost target in mind?
+
+The more information you can provide, the better I'll be able to assist you in finding the right factory for your needs.
+
+[Matched: 'yes i want to find a specific factory' | Score: 98.0]
+
+[LLM_FALLBACK] User: i want ti find a factory that made knitwear for zara
+[LLM_FALLBACK] Bot: [FALLBACK] User: i want ti find a factory that made knitwear for zara
+[FALLBACK] Bot: No relevant data found in dataset/static after LLM entity extraction. Used LLM to answer.
+[FALLBACK] LLM entities: {}
+[FALLBACK] LLM response: Interesting! Zara is known for its fast-fashion approach, and finding a factory that meets their quality and production standards can be a great challenge.
+
+To help me narrow down the search, I'll need to know more about what you're looking for. Please consider sharing the following details:
+
+1. What type of knitwear products are you interested in (e.g., sweaters, hats, scarves)?
+2. Are there any specific regions or countries where you'd like to source from (e.g., Europe, Asia, South America)?
+3. Do you have a specific factory size or experience level in mind (e.g., small-scale artisanal vs. large industrial production)?
+4. Are there any particular certifications or compliances you're looking for (e.g., ISO 9001, WRAP, SEDEX)?
+
+Some background information on Zara's manufacturing process might be helpful as well:
+
+* Zara is known for its fast-fashion approach, which means they require quick turnarounds and high-quality products.
+* They often work with small-to-medium-sized factories that specialize in specific types of textile production (e.g., knitwear).
+* These factories typically have experience working with European brands and are familiar with the required quality standards.
+
+With this information, I can start searching for a factory that meets your requirements. Keep in mind that finding an exact match might be challenging, as Zara is notoriously secretive about their suppliers. However, I'll do my best to find a factory that aligns with their quality and production standards.
+
+[Matched: 'i want ti find a factory that made knitwear for zara' | Score: 97.0]
+
+[CLARIFY] User: im interested in making sweaters and like theirs
+[CLARIFY] Bot: Of course! What kind of information do you need? Are you looking for a factory, advice, or something else?

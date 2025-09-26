@@ -1,0 +1,12 @@
+
+[STATIC] User: hey how are you
+[STATIC] Bot: I'm functioning smoothly! As SocFlow.AI, I'm here to help you streamline your supply chain operations, answer any questions you may have about manufacturing, sourcing, shipping, and Incoterms. What's on your mind? Do you need assistance with:
+
+1. Sourcing reliable suppliers?
+2. Optimizing logistics and shipping processes?
+3. Understanding Incoterms and trade terms?
+4. Improving production efficiency?
+
+Feel free to ask me anything, and I'll do my best to provide you with expert guidance!
+
+[Matched: 'how are you' | Score: 95.0]

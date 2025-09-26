@@ -1,0 +1,36 @@
+
+[STATIC] User: hey
+[STATIC] Bot: Hi there! I'm SocFlow.AI, your go-to expert assistant for all things related to manufacturing, sourcing, shipping, and Incoterms. What's on your mind? Do you have a specific question or concern about supply chain management, logistics, or international trade? Let me know, and I'll do my best to help you flow smoothly through the process!
+
+[Matched: 'hey' | Score: 100.0]
+
+[LLM_GREETING_OR_OTHER] User: how are you
+[LLM_GREETING_OR_OTHER] Bot:  I am just a computer program, so I don't have feelings or emotions like a human does. However, I am designed to assist users with their questions and concerns about supply chain management, logistics, and international trade. I am always ready and eager to help! Is there something specific that you would like to know or discuss?
+
+[Matched: 'how are you' | Score: 97.6]
+
+[LLM_FALLBACK] User: find me a factory that has made sweaters for zara
+[LLM_FALLBACK] Bot: [FALLBACK] User: find me a factory that has made sweaters for zara
+[FALLBACK] Bot: No relevant data found in dataset/static after LLM entity extraction. Used LLM to answer.
+[FALLBACK] LLM entities: {}
+[FALLBACK] LLM response:  To find a factory that has manufactured sweaters for Zara or a similar brand, you can try searching online databases of factories and suppliers in the textile industry. Here are some popular directories where you can find factories and suppliers that work with major fashion brands:
+
+1. Alibaba: A global online marketplace for manufacturers, suppliers, exporters, and importers. You can search for factories and suppliers of sweaters or other textile products using specific keywords.
+2. Global Sources: An international B2B platform connecting buyers with verified suppliers in various industries, including the textile industry.
+3. Made-in-China: Another global online marketplace specializing in connecting manufacturers and buyers from around the world. You can search for factories that produce sweaters or other textile products based on your specific requirements.
+4. Tmall Global: An e-commerce platform owned by Alibaba Group, catering to international buyers looking for high-quality products made in China. You can find factories and suppliers of various industries, including the textile industry.
+5. ThomasNet: A North American B2B marketplace that connects manufacturers, engineers, designers, and sourcing professionals with suppliers of products and services in various industries, including the textile industry.
+6. Texprocil: The Textile Export Promotion Council of India is a government organization that promotes Indian textiles and apparel exports. They have a directory of textile manufacturers and exporters in India.
+7. Cemtex: The Center for the Promotion of Imports from developing countries is an international trade fair held annually in Hamburg, Germany. It features a wide range of products and services from developing countries, including textiles and apparel.
+
+It's essential to thoroughly research any potential supplier or factory you find online before entering into a business relationship with them. This includes verifying their credentials, checking references, and reviewing their production capabilities to ensure they can meet your needs. Additionally, consider visiting the factory in person if possible to inspect their facilities and operations firsthand.
+
+[Matched: 'find me a factory that has made sweaters for zara' | Score: 98.5]
+
+[LLM_FALLBACK] User: give me a specific factory that has produced for zara
+[LLM_FALLBACK] Bot: [FALLBACK] User: give me a specific factory that has produced for zara
+[FALLBACK] Bot: No relevant data found in dataset/static after LLM entity extraction. Used LLM to answer.
+[FALLBACK] LLM entities: {}
+[FALLBACK] LLM response:  I cannot provide you with a specific factory that has produced sweaters for Zara as I don't have access to proprietary information about Zara's supply chain or the individual factories they work with. However, you can use the online directories I mentioned earlier (Alibaba, Global Sources, Made-in-China, Tmall Global, ThomasNet, Texprocil, and Cemtex) to find textile manufacturers and suppliers that may have worked with Zara or similar fashion brands. It's essential to verify their credentials, check references, and review their production capabilities before entering into a business relationship with them.
+
+[Matched: 'give me a specific factory that has produced for zara' | Score: 86.4]

@@ -1,0 +1,75 @@
+
+[STATIC] User: hey
+[STATIC] Bot: Hi there! I'm SocFlow.AI, your go-to expert assistant for all things related to manufacturing, sourcing, shipping, and Incoterms. What's on your mind? Do you have a specific question or concern about supply chain management, logistics, or international trade? Let me know, and I'll do my best to help you flow smoothly through the process!
+
+[Matched: 'hey' | Score: 100.0]
+
+[DATASET] User: i need help
+[DATASET] Bot: B'LAO SPORT COMPANY LIMITED looks promising. They're based in Hue. B'LAO SPORT COMPANY LIMITED 
+
+What specific requirements do you have for your manufacturing project?
+
+[Source: Dataset | Match Score: 80.0%]
+
+[DATASET] User: i didnt say what i needed yet
+[DATASET] Bot: Boyolali Industrial Zone looks promising. They're based in 300,000–500,000 pcs/month. P.T. DIAMONDFIT GARMENT INDONESIA 
+
+What specific requirements do you have for your manufacturing project?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: i am looking to make jeans near portugal
+[DATASET] Bot: Contact via shahi.co.in looks promising. They're based in Hosur . Shahi Exports Pvt Ltd ,Unit-27 
+
+What specific requirements do you have for your manufacturing project?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: is that closed to portugal?
+[DATASET] Bot: Contact via shahi.co.in looks promising. They're based in Hosur . Shahi Exports Pvt Ltd ,Unit-27 
+
+What specific requirements do you have for your manufacturing project?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: is that close to portugal?
+[DATASET] Bot: 24/6 Moo 6 Soi 24 Bangna-Trad Road looks promising. They're based in 500,000–1,000,000 pcs/month. Bogart Lingerie (Thailand) Limited 
+
+What specific requirements do you have for your manufacturing project?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: where is this factory
+[DATASET] Bot: 24/6 Moo 6 Soi 24 Bangna-Trad Road looks promising. They're based in 500,000–1,000,000 pcs/month. Bogart Lingerie (Thailand) Limited 
+
+What specific requirements do you have for your manufacturing project?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: i think you are interpreting the data wrong
+[DATASET] Bot: Contact via shahi.co.in looks promising. They're based in Hosur . Shahi Exports Pvt Ltd ,Unit-27 
+
+What specific requirements do you have for your manufacturing project?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: i need to get it within 2 weeks, is this possible?
+[DATASET] Bot: Contact via shahi.co.in looks promising. They're based in Hosur . Shahi Exports Pvt Ltd ,Unit-27 
+
+What specific requirements do you have for your manufacturing project?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: i need my shipment in two weeks
+[DATASET] Bot: Contact via shahi.co.in looks promising. They're based in Hosur . Shahi Exports Pvt Ltd ,Unit-27 
+
+What specific requirements do you have for your manufacturing project?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: whats the sample lead time?
+[DATASET] Bot: Contact via shahi.co.in looks promising. They're based in Hosur . Shahi Exports Pvt Ltd ,Unit-27 
+
+What specific requirements do you have for your manufacturing project?
+
+[Source: Dataset | Match Score: 100.0%]

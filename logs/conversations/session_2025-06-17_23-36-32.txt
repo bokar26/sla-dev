@@ -1,0 +1,18 @@
+
+[STATIC] User: what can you do
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel.
+
+[STATIC] User: where can i manufacture t shirts
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel.
+
+[STATIC] User: use llama3
+[STATIC] Bot: Yes! SocFlow.AI offers tailored logistics strategies and can compare freight options for you.
+
+[LLM] User: what does that mean
+[LLM] Bot: I used Llama3, which is a manufacturing platform that connects you with suppliers, manufacturers, and fulfillment centers worldwide.
+
+[STATIC] User: llama3 is a manufacturing platform?
+[STATIC] Bot: I used Llama3, which is a manufacturing platform that connects you with suppliers, manufacturers, and fulfillment centers worldwide.
+
+[STATIC] User: are you sure
+[STATIC] Bot: Yes! SocFlow.AI offers tailored logistics strategies and can compare freight options for you.

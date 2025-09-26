@@ -1,0 +1,9 @@
+
+[LLM] User: hey
+[LLM] Bot:  Hello there! I'm SocFlow AI, your expert assistant for end-to-end apparel and product manufacturing. I can help you with everything from factory sourcing to production planning, certifications, costing, and logistics. Let's work together to streamline your manufacturing process and ensure the success of your project!
+
+To get started, could you please provide some details about the specific requirements for your apparel or product? For instance, quantity, materials needed, size range, deadlines, certifications required, and any other relevant information. This will help me find the best factories to source from based on your needs.
+
+If you don't have all the necessary information yet, don't worry! I can still provide you with helpful sourcing advice to get started. Some factors that typically influence factory selection include production capacity, location, cost, certification status, and experience with similar products. Additionally, considering a factory's ethical standards and environmental practices can help ensure a sustainable and responsible supply chain.
+
+Looking forward to working with you! Let me know if you have any questions or need further assistance.

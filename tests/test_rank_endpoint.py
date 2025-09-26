@@ -1,0 +1,1 @@
+from sla_ai_components.tests.test_rank_endpoint import *  # noqa

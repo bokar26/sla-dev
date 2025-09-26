@@ -1,0 +1,59 @@
+
+[STATIC] User: what do you do
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel.
+
+[STATIC] User: how are you
+[STATIC] Bot: SocFlow.AI can match you with vetted factories based on your location, budget, and quality needs.
+
+[STATIC] User: what is average cost to ship from russia to china
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel.
+
+[STATIC] User: i want to know the cost
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel.
+
+[LLM] User: tell me the cost
+[LLM] Bot: The average cost to ship from Russia to China can vary depending on the shipping method, package size, weight, and other factors. However, based on general estimates and market rates:
+
+* Air freight:
+	+ Economy air: $1.50-$3.00 per kg (approx. 2-4 USD per pound)
+	+ Standard air: $2.50-$5.00 per kg (approx. 4-8 USD per pound)
+* Ocean freight:
+	+ LCL (Less than Container Load): $300-$600 per container (20ft) depending on the port, size, and weight of the shipment
+	+ FCL (Full Container Load): $800-$1,500 per container (20ft) depending on the port, size, and weight of the shipment
+
+Please note that these are rough estimates and actual costs may vary. It's recommended to check with shipping companies like DHL, FedEx, UPS, or Maersk for more accurate quotes based on your specific requirements.
+
+SocFlow.AI can help you find the best shipping options for your needs!
+
+[STATIC] User: what about from russia to america
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel.
+
+[STATIC] User: russia to america
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel.
+
+[LLM] User: give me the cost
+[LLM] Bot: The average cost to ship from Russia to America can vary depending on the shipping method, package size, weight, and other factors. However, based on general estimates and market rates:
+
+* Air freight:
+	+ Economy air: $5.00-$10.00 per kg (approx. 8-16 USD per pound)
+	+ Standard air: $7.50-$15.00 per kg (approx. 12-24 USD per pound)
+* Ocean freight:
+	+ LCL (Less than Container Load): $800-$1,500 per container (20ft) depending on the port, size, and weight of the shipment
+	+ FCL (Full Container Load): $2,000-$5,000 per container (20ft) depending on the port, size, and weight of the shipment
+
+Please note that these are rough estimates and actual costs may vary. It's recommended to check with shipping companies like DHL, FedEx, UPS, or Maersk for more accurate quotes based on your specific requirements.
+
+Some popular shipping routes from Russia to America include:
+
+* Moscow (RU) to New York/Newark (US): 7-10 days by air freight; 20-30 days by ocean freight
+* St. Petersburg (RU) to Los Angeles (US): 8-12 days by air freight; 25-35 days by ocean freight
+
+Keep in mind that these estimates are approximate and may vary depending on the specific routes, shipping companies, and other factors.
+
+SocFlow.AI can help you find the best shipping options for your needs!
+
+[STATIC] User: so if i want to produce in russia, what is the best product to make there
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel.
+
+[STATIC] User: what is the best product to make there
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel.

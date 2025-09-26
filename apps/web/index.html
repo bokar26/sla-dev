@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>SLA - Sourcing Simplified</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      (function () {
+        function makeOverlay(msg) {
+          var d = document.createElement('div');
+          d.id = 'boot-error-overlay';
+          d.style.cssText = 'position:fixed;inset:0;z-index:2147483647;background:#0b1021;color:#fff;padding:16px;font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;overflow:auto';
+          d.innerHTML = '<h2 style="margin:0 0 8px 0">App failed to start</h2><pre style="white-space:pre-wrap;background:#12182f;padding:12px;border-radius:8px">' +
+            msg.replace(/</g,'&lt;') + '</pre>';
+          return d;
+        }
+        function show(e) {
+          var m = (e && (e.reason && (e.reason.stack || e.reason.message) || e.error && e.error.stack || e.message || String(e))) || 'Unknown error';
+          if (!document.getElementById('boot-error-overlay')) {
+            document.body.appendChild(makeOverlay(m));
+          }
+        }
+        window.addEventListener('error', show);
+        window.addEventListener('unhandledrejection', show);
+        window.__clearBootOverlay = function(){ var el=document.getElementById('boot-error-overlay'); if(el) el.remove(); };
+      })();
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "sla",
+  "private": true,
+  "packageManager": "pnpm@10",
+  "scripts": {
+    "dev:web": "pnpm --filter @sla/web dev",
+    "dev:mobile": "pnpm --filter @sla/mobile start",
+    "build:web": "pnpm --filter @sla/web build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
+  }
+}

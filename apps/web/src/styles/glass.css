@@ -1,0 +1,14 @@
+/* Glass morphism utilities */
+@layer components {
+  .glass {
+    @apply bg-white/60 backdrop-blur-md shadow-glass border border-white/10;
+  }
+
+  .glass-light {
+    @apply bg-white/80 backdrop-blur-sm shadow-soft border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-ink/80 backdrop-blur-md shadow-glass border border-white/10;
+  }
+}

@@ -1,0 +1,34 @@
+
+[STATIC] User: hey how are you
+[STATIC] Bot: I'm functioning smoothly! As SocFlow.AI, I'm here to help you streamline your supply chain operations, answer any questions you may have about manufacturing, sourcing, shipping, and Incoterms. What's on your mind? Do you need assistance with:
+
+1. Sourcing reliable suppliers?
+2. Optimizing logistics and shipping processes?
+3. Understanding Incoterms and trade terms?
+4. Improving production efficiency?
+
+Feel free to ask me anything, and I'll do my best to provide you with expert guidance!
+
+[Matched: 'how are you' | Score: 95.0]
+
+[LLM] User: i need you to find me a factory thats good at denim
+[LLM] Bot: I'd be happy to help you find a reliable factory that specializes in denim production.
+
+To get started, I'll need some more information from you:
+
+1. What type of denim products are you looking to manufacture (e.g., jeans, jackets, shorts, accessories)?
+2. What is your target price range for the denim products?
+3. Do you have any specific requirements or certifications for the factory (e.g., Oeko-Tex, ISO 9001, WRAP)?
+4. Are there any specific countries or regions you're interested in sourcing from?
+5. What is your expected MOQ (Minimum Order Quantity) for the denim products?
+
+Once I have this information, I can provide you with a list of potential factories that meet your criteria.
+
+In the meantime, here are some popular denim manufacturing destinations:
+
+1. China: Known for its large-scale denim production and competitive pricing.
+2. Turkey: A significant producer of denim fabrics and garments, with many factories in Istanbul and Izmir.
+3. India: Home to a large textile industry, with many factories producing denim products in cities like Delhi, Mumbai, and Ahmedabad.
+4. Bangladesh: A major player in the global denim market, with many factories in Dhaka and Chattogram.
+
+Please provide me with more details, and I'll get started on finding the perfect factory for your denim needs!

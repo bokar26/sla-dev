@@ -1,0 +1,24 @@
+[project]
+name = "sla-ai"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "numpy",
+    "pandas",
+    "python-dotenv",
+    "rapidfuzz",
+    "ollama",
+    "python-multipart",
+    "aiofiles",
+    "pyyaml"
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sla_ai_components*"]

@@ -1,0 +1,18 @@
+
+[LLM_FALLBACK] User: find me a factory that has made for Zara
+[LLM_FALLBACK] Bot: [FALLBACK] User: find me a factory that has made for Zara
+[FALLBACK] Bot: No relevant data found in dataset/static after LLM entity extraction. Used LLM to answer.
+[FALLBACK] LLM entities: {'factory': 'location', 'Zara': 'brand'}
+[FALLBACK] LLM response:  To find a factory that has manufactured for Zara, I would recommend using BSCI (Business Social Compliance Initiative) or Amfori BSCI certified factories. These factories have been audited and comply with social compliance criteria. Here are some steps you can follow:
+
+1. Visit the BSCI or Amfori BSCI website, where they provide a list of certified factories that have worked with global fashion brands such as Zara. You can search for factories based on their location, industry sector, and product category.
+
+2. Once you find a factory that seems suitable, reach out to them directly via email or contact form on their website. Provide detailed information about your project requirements, including the specific products you need, production quantities, deadlines, and any other relevant details.
+
+3. If the factory is interested in working with you, they will likely request additional information such as your company's background, product specifications, quality standards, and shipping terms. Make sure to provide clear and accurate information to build trust and establish a strong partnership.
+
+4. Once you have agreed on the terms, the factory will provide a quotation for the production costs, including materials, labor, and any additional fees like customs duties or shipping charges.
+
+5. After reviewing the quotation, if everything seems acceptable, you can proceed with placing an order. Be sure to maintain clear communication with the factory throughout the production process to ensure that everything is on track and meets your quality standards.
+
+6. Lastly, keep in mind that working with factories in different countries may involve dealing with complex Incoterms (International Commercial Terms) and logistics challenges. To minimize risks and costs, consider partnering with a reliable sourcing agent or freight forwarder who can help navigate these issues and ensure a smooth transaction.

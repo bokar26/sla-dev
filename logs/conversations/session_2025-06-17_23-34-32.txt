@@ -1,0 +1,12 @@
+
+[STATIC] User: what can you do
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel.
+
+[STATIC] User: how 
+[STATIC] Bot: SocFlow.AI can match you with vetted factories based on your location, budget, and quality needs.
+
+[STATIC] User: why
+[STATIC] Bot: SocFlow.AI can match you with vetted factories based on your location, budget, and quality needs.
+
+[STATIC] User: where should i manufacture if i want t shirts
+[STATIC] Bot: SocFlow.AI provides guidelines for inspections, testing, and certifications to ensure your products meet standards.

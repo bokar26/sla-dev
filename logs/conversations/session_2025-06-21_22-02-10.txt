@@ -1,0 +1,10 @@
+
+[STATIC] User: hey what can you do
+[STATIC] Bot: SocFlow.AI can match you with vetted factories based on your location, budget, and quality needs.
+
+[Matched: 'how can i find a manufacturer for grip socks?' | Score: 85.5]
+
+[STATIC] User: where can i make tires
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel.
+
+[Matched: 'what does socflow.ai do?' | Score: 85.5]

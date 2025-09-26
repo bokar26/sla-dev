@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pydantic
+numpy
+pandas
+python-dotenv
+rapidfuzz
+ollama
+python-multipart
+aiofiles
+pyyaml

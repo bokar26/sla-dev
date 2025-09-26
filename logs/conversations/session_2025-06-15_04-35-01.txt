@@ -1,0 +1,12 @@
+
+[STATIC] User: hey what can you do
+[STATIC] Bot: SocFlow.AI can match you with vetted factories based on your location, budget, and quality needs.
+
+[STATIC] User: where are some of the best factories
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel.
+
+[STATIC] User: where can i find factories that make good socks
+[STATIC] Bot: SocFlow.AI can match you with vetted factories based on your location, budget, and quality needs.
+
+[STATIC] User: What port is best for exporting socks from Vietnam?
+[STATIC] Bot: SocFlow.AI can match you with vetted factories based on your location, budget, and quality needs.

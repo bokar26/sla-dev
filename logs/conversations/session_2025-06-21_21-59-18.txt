@@ -1,0 +1,12 @@
+
+[STATIC] User: what can you do
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel. [score=85.5]
+
+[STATIC] User: where can i make candy
+[STATIC] Bot: SocFlow.AI simplifies and optimizes the manufacturing process—from materials to delivery—starting with grip socks and expanding into all apparel. [score=85.5]
+
+[STATIC] User: how is that a good response 
+[STATIC] Bot: That depends, SocFlow.AI will help you compare EXW, FOB, CIF, and more based on your risk tolerance and shipping needs. [score=85.5]
+
+[STATIC] User: that doesnt make sense, i want to manufacture candy
+[STATIC] Bot: SocFlow.AI can match you with vetted factories based on your location, budget, and quality needs. [score=85.5]

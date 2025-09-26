@@ -1,0 +1,141 @@
+
+[STATIC] User: hey
+[STATIC] Bot: Hi there! I'm SocFlow.AI, your go-to expert assistant for all things related to manufacturing, sourcing, shipping, and Incoterms. What's on your mind? Do you have a specific question or concern about supply chain management, logistics, or international trade? Let me know, and I'll do my best to help you flow smoothly through the process!
+
+[Matched: 'hey' | Score: 100.0]
+
+[DATASET] User: find me a factory
+[DATASET] Bot: **Contact via shahi.co.in**
+📍 Located in: Hosur 
+
+Shahi Exports Pvt Ltd ,Unit-27
+
+**Would this be a good fit?** 🤔
+I'd need to know more about your specific requirements to give you a definitive answer.
+
+**To help narrow this down, could you tell me:**
+• What type of products are you looking to manufacture?
+• What's your target production volume?
+• Do you have specific quality certifications needed?
+• What's your timeline and budget range?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: tell me a bit more about this factory, whats their monthly capacity?
+[DATASET] Bot: **Contact via shahi.co.in**
+📍 Located in: Hosur 
+
+Shahi Exports Pvt Ltd ,Unit-27
+
+**Would this be a good fit?** 🤔
+I'd need to know more about your specific requirements to give you a definitive answer.
+
+**To help narrow this down, could you tell me:**
+• What type of products are you looking to manufacture?
+• What's your target production volume?
+• Do you have specific quality certifications needed?
+• What's your timeline and budget range?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: whats their monthly capacity?
+[DATASET] Bot: **24/6 Moo 6 Soi 24 Bangna-Trad Road**
+📍 Located in: 500,000–1,000,000 pcs/month
+
+Bogart Lingerie (Thailand) Limited
+
+**Would this be a good fit?** 🤔
+I'd need to know more about your specific requirements to give you a definitive answer.
+
+**To help narrow this down, could you tell me:**
+• What type of products are you looking to manufacture?
+• What's your target production volume?
+• Do you have specific quality certifications needed?
+• What's your timeline and budget range?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: tell me a bit more about this factory, whats their monthly capacity?
+[DATASET] Bot: **Contact via shahi.co.in**
+📍 Located in: Hosur 
+
+Shahi Exports Pvt Ltd ,Unit-27
+
+**Would this be a good fit?** 🤔
+I'd need to know more about your specific requirements to give you a definitive answer.
+
+**To help narrow this down, could you tell me:**
+• What type of products are you looking to manufacture?
+• What's your target production volume?
+• Do you have specific quality certifications needed?
+• What's your timeline and budget range?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: i ma looking to make jeans, my budget is $10 per unit, i would likely do 400 units at a time, i dont have any certification requirements
+[DATASET] Bot: **Contact via shahi.co.in**
+📍 Located in: Hosur 
+
+Shahi Exports Pvt Ltd ,Unit-27
+
+**Would this be a good fit?** 🤔
+I'd need to know more about your specific requirements to give you a definitive answer.
+
+**To help narrow this down, could you tell me:**
+• What type of products are you looking to manufacture?
+• What's your target production volume?
+• Do you have specific quality certifications needed?
+• What's your timeline and budget range?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: i need to make jeans
+[DATASET] Bot: **Contact via shahi.co.in**
+📍 Located in: Hosur 
+
+Shahi Exports Pvt Ltd ,Unit-27
+
+**Would this be a good fit?** 🤔
+I'd need to know more about your specific requirements to give you a definitive answer.
+
+**To help narrow this down, could you tell me:**
+• What type of products are you looking to manufacture?
+• What's your target production volume?
+• Do you have specific quality certifications needed?
+• What's your timeline and budget range?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: no its not a good fit
+[DATASET] Bot: **Not specified**
+📍 Located in: Casablanca
+
+Denim, Cotton, Cotton blends
+
+**Would this be a good fit?** 🤔
+I'd need to know more about your specific requirements to give you a definitive answer.
+
+**To help narrow this down, could you tell me:**
+• What type of products are you looking to manufacture?
+• What's your target production volume?
+• Do you have specific quality certifications needed?
+• What's your timeline and budget range?
+
+[Source: Dataset | Match Score: 100.0%]
+
+[DATASET] User: nope
+[DATASET] Bot: **Ogura Meriyasu Tochigi Factory Co., Ltd.**
+📍 Located in: Sano
+
+Ogura Meriyasu Tochigi Factory Co., Ltd.
+
+**Would this be a good fit?** 🤔
+I'd need to know more about your specific requirements to give you a definitive answer.
+
+**To help narrow this down, could you tell me:**
+• What type of products are you looking to manufacture?
+• What's your target production volume?
+• Do you have specific quality certifications needed?
+• What's your timeline and budget range?
+
+[Source: Dataset | Match Score: 75.0%]

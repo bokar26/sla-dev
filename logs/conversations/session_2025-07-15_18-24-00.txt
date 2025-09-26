@@ -1,0 +1,38 @@
+
+[STATIC] User: hey
+[STATIC] Bot: Hi there! I'm SocFlow.AI, your go-to expert assistant for all things related to manufacturing, sourcing, shipping, and Incoterms. What's on your mind? Do you have a specific question or concern about supply chain management, logistics, or international trade? Let me know, and I'll do my best to help you flow smoothly through the process!
+
+[Matched: 'hey' | Score: 100.0]
+
+[STATIC] User: i need help
+[STATIC] Bot: Don't worry! I'm here to assist you. What specifically do you need help with? Are you struggling with:
+
+1. Manufacturing: sourcing materials, optimizing production processes, or managing inventory?
+2. Sourcing: finding reliable suppliers, negotiating prices, or ensuring quality control?
+3. Shipping: planning routes, calculating costs, or handling customs clearance?
+4. Incoterms: understanding the responsibilities of buyers and sellers, or resolving disputes?
+
+Let me know, and I'll provide guidance, resources, and expert insights to help you navigate the complexities.
+
+[Matched: 'i need help' | Score: 100.0]
+
+[Matched: 'hey i need help' | Score: 100.0]
+
+[CLARIFY] User: i want to know something
+[CLARIFY] Bot: Could you tell me a bit more about what you're looking for? Are you interested in factories, products, shipping, or something else?
+
+[INFO_REQUEST] User: i was wondering what factory has produced for H&M
+[INFO_REQUEST] Bot: To help you find the best factory, could you tell me your production volume and budget?
+
+[LLM] User: i want to know what factory had produced for the brand H&M
+[LLM] Bot: H&M (Hennes & Mauritz) is a Swedish multinational fashion corporation that has been known to partner with various suppliers and manufacturers around the world. As a responsible business, H&M has made efforts to increase transparency in their supply chain.
+
+According to publicly available information and reports from organizations like the Clean Clothes Campaign, some of the factories that have produced clothing for H&M include:
+
+1. Rana Plaza (Bangladesh): Unfortunately, this factory collapsed in 2013, resulting in tragic losses. Many international brands, including H&M, had supplied orders to Rana Plaza.
+2. Golden Apple Garment Industry Limited (China): This factory has been linked to H&M's production of clothing, particularly activewear and sportswear.
+3. Wing Star Ltd. (Cambodia): This Cambodian manufacturer has produced garments for H&M, including knitwear and casual wear.
+
+Please note that these factories may not be exclusively producing for H&M, as many manufacturers supply multiple brands. Additionally, it's essential to recognize that the fashion industry faces various challenges, and ensuring fair labor practices is a continuous effort.
+
+Would you like more information on supply chain transparency or ethical manufacturing practices?

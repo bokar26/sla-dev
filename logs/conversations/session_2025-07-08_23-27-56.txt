@@ -1,0 +1,20 @@
+
+[STATIC] User: hey
+[STATIC] Bot: Hi there! I'm SocFlow.AI, your go-to expert assistant for all things related to manufacturing, sourcing, shipping, and Incoterms. What's on your mind? Do you have a specific question or concern about supply chain management, logistics, or international trade? Let me know, and I'll do my best to help you flow smoothly through the process!
+
+[Matched: 'hey' | Score: 100.0]
+
+[INFO_REQUEST] User: i need help sourcing 
+[INFO_REQUEST] Bot: To help you find the best factory, could you tell me your product type?
+
+[INFO_REQUEST] User: they are sweaters
+[INFO_REQUEST] Bot: To help you find the best factory, could you tell me your product type?
+
+[INFO_REQUEST] User: sweaters
+[INFO_REQUEST] Bot: To help you find the best factory, could you tell me your product type?
+
+[INFO_REQUEST] User: jeans
+[INFO_REQUEST] Bot: To help you find the best factory, could you tell me your product type?
+
+[INFO_REQUEST] User: clothing
+[INFO_REQUEST] Bot: To help you find the best factory, could you tell me your product type?

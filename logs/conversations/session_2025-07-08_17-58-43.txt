@@ -1,0 +1,153 @@
+
+[STATIC] User: hey
+[STATIC] Bot: Hi there! I'm SocFlow.AI, your go-to expert assistant for all things related to manufacturing, sourcing, shipping, and Incoterms. What's on your mind? Do you have a specific question or concern about supply chain management, logistics, or international trade? Let me know, and I'll do my best to help you flow smoothly through the process!
+
+[Matched: 'hey' | Score: 100.0]
+
+[DATASET] User: i need you to find me a factory
+[DATASET] Bot: Factory Name: Shahi Exports Pvt Ltd ,Unit-27
+Country: IN
+City: Hosur 
+Product Specialties: Apparel
+Materials Handled: Cotton, Denim, Blends, Knits, Wovens
+Minimum Order Quantity (MOQ): Varies per buyer (requires direct inquiry)
+Price Per Unit: Varies per buyer (requires direct inquiry)
+Payment Terms: Negotiable (typical EXW/FOB)
+Standard Lead Time: 30-60 days
+Peak Season Lead Time: Extended by 1-2 weeks
+Labor Practices: 1001-2500
+Year Established: 1974
+Factory Size: 50+ factories, ~900,000 sq ft for woven plant
+Languages Spoken: English, Hindi, Tamil
+Customization Capabilities: In-house R&D, printing, embroidery, washing, finishing
+Contact Name: Contact via shahi.co.in
+Contact Email: Contact via shahi.co.in
+Contact Phone: Contact via shahi.co.in
+Notes: Vertically integrated; sustainability focused
+
+[Source: Dataset | Match Score: 100.0% | Strategy: partial_ratio_Country]
+
+[DATASET] User: i need a different factory
+[DATASET] Bot: Factory Name: Shahi Exports Pvt Ltd ,Unit-27
+Country: IN
+City: Hosur 
+Product Specialties: Apparel
+Materials Handled: Cotton, Denim, Blends, Knits, Wovens
+Minimum Order Quantity (MOQ): Varies per buyer (requires direct inquiry)
+Price Per Unit: Varies per buyer (requires direct inquiry)
+Payment Terms: Negotiable (typical EXW/FOB)
+Standard Lead Time: 30-60 days
+Peak Season Lead Time: Extended by 1-2 weeks
+Labor Practices: 1001-2500
+Year Established: 1974
+Factory Size: 50+ factories, ~900,000 sq ft for woven plant
+Languages Spoken: English, Hindi, Tamil
+Customization Capabilities: In-house R&D, printing, embroidery, washing, finishing
+Contact Name: Contact via shahi.co.in
+Contact Email: Contact via shahi.co.in
+Contact Phone: Contact via shahi.co.in
+Notes: Vertically integrated; sustainability focused
+
+[Source: Dataset | Match Score: 100.0% | Strategy: partial_ratio_Country]
+
+[DATASET] User: not this factory, i need one that specializes in jacquard
+[DATASET] Bot: Factory Name: Shahi Exports Pvt Ltd ,Unit-27
+Country: IN
+City: Hosur 
+Product Specialties: Apparel
+Materials Handled: Cotton, Denim, Blends, Knits, Wovens
+Minimum Order Quantity (MOQ): Varies per buyer (requires direct inquiry)
+Price Per Unit: Varies per buyer (requires direct inquiry)
+Payment Terms: Negotiable (typical EXW/FOB)
+Standard Lead Time: 30-60 days
+Peak Season Lead Time: Extended by 1-2 weeks
+Labor Practices: 1001-2500
+Year Established: 1974
+Factory Size: 50+ factories, ~900,000 sq ft for woven plant
+Languages Spoken: English, Hindi, Tamil
+Customization Capabilities: In-house R&D, printing, embroidery, washing, finishing
+Contact Name: Contact via shahi.co.in
+Contact Email: Contact via shahi.co.in
+Contact Phone: Contact via shahi.co.in
+Notes: Vertically integrated; sustainability focused
+
+[Source: Dataset | Match Score: 100.0% | Strategy: partial_ratio_Country]
+
+[DATASET] User: not this one
+[DATASET] Bot: Factory Name: Shahi Exports Pvt Ltd ,Unit-27
+Country: IN
+City: Hosur 
+Product Specialties: Apparel
+Materials Handled: Cotton, Denim, Blends, Knits, Wovens
+Minimum Order Quantity (MOQ): Varies per buyer (requires direct inquiry)
+Price Per Unit: Varies per buyer (requires direct inquiry)
+Payment Terms: Negotiable (typical EXW/FOB)
+Standard Lead Time: 30-60 days
+Peak Season Lead Time: Extended by 1-2 weeks
+Labor Practices: 1001-2500
+Year Established: 1974
+Factory Size: 50+ factories, ~900,000 sq ft for woven plant
+Languages Spoken: English, Hindi, Tamil
+Customization Capabilities: In-house R&D, printing, embroidery, washing, finishing
+Contact Name: Contact via shahi.co.in
+Contact Email: Contact via shahi.co.in
+Contact Phone: Contact via shahi.co.in
+Notes: Vertically integrated; sustainability focused
+
+[Source: Dataset | Match Score: 100.0% | Strategy: partial_ratio_Country]
+
+[DATASET] User: not this one
+[DATASET] Bot: Factory Name: Bogart Lingerie (Thailand) Limited
+Country: TH
+City: Samutprakarn
+Product Specialties: Apparel (lingerie, sportswear, swimwear)
+Materials Handled: Lace, molded cups, microfiber blends
+Minimum Order Quantity (MOQ): Not disclosed
+Price Per Unit: Not disclosed
+Payment Terms: LC/TT
+Standard Lead Time: 45 days
+Peak Season Lead Time: 60–75 days
+Max Monthly Capacity: 500,000–1,000,000 pcs/month
+Certifications: GOTS, OCS, RCS, WRAP
+Quality Control Processes: Inline QC; high‑tech molding
+Past Clients: Victoria’s Secret, Savage X Fenty
+Nearest Port: Shekou Port (via Bangkok-Chonburi shipping)
+Labor Practices: Complies with Thai labor law
+Labor Cost: 0.8
+Number of Workers: 2501-5000
+Year Established: 1993
+Factory Size: 24/6 Moo 6 Soi 24 Bangna-Trad Road
+Languages Spoken: Thai, English
+Customization Capabilities: Private label, embroidery, fabric lamination
+Contact Email: Contact via website under Delta Galil
+Notes: Delta Bogart Group subsidiary
+
+[Source: Dataset | Match Score: 100.0% | Strategy: partial_ratio_Country]
+
+[DATASET] User: not this one
+[DATASET] Bot: Factory Name: Bogart Lingerie (Thailand) Limited
+Country: TH
+City: Samutprakarn
+Product Specialties: Apparel (lingerie, sportswear, swimwear)
+Materials Handled: Lace, molded cups, microfiber blends
+Minimum Order Quantity (MOQ): Not disclosed
+Price Per Unit: Not disclosed
+Payment Terms: LC/TT
+Standard Lead Time: 45 days
+Peak Season Lead Time: 60–75 days
+Max Monthly Capacity: 500,000–1,000,000 pcs/month
+Certifications: GOTS, OCS, RCS, WRAP
+Quality Control Processes: Inline QC; high‑tech molding
+Past Clients: Victoria’s Secret, Savage X Fenty
+Nearest Port: Shekou Port (via Bangkok-Chonburi shipping)
+Labor Practices: Complies with Thai labor law
+Labor Cost: 0.8
+Number of Workers: 2501-5000
+Year Established: 1993
+Factory Size: 24/6 Moo 6 Soi 24 Bangna-Trad Road
+Languages Spoken: Thai, English
+Customization Capabilities: Private label, embroidery, fabric lamination
+Contact Email: Contact via website under Delta Galil
+Notes: Delta Bogart Group subsidiary
+
+[Source: Dataset | Match Score: 100.0% | Strategy: partial_ratio_Country]

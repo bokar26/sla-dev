@@ -1,0 +1,190 @@
+{
+  "suppliers": [
+    {
+      "id": "supplier-001",
+      "name": "Guangzhou Textile Co.",
+      "country": "China",
+      "region": "APAC",
+      "currency": "USD"
+    },
+    {
+      "id": "supplier-002", 
+      "name": "Dhaka Garments Ltd",
+      "country": "Bangladesh",
+      "region": "APAC",
+      "currency": "USD"
+    },
+    {
+      "id": "supplier-003",
+      "name": "Mumbai Fabrics Inc",
+      "country": "India", 
+      "region": "APAC",
+      "currency": "USD"
+    },
+    {
+      "id": "supplier-004",
+      "name": "Istanbul Textile Works",
+      "country": "Turkey",
+      "region": "EMEA",
+      "currency": "EUR"
+    },
+    {
+      "id": "supplier-005",
+      "name": "São Paulo Manufacturing",
+      "country": "Brazil",
+      "region": "AMER",
+      "currency": "USD"
+    }
+  ],
+  "skus": [
+    {
+      "id": "sku-001",
+      "code": "TSH-COT-001",
+      "title": "Cotton T-Shirt - Basic",
+      "category": "apparel"
+    },
+    {
+      "id": "sku-002", 
+      "code": "JNS-DEN-002",
+      "title": "Denim Jeans - Classic",
+      "category": "apparel"
+    },
+    {
+      "id": "sku-003",
+      "code": "HOD-FLE-003", 
+      "title": "Fleece Hoodie - Premium",
+      "category": "apparel"
+    },
+    {
+      "id": "sku-004",
+      "code": "SHO-CAN-004",
+      "title": "Canvas Sneakers - Unisex",
+      "category": "footwear"
+    },
+    {
+      "id": "sku-005",
+      "code": "BAG-CAN-005",
+      "title": "Canvas Tote Bag - Eco",
+      "category": "accessories"
+    }
+  ],
+  "supplierSkus": [
+    {
+      "supplierId": "supplier-001",
+      "skuId": "sku-001",
+      "cost": 3.50,
+      "price": 8.99,
+      "moq": 1000,
+      "leadTimeDays": 30
+    },
+    {
+      "supplierId": "supplier-001", 
+      "skuId": "sku-002",
+      "cost": 12.00,
+      "price": 29.99,
+      "moq": 500,
+      "leadTimeDays": 45
+    },
+    {
+      "supplierId": "supplier-002",
+      "skuId": "sku-001", 
+      "cost": 3.20,
+      "price": 8.99,
+      "moq": 2000,
+      "leadTimeDays": 35
+    },
+    {
+      "supplierId": "supplier-002",
+      "skuId": "sku-003",
+      "cost": 15.00,
+      "price": 39.99,
+      "moq": 300,
+      "leadTimeDays": 40
+    },
+    {
+      "supplierId": "supplier-003",
+      "skuId": "sku-002",
+      "cost": 11.50,
+      "price": 29.99,
+      "moq": 800,
+      "leadTimeDays": 25
+    },
+    {
+      "supplierId": "supplier-003",
+      "skuId": "sku-004",
+      "cost": 8.00,
+      "price": 24.99,
+      "moq": 500,
+      "leadTimeDays": 20
+    },
+    {
+      "supplierId": "supplier-004",
+      "skuId": "sku-003",
+      "cost": 16.50,
+      "price": 39.99,
+      "moq": 200,
+      "leadTimeDays": 15
+    },
+    {
+      "supplierId": "supplier-004",
+      "skuId": "sku-005",
+      "cost": 4.50,
+      "price": 12.99,
+      "moq": 1000,
+      "leadTimeDays": 10
+    },
+    {
+      "supplierId": "supplier-005",
+      "skuId": "sku-001",
+      "cost": 3.80,
+      "price": 8.99,
+      "moq": 1500,
+      "leadTimeDays": 28
+    },
+    {
+      "supplierId": "supplier-005",
+      "skuId": "sku-004",
+      "cost": 7.50,
+      "price": 24.99,
+      "moq": 600,
+      "leadTimeDays": 22
+    }
+  ],
+  "skuSales": [
+    {
+      "skuId": "sku-001",
+      "units": 15000,
+      "revenue": 134850,
+      "periodStart": "2024-06-01T00:00:00Z",
+      "periodEnd": "2024-08-31T23:59:59Z"
+    },
+    {
+      "skuId": "sku-002", 
+      "units": 8500,
+      "revenue": 254915,
+      "periodStart": "2024-06-01T00:00:00Z",
+      "periodEnd": "2024-08-31T23:59:59Z"
+    },
+    {
+      "skuId": "sku-003",
+      "units": 4200,
+      "revenue": 167958,
+      "periodStart": "2024-06-01T00:00:00Z", 
+      "periodEnd": "2024-08-31T23:59:59Z"
+    },
+    {
+      "skuId": "sku-004",
+      "units": 6800,
+      "revenue": 169932,
+      "periodStart": "2024-06-01T00:00:00Z",
+      "periodEnd": "2024-08-31T23:59:59Z"
+    },
+    {
+      "skuId": "sku-005",
+      "units": 12000,
+      "revenue": 155880,
+      "periodStart": "2024-06-01T00:00:00Z",
+      "periodEnd": "2024-08-31T23:59:59Z"
+    }
+  ]
+}
