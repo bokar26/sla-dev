@@ -150,9 +150,22 @@ export default function SavedClientsPanel() {
         <div className="text-center py-12">
           <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-medium text-foreground mb-2">No clients found</h3>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mb-4">
             {query ? "Try adjusting your search" : "No saved clients available"}
           </p>
+          {!query && (
+            <button
+              onClick={() => {
+                // Trigger upload modal from parent
+                const event = new CustomEvent('openUploadModal');
+                window.dispatchEvent(event);
+              }}
+              className="px-4 py-2 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-2 mx-auto"
+            >
+              <Plus className="w-4 h-4" />
+              Upload clients
+            </button>
+          )}
         </div>
       )}
 

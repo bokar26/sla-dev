@@ -1,6 +1,8 @@
-import React, { useMemo, useState } from 'react';
-import { FileText, ChevronRight, Search, X, Calendar, DollarSign, Package, Clock, Download } from 'lucide-react';
-import { useSavedQuotes } from '@/hooks/useSavedQuotes';
+import React, { useMemo, useState, useEffect } from 'react';
+import { FileText, ChevronRight, Search, X, Calendar, DollarSign, Package, Clock, Download, Upload } from 'lucide-react';
+import { useSavedQuotes } from '@/stores/savedQuotes';
+import { listSavedQuotes } from '@/services/quotesService';
+import UploadModal from './UploadModal';
 
 function QuoteRow({ q, onOpen }) {
   const getStatusColor = (status) => {
@@ -222,10 +224,39 @@ function QuoteDetails({ open, onOpenChange, quote }) {
 }
 
 export default function SavedQuotesPanel() {
-  const { quotes = [], loading, err } = useSavedQuotes();
+  const { items, order, setAll, addMany } = useSavedQuotes();
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState(null);
+  
+  // Upload state
+  const [uploadOpen, setUploadOpen] = useState(false);
+
+  // Load saved quotes from API
+  useEffect(() => {
+    const loadQuotes = async () => {
+      try {
+        setLoading(true);
+        setErr(null);
+        const data = await listSavedQuotes();
+        setAll(data.items || []);
+      } catch (e) {
+        setErr(e?.message ?? String(e));
+        console.error('Failed to load quotes:', e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadQuotes();
+  }, [setAll]);
+
+  // Convert store data to array for filtering
+  const quotes = useMemo(() => {
+    return order.map(id => items[id]).filter(Boolean);
+  }, [items, order]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -239,12 +270,71 @@ export default function SavedQuotesPanel() {
     });
   }, [quotes, query]);
 
-  if (err) return <div className="p-4 text-red-600">Failed to load quotes: {err}</div>;
+  if (err) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">Saved Quotes</h2>
+            <p className="text-sm text-muted-foreground">Error loading quotes</p>
+          </div>
+        </div>
+        <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+          <div className="font-medium">Failed to load quotes</div>
+          <div className="mt-1">{err}</div>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-2 text-sm underline hover:no-underline"
+          >
+            Try again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const onOpen = (quote) => { setSelected(quote); setOpen(true); };
 
+  // Upload handlers
+  const handleUploadSuccess = async (result) => {
+    // Optimistically add new quotes to the store
+    if (result.created && Array.isArray(result.created)) {
+      addMany(result.created);
+      console.log('Uploaded quotes:', result.created);
+    }
+    
+    // Show success message
+    console.log(`Uploaded ${result.created?.length || 0} quotes`);
+    
+    // Background refetch to ensure consistency
+    try {
+      const data = await listSavedQuotes();
+      setAll(data.items || []);
+    } catch (e) {
+      console.error('Failed to refresh quotes:', e);
+    }
+  };
+
   return (
     <div className="space-y-4">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-semibold text-foreground">Saved Quotes</h2>
+          <p className="text-sm text-muted-foreground">
+            {filtered.length} quote{filtered.length !== 1 ? 's' : ''} saved
+          </p>
+        </div>
+        
+        <button
+          onClick={() => setUploadOpen(true)}
+          className="px-3 py-1.5 text-sm rounded-md border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-2"
+        >
+          <Upload className="w-4 h-4" />
+          Upload quotes
+        </button>
+      </div>
+
       {/* Search */}
       <div className="flex items-center gap-3">
         <div className="relative flex-1 min-w-64">
@@ -280,13 +370,32 @@ export default function SavedQuotesPanel() {
         <div className="text-center py-12">
           <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-medium text-foreground mb-2">No quotes found</h3>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mb-4">
             {query ? "Try adjusting your search" : "No saved quotes available"}
           </p>
+          {!query && (
+            <button
+              onClick={() => setUploadOpen(true)}
+              className="px-4 py-2 text-sm rounded-md bg-emerald-600 text-white hover:bg-emerald-700 flex items-center gap-2 mx-auto"
+            >
+              <Upload className="w-4 h-4" />
+              Upload quotes
+            </button>
+          )}
         </div>
       )}
 
       <QuoteDetails open={open} onOpenChange={setOpen} quote={selected} />
+      
+      {/* Upload Modal */}
+      {uploadOpen && (
+        <UploadModal
+          open={uploadOpen}
+          onClose={() => setUploadOpen(false)}
+          type="quotes"
+          onSuccess={handleUploadSuccess}
+        />
+      )}
     </div>
   );
 }

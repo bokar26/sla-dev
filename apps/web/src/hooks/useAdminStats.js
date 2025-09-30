@@ -10,9 +10,9 @@ export function useAdminStats() {
     setError(null);
     try {
       // Add a small delay to ensure the API is ready
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise(resolve => setTimeout(resolve, 50));
       
-      const base = (import.meta.env.VITE_API_BASE || "/api").replace(/\/+$/, "");
+      const base = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/+$/, "");
       const res = await fetch(`${base}/admin/stats`, { credentials: "omit" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const ct = res.headers.get("content-type") || "";

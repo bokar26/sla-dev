@@ -1,5 +1,5 @@
 export function getApiBase() {
-  return (import.meta.env.VITE_API_BASE || "/api").replace(/\/+$/,"");
+  return (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/+$/,"");
 }
 
 export async function safeJson(res) {

@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState, createContext, useContext } from 'react';
 
-const Tabs = ({ children, className = '' }) => {
+const TabsContext = createContext();
+
+const Tabs = ({ children, value, defaultValue, onValueChange, className = '' }) => {
+  const [internalValue, setInternalValue] = useState(defaultValue || '');
+  const currentValue = value !== undefined ? value : internalValue;
+  
+  const handleChange = (next) => {
+    if (typeof onValueChange === "function") {
+      onValueChange(next);
+    }
+    if (value === undefined) {
+      setInternalValue(next);
+    }
+  };
+
   return (
-    <div className={`tabs ${className}`}>
-      {children}
-    </div>
+    <TabsContext.Provider value={{ value: currentValue, onValueChange: handleChange }}>
+      <div className={`tabs ${className}`}>
+        {children}
+      </div>
+    </TabsContext.Provider>
   );
 };
 
@@ -16,13 +32,20 @@ const TabsList = ({ children, className = '' }) => {
   );
 };
 
-const TabsTrigger = ({ value, activeValue, onValueChange, children, className = '' }) => {
+const TabsTrigger = ({ value, children, className = '' }) => {
+  const { value: activeValue, onValueChange } = useContext(TabsContext);
   const isActive = value === activeValue;
+  
+  const handleClick = () => {
+    if (typeof onValueChange === "function") {
+      onValueChange(value);
+    }
+  };
   
   return (
     <button
       type="button"
-      onClick={() => onValueChange(value)}
+      onClick={handleClick}
       className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
         isActive
           ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400'
@@ -34,7 +57,8 @@ const TabsTrigger = ({ value, activeValue, onValueChange, children, className = 
   );
 };
 
-const TabsContent = ({ value, activeValue, children, className = '' }) => {
+const TabsContent = ({ value, children, className = '' }) => {
+  const { value: activeValue } = useContext(TabsContext);
   if (value !== activeValue) return null;
   
   return (

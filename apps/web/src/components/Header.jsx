@@ -50,7 +50,6 @@ export default function Header({
     { label: 'Logistics', tab: 'Logistics', icon: '🚚' },
     { label: 'Orders', tab: 'Orders', icon: '🛒' },
     { label: 'Finances', tab: 'Finances', icon: '💰' },
-    { label: 'Integrations', tab: 'Integrations', icon: '🔗' },
     { label: 'Settings', tab: 'Settings', icon: '⚙️' },
   ];
 

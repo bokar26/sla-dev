@@ -8,7 +8,7 @@ export default function SavedClientCard({ client, onOpen, selectable=false, sele
         <button
           type="button"
           onClick={(e) => { e.stopPropagation(); onToggleSelect?.(); }}
-          className="absolute top-2 left-2 z-10 rounded p-1 bg-white/90 border"
+          className="absolute top-2 left-2 z-10 rounded p-1 bg-white/90 dark:bg-slate-900/90 border dark:border-slate-700"
           aria-label={selected ? 'Deselect' : 'Select'}
         >
           {selected ? <CheckSquare className="size-4" /> : <Square className="size-4" />}
@@ -18,7 +18,7 @@ export default function SavedClientCard({ client, onOpen, selectable=false, sele
       <button
         type="button"
         onClick={() => !selectable && onOpen(client)}
-        className={`w-full text-left rounded-2xl border border-neutral-200/60 bg-white ${selectable ? '' : 'hover:bg-neutral-50'} focus:outline-none focus:ring-2 focus:ring-emerald-400/60 transition-all p-4 group shadow-sm`}
+        className={`w-full text-left rounded-2xl border border-neutral-200/60 dark:border-slate-800 bg-white dark:bg-slate-900/60 ${selectable ? '' : 'hover:bg-neutral-50 dark:hover:bg-slate-800/40'} focus:outline-none focus:ring-2 focus:ring-emerald-400/60 transition-all p-4 group shadow-sm`}
         aria-label={`Open details for ${client.name}`}
       >
         <div className="flex items-start justify-between gap-3">
@@ -34,13 +34,13 @@ export default function SavedClientCard({ client, onOpen, selectable=false, sele
               )}
             </div>
             
-            <h3 className="text-sm font-medium text-neutral-900 truncate mb-1">{client.name}</h3>
+            <h3 className="text-sm font-medium text-neutral-900 dark:text-slate-100 truncate mb-1">{client.name}</h3>
             
             {client.primaryContact && (
-              <p className="text-xs text-neutral-600 truncate mb-1">{client.primaryContact}</p>
+              <p className="text-xs text-neutral-600 dark:text-slate-400 truncate mb-1">{client.primaryContact}</p>
             )}
             
-            <div className="flex items-center gap-3 text-xs text-neutral-500">
+            <div className="flex items-center gap-3 text-xs text-neutral-500 dark:text-slate-400">
               {client.email && (
                 <div className="flex items-center gap-1">
                   <Mail className="size-3" />
@@ -56,7 +56,7 @@ export default function SavedClientCard({ client, onOpen, selectable=false, sele
             </div>
             
             {client.addresses?.length > 0 && (
-              <div className="flex items-center gap-1 mt-1 text-xs text-neutral-500">
+              <div className="flex items-center gap-1 mt-1 text-xs text-neutral-500 dark:text-slate-400">
                 <MapPin className="size-3" />
                 <span>{client.addresses[0].city}, {client.addresses[0].country}</span>
               </div>
@@ -65,12 +65,12 @@ export default function SavedClientCard({ client, onOpen, selectable=false, sele
             {client.tags && client.tags.length > 0 && (
               <div className="flex flex-wrap gap-1 mt-2">
                 {client.tags.slice(0, 2).map((tag, index) => (
-                  <span key={index} className="px-1.5 py-0.5 text-[10px] rounded bg-neutral-100 text-neutral-600">
+                  <span key={index} className="px-1.5 py-0.5 text-[10px] rounded bg-neutral-100 dark:bg-slate-800 text-neutral-600 dark:text-slate-300">
                     {tag}
                   </span>
                 ))}
                 {client.tags.length > 2 && (
-                  <span className="px-1.5 py-0.5 text-[10px] rounded bg-neutral-100 text-neutral-600">
+                  <span className="px-1.5 py-0.5 text-[10px] rounded bg-neutral-100 dark:bg-slate-800 text-neutral-600 dark:text-slate-300">
                     +{client.tags.length - 2}
                   </span>
                 )}
@@ -78,7 +78,7 @@ export default function SavedClientCard({ client, onOpen, selectable=false, sele
             )}
           </div>
           
-          {!selectable && <ChevronRight className="size-4 text-neutral-400 group-hover:text-neutral-600 shrink-0" />}
+          {!selectable && <ChevronRight className="size-4 text-neutral-400 dark:text-slate-500 group-hover:text-neutral-600 dark:group-hover:text-slate-400 shrink-0" />}
         </div>
       </button>
     </div>

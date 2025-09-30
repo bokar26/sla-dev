@@ -18,7 +18,7 @@ export function useSupplyCenterMetrics() {
   const load = useCallback(async () => {
     setLoading(true); setError(null);
     try {
-      const base = (import.meta.env.VITE_API_BASE || "/api").replace(/\/+$/,"");
+      const base = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/+$/,"");
       const res = await fetch(`${base}/metrics/supply_center`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const ct = res.headers.get("content-type") || "";

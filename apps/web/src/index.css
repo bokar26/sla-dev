@@ -1,4 +1,5 @@
 @import './styles/glass.css';
+@import './styles/animations.css';
 
 @config "../tailwind.config.js";
 
@@ -12,6 +13,22 @@ html, body, #root {
 }
 html, body {
   overflow: hidden; /* prevent whole-page scroll */
+}
+
+/* Font smoothing */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth theme transition for surfaces/text */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
 }
 
 /* Momentum scrolling on iOS */
@@ -183,3 +200,13 @@ button, input, textarea, select {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Allow natural page scroll on marketing / home */
+html, body, #root {
+  height: auto;
+  min-height: 100%;
+  overflow-y: auto;
+}
+
+/* If you use a body class to lock scroll for modals, keep it */
+body.lock-scroll { overflow: hidden; }

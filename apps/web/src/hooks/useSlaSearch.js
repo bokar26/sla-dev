@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { apiPost } from "../lib/api";
 
 export function useSlaSearch() {
   const [state, setState] = useState({ loading: false, data: null, error: null });
@@ -7,13 +8,7 @@ export function useSlaSearch() {
     setState({ loading: true, data: null, error: null });
     try {
       const body = { query, ...opts };
-      const res = await fetch("/api/ai/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
+      const data = await apiPost("/ai/search", body);
       setState({ loading: false, data, error: null });
     } catch (e) {
       setState({ loading: false, data: null, error: e.message || "Search failed" });

@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { apiPost } from "../lib/api";
 
 export function useFulfillmentRoutes() {
   const [state, setState] = useState({ loading: false, data: null, error: null });
@@ -6,13 +7,7 @@ export function useFulfillmentRoutes() {
   const fetchRoutes = useCallback(async (payload) => {
     setState({ loading: true, data: null, error: null });
     try {
-      const res = await fetch("/api/ai/fulfillment/options", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
+      const data = await apiPost("/ai/fulfillment/options", payload);
       setState({ loading: false, data, error: null });
     } catch (e) {
       setState({ loading: false, data: null, error: e.message || "Failed to get routes" });

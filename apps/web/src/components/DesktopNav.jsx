@@ -31,7 +31,6 @@ export default function DesktopNav({
     { label: "Production Portfolio", icon: <BarChart3 size={16} />, action: () => setActiveDashboardTab("Production Portfolio") },
     { label: "Tasks", icon: <CheckSquare size={16} />, action: () => setActiveDashboardTab("Tasks") },
     { label: "Emails", icon: <Mail size={16} />, action: () => setActiveDashboardTab("Emails") },
-    { label: "Integrations", icon: <LinkIcon size={16} />, action: () => setActiveDashboardTab("Integrations") },
     { label: "Settings", icon: <Settings size={16} />, action: () => setActiveDashboardTab("Settings") },
   ];
 

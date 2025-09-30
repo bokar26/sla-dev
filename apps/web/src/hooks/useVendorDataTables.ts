@@ -7,7 +7,8 @@ export function useVendorDataTables(initialVendor: Vendor | null) {
 
   const save = useCallback(async (next: Vendor) => {
     setVendor(next); // optimistic
-    // TODO: await fetch(`/api/vendors/${next.id}`, { method: 'PATCH', body: JSON.stringify({ dataTables: next.dataTables }) })
+    // Replaced demo/mock with real API call: see services/serviceMap.md
+    // TODO: await apiPut(`/vendors/${next.id}`, { dataTables: next.dataTables })
   }, []);
 
   const createTable = useCallback((name = 'New Table') => {

@@ -1,9 +1,9 @@
 import { useState, useCallback, useEffect } from "react";
-import { getApiBase, safeJson } from "../utils/apiBase";
+import { apiUrl } from "@/lib/api";
 
 export function useSlaSuggestions() {
   const [state, setState] = useState({ loading: false, data: null, error: null });
-  const API = getApiBase();
+  const API = apiUrl('');
 
   const load = useCallback(async () => {
     setState({ loading: true, data: null, error: null });
@@ -13,7 +13,7 @@ export function useSlaSuggestions() {
         const t = await res.text();
         throw new Error(`HTTP ${res.status} — ${t.slice(0,120)}`);
       }
-      const data = await safeJson(res);
+      const data = await res.json();
       setState({ loading: false, data, error: null });
     } catch (e) {
       setState({ loading: false, data: { suggestions: [] }, error: e.message });

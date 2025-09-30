@@ -1,5 +1,5 @@
 export async function saveFactory(factoryId: string) {
-  const base = (import.meta.env.VITE_API_BASE || "/api").replace(/\/+$/,"");
+  const base = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/+$/,"");
   const r = await fetch(`${base}/saved/factories`, {
     method: "POST", 
     headers: {"Content-Type":"application/json"},

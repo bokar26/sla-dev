@@ -1,15 +1,18 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import SavedCard from './SavedCard';
 import SavedTable from './SavedTable';
 import SavedDetails from './SavedDetails';
 import ExportVendorsModal from './ExportVendorsModal';
-import { mergeContactsIntoSaved } from '@/utils/mergeContacts';
-import { Search, List, Grid3X3, Building2, Download, CheckSquare, Square, SlidersHorizontal } from 'lucide-react';
+import UploadModal from './UploadModal';
+import { useSavedVendors } from '../../stores/savedVendors';
+import { listSavedVendors } from '../../services/savedVendorsService';
+import { Search, List, Grid3X3, Building2, Download, CheckSquare, Square, SlidersHorizontal, Upload, FileText, FileImage } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import Papa from 'papaparse';
 
 export default function SavedVendorsPanel() {
-  const [vendors, setVendors] = useState([]);
+  const { items, order, setAll } = useSavedVendors();
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
   const [query, setQuery] = useState('');
@@ -21,232 +24,18 @@ export default function SavedVendorsPanel() {
   const [selectMode, setSelectMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState(() => new Set());
   const [exportOpen, setExportOpen] = useState(false);
+  
+  // Upload state
+  const [uploadOpen, setUploadOpen] = useState(false);
+  const [uploadType, setUploadType] = useState('vendors');
 
-  // Load mock data
+  // Load saved vendors from API and populate store
   useEffect(() => {
-    const loadMockData = async () => {
+    const loadSavedVendors = async () => {
       try {
         setLoading(true);
-        
-        // Mock factory data
-        const mockFactories = [
-          {
-            id: 1,
-            name: "TechCorp Manufacturing",
-            location: "Shenzhen, China",
-            region: "APAC",
-            coordinates: { lat: 22.5431, lng: 114.0579 },
-            specialties: ["Electronics", "Consumer Goods", "IoT Devices"],
-            rating: 4.8,
-            reviewCount: 127,
-            avgDeliveryTime: "15-20 days",
-            minOrderQuantity: "1000 units",
-            certifications: ["ISO 9001", "CE", "FCC"],
-            savedDate: "2024-01-15",
-            lastContact: "2024-01-20",
-            notes: "Excellent for electronic components, very responsive team",
-            customers: [
-              {
-                id: "cust-1",
-                name: "TechStart Inc",
-                region: "North America",
-                products: ["Smartphones", "Tablets", "Wearables"],
-                contact: {
-                  name: "Sarah Johnson",
-                  email: "sarah@techstart.com",
-                  phone: "+1-555-0123"
-                },
-                tags: ["Premium", "Long-term"],
-                relationship: "active",
-                notes: [
-                  {
-                    id: "note-1",
-                    content: "Great communication, always delivers on time",
-                    createdAt: "2024-01-15T10:00:00Z"
-                  }
-                ]
-              },
-              {
-                id: "cust-2",
-                name: "GadgetCorp",
-                region: "Europe",
-                products: ["IoT Devices", "Sensors"],
-                contact: {
-                  name: "Marco Rossi",
-                  email: "marco@gadgetcorp.com",
-                  phone: "+39-02-1234-5678"
-                },
-                tags: ["Innovation", "R&D"],
-                relationship: "active"
-              }
-            ],
-            contact: {
-              name: "David Chen",
-              title: "Sales Manager",
-              email: "david.chen@techcorp.com",
-              phone: "+86-755-1234-5678",
-              whatsapp: "+86-755-1234-5678",
-              website: "https://techcorp.com",
-              address: "Building A, High-Tech Park, Shenzhen, China",
-              status: "active",
-              lastContact: "2024-01-20"
-            }
-          },
-          {
-            id: 2,
-            name: "Precision Textiles Ltd",
-            location: "Dhaka, Bangladesh",
-            region: "APAC",
-            coordinates: { lat: 23.8103, lng: 90.4125 },
-            specialties: ["Textiles", "Apparel", "Fashion"],
-            rating: 4.6,
-            reviewCount: 89,
-            avgDeliveryTime: "20-25 days",
-            minOrderQuantity: "1000 units",
-            certifications: ["OEKO-TEX", "GOTS", "WRAP"],
-            savedDate: "2024-01-10",
-            lastContact: "2024-01-18",
-            notes: "Great quality textiles, competitive pricing",
-            customers: [
-              {
-                id: "cust-3",
-                name: "Fashion Forward",
-                region: "North America",
-                products: ["Apparel", "Fashion Accessories"],
-                contact: {
-                  name: "Emily Davis",
-                  email: "emily@fashionforward.com",
-                  phone: "+1-555-0456"
-                },
-                tags: ["Fashion", "Retail"],
-                relationship: "active"
-              }
-            ],
-            contact: {
-              name: "Rahman Ahmed",
-              title: "Export Manager",
-              email: "rahman@precisiontextiles.com",
-              phone: "+880-2-1234-5678",
-              whatsapp: "+880-2-1234-5678",
-              website: "https://precisiontextiles.com",
-              address: "Industrial Area, Dhaka, Bangladesh",
-              status: "active",
-              lastContact: "2024-01-18"
-            }
-          }
-        ];
-
-        // Mock supplier data
-        const mockSuppliers = [
-          {
-            id: 3,
-            name: "Global Components Inc",
-            location: "Taipei, Taiwan",
-            region: "APAC",
-            coordinates: { lat: 25.0330, lng: 121.5654 },
-            specialties: ["Electronics", "Components", "Semiconductors"],
-            rating: 4.7,
-            reviewCount: 156,
-            avgDeliveryTime: "10-15 days",
-            minOrderQuantity: "100 units",
-            certifications: ["ISO 14001", "RoHS", "REACH"],
-            savedDate: "2024-01-12",
-            lastContact: "2024-01-19",
-            notes: "Reliable component supplier, fast shipping",
-            customers: [
-              {
-                id: "cust-4",
-                name: "ElectroTech Solutions",
-                region: "Asia Pacific",
-                products: ["Semiconductors", "PCBs", "Components"],
-                contact: {
-                  name: "Kenji Tanaka",
-                  email: "kenji@electrotech.com",
-                  phone: "+81-3-1234-5678"
-                },
-                tags: ["Technology", "B2B"],
-                relationship: "active"
-              },
-              {
-                id: "cust-5",
-                name: "Innovation Labs",
-                region: "Europe",
-                products: ["Research Equipment", "Prototypes"],
-                contact: {
-                  name: "Dr. Anna Mueller",
-                  email: "anna@innovationlabs.de",
-                  phone: "+49-30-1234-5678"
-                },
-                tags: ["R&D", "Innovation"],
-                relationship: "prospect"
-              }
-            ],
-            contact: {
-              name: "Lisa Wang",
-              title: "Business Development",
-              email: "lisa.wang@globalcomponents.com",
-              phone: "+886-2-1234-5678",
-              whatsapp: "+886-2-1234-5678",
-              website: "https://globalcomponents.com",
-              address: "Hsinchu Science Park, Taiwan",
-              status: "active",
-              lastContact: "2024-01-19"
-            }
-          },
-          {
-            id: 4,
-            name: "MetalWorks Solutions",
-            location: "Mumbai, India",
-            region: "APAC",
-            coordinates: { lat: 19.0760, lng: 72.8777 },
-            specialties: ["Metal Fabrication", "Machining", "Assembly"],
-            rating: 4.5,
-            reviewCount: 73,
-            avgDeliveryTime: "25-30 days",
-            minOrderQuantity: "200 units",
-            certifications: ["ISO 9001", "AS9100", "IATF 16949"],
-            savedDate: "2024-01-08",
-            lastContact: "2024-01-17",
-            notes: "Good for custom metal parts, reasonable lead times",
-            customers: [
-              {
-                id: "cust-6",
-                name: "AutoParts Manufacturing",
-                region: "North America",
-                products: ["Automotive Parts", "Machining Services"],
-                contact: {
-                  name: "Mike Johnson",
-                  email: "mike@autoparts.com",
-                  phone: "+1-555-0789"
-                },
-                tags: ["Automotive", "Manufacturing"],
-                relationship: "active"
-              }
-            ],
-            contact: {
-              name: "Rajesh Kumar",
-              title: "Production Manager",
-              email: "rajesh@metalworks.com",
-              phone: "+91-22-1234-5678",
-              whatsapp: "+91-22-1234-5678",
-              website: "https://metalworks.com",
-              address: "Industrial Estate, Mumbai, India",
-              status: "active",
-              lastContact: "2024-01-17"
-            }
-          }
-        ];
-
-        // Merge contact data and add type field
-        const { savedFactories: enrichedFactories, savedSuppliers: enrichedSuppliers } = mergeContactsIntoSaved({
-          savedFactories: mockFactories,
-          savedSuppliers: mockSuppliers
-        });
-
-        const factoriesWithType = enrichedFactories.map(factory => ({ ...factory, type: 'factory' }));
-        const suppliersWithType = enrichedSuppliers.map(supplier => ({ ...supplier, type: 'supplier' }));
-
-        setVendors([...factoriesWithType, ...suppliersWithType]);
+        const data = await listSavedVendors();
+        setAll(data.vendors || []);
       } catch (e) {
         setErr(e?.message ?? String(e));
       } finally {
@@ -254,8 +43,13 @@ export default function SavedVendorsPanel() {
       }
     };
 
-    loadMockData();
-  }, []);
+    loadSavedVendors();
+  }, [setAll]);
+
+  // Convert store data to array for filtering
+  const vendors = useMemo(() => {
+    return order.map(id => items[id]).filter(Boolean);
+  }, [items, order]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -263,113 +57,133 @@ export default function SavedVendorsPanel() {
     return vendors.filter(v => {
       // Basic vendor fields
       const basicHay = [
-        v.name, v.region, v.type, v.location,
+        v.name, v.region, v.vendor_type, v.country,
         v.contact?.name, v.contact?.email, v.contact?.phone, v.contact?.website,
         v.specialties?.join?.(',') ?? '',
         v.certifications?.join?.(',') ?? '',
       ].join(' ').toLowerCase();
 
-      // Customer fields
-      const customerHay = (v.customers ?? []).map(c =>
-        [
-          c.name, c.region,
-          (c.products ?? []).join(','),
-          c.contact?.name, c.contact?.email, c.contact?.phone,
-          (c.tags ?? []).join(','),
-        ].join(' ')
-      ).join(' ').toLowerCase();
-
-      // Data table fields
-      const dataHay = (v.dataTables ?? []).map(t =>
-        t.rows.map(r => Object.values(r.cells).map(val => {
-          if (val == null) return '';
-          if (Array.isArray(val)) return val.join(' ');
-          if (typeof val === 'object') return JSON.stringify(val);
-          return String(val);
-        }).join(' ')
-      ).join(' ')
-      ).join(' ').toLowerCase();
-
-      const combinedHay = `${basicHay} ${customerHay} ${dataHay}`;
-      return combinedHay.includes(q);
+      return basicHay.includes(q);
     });
   }, [vendors, query]);
 
-  // Selection helpers
+  const onOpen = (entity) => {
+    setSelected(entity);
+    setOpen(true);
+  };
+
   const isSelected = (id) => selectedIds.has(id);
-  const toggleOne = (id) => setSelectedIds(prev => {
-    const next = new Set(prev);
-    next.has(id) ? next.delete(id) : next.add(id);
-    return next;
-  });
-  const clearSelection = () => setSelectedIds(new Set());
-  const selectAllFiltered = () => setSelectedIds(new Set(filtered.map(v => v.id)));
+  const toggleOne = (id) => {
+    const newSet = new Set(selectedIds);
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      newSet.add(id);
+    }
+    setSelectedIds(newSet);
+  };
 
-  if (err) return <div className="p-4 text-red-600">Failed to load vendors: {err}</div>;
+  // Upload handlers
+  const handleUploadClick = (type) => {
+    setUploadType(type);
+    setUploadOpen(true);
+  };
 
-  const onOpen = (entity) => { setSelected(entity); setOpen(true); };
+  const handleUploadSuccess = async (result) => {
+    // Optimistically add new vendors to the store
+    if (result.created && Array.isArray(result.created)) {
+      const { addOrUpdate } = useSavedVendors.getState();
+      result.created.forEach(vendor => addOrUpdate(vendor));
+    }
+    
+    // Show success message
+    const message = uploadType === 'vendors' 
+      ? `Imported ${result.created?.length || 0} vendors${result.deduped ? ` (${result.deduped} deduped)` : ''}`
+      : `Uploaded ${result.created?.length || 0} quotes`;
+    
+    // You could add a toast notification here
+    console.log(message);
+    
+    // Background refetch to ensure consistency
+    try {
+      const data = await listSavedVendors();
+      setAll(data.vendors || []);
+    } catch (e) {
+      console.error('Failed to refresh vendors:', e);
+    }
+  };
+
+  const renderItem = (entity) => (
+    <SavedCard
+      key={entity.id}
+      entity={entity}
+      onOpen={onOpen}
+      selectable={selectMode}
+      selected={isSelected(entity.id)}
+      onToggleSelect={() => toggleOne(entity.id)}
+    />
+  );
 
   return (
     <div className="space-y-4">
-      {/* Search and View Controls */}
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="relative flex-1 min-w-64">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-semibold text-foreground">Saved Vendors</h2>
+          <p className="text-sm text-muted-foreground">
+            {filtered.length} vendor{filtered.length !== 1 ? 's' : ''} saved
+          </p>
+        </div>
+        
+        <div className="flex items-center gap-2">
+          {/* Upload Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => handleUploadClick('vendors')}
+              className="px-3 py-1.5 text-sm rounded-md border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-2"
+            >
+              <Upload className="w-4 h-4" />
+              Upload
+            </button>
+          </div>
+          
+          <button
+            onClick={() => setSelectMode(!selectMode)}
+            className="px-3 py-1.5 text-sm rounded-md border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
+          >
+            {selectMode ? 'Cancel' : 'Select'}
+          </button>
+          
+          {selectMode && selectedIds.size > 0 && (
+            <button
+              onClick={() => setExportOpen(true)}
+              className="px-3 py-1.5 text-sm rounded-md bg-emerald-600 text-white hover:bg-emerald-700"
+            >
+              Export ({selectedIds.size})
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Search and filters */}
+      <div className="flex items-center gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
           <input
             type="text"
             placeholder="Search vendors..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-border bg-card text-foreground rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-900 focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
           />
         </div>
         
-        <div className="ml-auto flex items-center gap-2">
-          <button
-            className={`px-2 py-1 text-xs rounded border ${selectMode ? 'bg-neutral-900 text-white' : ''}`}
-            onClick={() => { setSelectMode(v => !v); if (selectMode) clearSelection(); }}
-            title="Toggle select mode"
-          >
-            {selectMode ? 'Done' : 'Select'}
-          </button>
-
-          {selectMode && (
-            <>
-              <button className="px-2 py-1 text-xs rounded border" onClick={selectAllFiltered}>
-                Select All (filtered)
-              </button>
-              <button className="px-2 py-1 text-xs rounded border" onClick={clearSelection}>
-                Clear
-              </button>
-              <button
-                className="inline-flex items-center gap-1 px-2 py-1 text-xs rounded bg-neutral-900 text-white disabled:opacity-50"
-                onClick={() => setExportOpen(true)}
-                disabled={selectedIds.size === 0}
-                title="Export selected"
-              >
-                <Download className="size-3.5" /> Export
-              </button>
-            </>
-          )}
-
-          <div className="flex items-center gap-1">
-            <button
-              className={`px-2 py-1 text-xs rounded ${view==='cards' ? 'bg-neutral-900 text-white' : 'bg-neutral-100'}`}
-              onClick={() => setView('cards')}
-            >Cards</button>
-            <button
-              className={`px-2 py-1 text-xs rounded ${view==='table' ? 'bg-neutral-900 text-white' : 'bg-neutral-100'}`}
-              onClick={() => setView('table')}
-            >Table</button>
-          </div>
-        </div>
-      </div>
-
-      {/* Results Count */}
-      <div>
-        <p className="text-sm text-muted-foreground">
-          {loading ? 'Loading...' : `${filtered.length} vendor${filtered.length !== 1 ? 's' : ''} found`}
-        </p>
+        <button
+          onClick={() => setView(view === 'cards' ? 'table' : 'cards')}
+          className="p-2 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800"
+        >
+          {view === 'cards' ? <List className="w-4 h-4" /> : <Grid3X3 className="w-4 h-4" />}
+        </button>
       </div>
 
       {/* Content */}
@@ -381,16 +195,27 @@ export default function SavedVendorsPanel() {
         </div>
       ) : view === 'cards' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
-          {filtered.map((e) => (
-            <SavedCard
-              key={e.id}
-              entity={e}
-              onOpen={onOpen}
-              selectable={selectMode}
-              selected={isSelected(e.id)}
-              onToggleSelect={() => toggleOne(e.id)}
-            />
-          ))}
+          <AnimatePresence initial={false}>
+            {filtered.map((e) => (
+              <motion.div
+                key={e.vendorId || e.id}
+                layout
+                initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              >
+                <SavedCard
+                  key={e.vendorId || e.id}
+                  entity={e}
+                  onOpen={onOpen}
+                  selectable={selectMode}
+                  selected={isSelected(e.vendorId || e.id)}
+                  onToggleSelect={() => toggleOne(e.vendorId || e.id)}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       ) : (
         <SavedTable
@@ -420,6 +245,16 @@ export default function SavedVendorsPanel() {
         <ExportVendorsModal
           onClose={() => setExportOpen(false)}
           vendors={filtered.filter(v => selectedIds.has(v.id))}
+        />
+      )}
+      
+      {/* Upload Modal */}
+      {uploadOpen && (
+        <UploadModal
+          open={uploadOpen}
+          onClose={() => setUploadOpen(false)}
+          type={uploadType}
+          onSuccess={handleUploadSuccess}
         />
       )}
     </div>

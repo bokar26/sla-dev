@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { pingApi } from "../utils/apiBase";
+import { apiUrl } from "@/lib/api";
 
 export default function ApiStatusBanner() {
   const [msg, setMsg] = useState(null);
@@ -9,7 +9,7 @@ export default function ApiStatusBanner() {
   useEffect(() => {
     let cancelled = false;
     const run = async () => {
-      const r = await pingApi();
+      const r = await fetch(apiUrl('/health'));
       if (cancelled) return;
       if (r.ok) { 
         setMsg(null); 

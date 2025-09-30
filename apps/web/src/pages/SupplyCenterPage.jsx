@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useLayoutEffect, useRef, useCallback } from "react";
+import React, { useLayoutEffect, useRef, useCallback, useMemo } from "react";
 import SleekCard from "../components/ui/SleekCard";
 import AccentKpiCard from "../components/ui/AccentKpiCard";
 import SleekProgressBar from "../components/ui/SleekProgressBar";
@@ -7,9 +7,159 @@ import SuppliersSnapshotCard from "../components/SuppliersSnapshotCard";
 import SlaSuggestionsCard from "../components/SlaSuggestionsCard";
 import ApiStatusBanner from "../components/ApiStatusBanner";
 import GoalBar from "@/components/goals/GoalBar";
+import GoalProgressCard from "../components/supply-center/GoalProgressCard";
+import VendorRegionPieCard from "../components/supply-center/VendorRegionPieCard";
+import SLASuggestionsCard from "../components/supply-center/SLASuggestionsCard";
+import { Card } from "@/components/ui/card";
 import { useSlaSuggestions } from "../hooks/useSlaSuggestions";
 import { useSupplyCenterMetrics } from "../hooks/useSupplyCenterMetrics";
 import { fmtCurrency, fmtDuration } from "../utils/formatters";
+
+// ===== SLA: START supply center helpers =====
+function GoalProgressBar({
+  goalLabel,
+  current,
+  target,
+}: { goalLabel: string; current: number; target: number }) {
+  const pct = Math.max(0, Math.min(100, (current / target) * 100));
+  return (
+    <Card className="p-4 md:p-6">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-sm text-muted-foreground">Goal</p>
+          <h3 className="text-base md:text-lg font-semibold">{goalLabel}</h3>
+        </div>
+        <div className="text-right">
+          <p className="text-xs md:text-sm text-muted-foreground">Target</p>
+          <p className="text-sm md:text-base font-medium">+{target}%</p>
+        </div>
+      </div>
+      <div className="mt-4">
+        <div className="h-2 w-full rounded-full bg-muted">
+          <div
+            className="h-2 rounded-full bg-emerald-600 transition-all"
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+        <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
+          <span>Progress: +{current}%</span>
+          <span>{Math.round(pct)}% of goal</span>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+/** Conic-gradient donut (no external charts). */
+function VendorRegionDonut({
+  title = "Vendor regional breakdown",
+  // If API wiring exists later, pass actual data in [{ name, value }] format
+  data = [
+    { name: "Mainland China", value: 42 },
+    { name: "Bangladesh", value: 13 },
+    { name: "Türkiye", value: 10 },
+    { name: "China (CN)", value: 9 },
+    { name: "India", value: 7 },
+    { name: "Vietnam", value: 4 },
+    { name: "Other", value: 15 },
+  ],
+}: {
+  title?: string;
+  data?: { name: string; value: number }[];
+}) {
+  const palette = [
+    "#16a34a", // emerald
+    "#0ea5e9", // sky
+    "#f59e0b", // amber
+    "#8b5cf6", // violet
+    "#ef4444", // red
+    "#14b8a6", // teal
+    "#64748b", // slate
+  ];
+  const total = data.reduce((a, b) => a + b.value, 0) || 1;
+
+  // Build conic-gradient stops
+  const gradient = useMemo(() => {
+    let acc = 0;
+    return data
+      .map((d, i) => {
+        const start = (acc / total) * 360;
+        acc += d.value;
+        const end = (acc / total) * 360;
+        return `${palette[i % palette.length]} ${start}deg ${end}deg`;
+      })
+      .join(", ");
+  }, [data, total]);
+
+  return (
+    <Card className="p-4 md:p-6">
+      <h3 className="text-base md:text-lg font-semibold mb-4">{title}</h3>
+      <div className="flex items-center gap-6">
+        <div
+          className="relative h-40 w-40 rounded-full"
+          style={{ background: `conic-gradient(${gradient})` }}
+          aria-label="Vendor region pie"
+        >
+          <div className="absolute inset-4 rounded-full bg-background" />
+        </div>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm">
+          {data.map((d, i) => (
+            <li key={d.name} className="flex items-center gap-2">
+              <span
+                className="inline-block h-3 w-3 rounded-sm"
+                style={{ backgroundColor: palette[i % palette.length] }}
+              />
+              <span className="text-muted-foreground">{d.name}</span>
+              <span className="ml-auto font-medium">
+                {Math.round((d.value / total) * 100)}%
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Card>
+  );
+}
+
+function SLASuggestionsCard() {
+  const tips = [
+    {
+      title: "Shift CN→EU lanes with ≥10d slack from sea to rail",
+      impact: 4,
+      note: "Applies to ~27% of current CN→EU orders with margin to spare.",
+    },
+    {
+      title: "Consolidate Vietnam suppliers into 2 primary hubs",
+      impact: 3,
+      note: "Cuts handoffs and improves pickup windows.",
+    },
+    {
+      title: "Enable pre-booked air for urgent SKUs in Q4",
+      impact: 2,
+      note: "Lock capacity for spikes; restrict to top 10 SKUs.",
+    },
+  ];
+
+  return (
+    <Card className="p-4 md:p-6">
+      <h3 className="text-base md:text-lg font-semibold mb-3">SLA suggestions</h3>
+      <ul className="space-y-3">
+        {tips.map((t) => (
+          <li key={t.title} className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-sm font-medium">{t.title}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{t.note}</p>
+            </div>
+            <span className="shrink-0 rounded-md bg-emerald-600/10 text-emerald-700 px-2 py-1 text-xs font-medium">
+              +{t.impact}% toward Q4 goal
+            </span>
+          </li>
+        ))}
+      </ul>
+    </Card>
+  );
+}
+// ===== SLA: END supply center helpers =====
 
 /**
  * Local helper: set the container's height to fill viewport from its top,
@@ -59,7 +209,7 @@ export default function SupplyCenterPage({ setActiveDashboardTab }) {
   // Suggestions
   const { loading: suggLoading, data: suggData, error: suggError, reload: suggReload, act: suggAct } = useSlaSuggestions();
   const onSuggestionAction = async (id, action) => {
-    const base = (import.meta.env.VITE_API_BASE || "/api").replace(/\/+$/,"");
+    const base = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/+$/,"");
     if (action === "run") {
       await fetch(`${base}/ai/suggestions/run`, { method: "POST" });
       await suggReload();
@@ -100,6 +250,16 @@ export default function SupplyCenterPage({ setActiveDashboardTab }) {
           <div className="max-w-7xl mx-auto px-4 py-6 pb-12 space-y-6">
             {/* Goals Bar - left-aligned in content */}
             <GoalBar />
+            
+            {/* ===== SLA: START goal card ===== */}
+            <div className="mt-4">
+              <GoalProgressBar
+                goalLabel="Increase Q4 shipping speed by 18%"
+                current={6}   // ~1/3 progress toward 18%
+                target={18}
+              />
+            </div>
+            {/* ===== SLA: END goal card ===== */}
             
             {/* API Connection Status Banner */}
             <ApiStatusBanner />
@@ -152,6 +312,13 @@ export default function SupplyCenterPage({ setActiveDashboardTab }) {
               />
             </div>
 
+            {/* ===== SLA: START analytics row ===== */}
+            <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <VendorRegionDonut />
+              <SLASuggestionsCard />
+            </div>
+            {/* ===== SLA: END analytics row ===== */}
+
             {/* MAIN GRID: left = suppliers + suggestions, right = future widgets */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 auto-rows-min">
               {/* LEFT COLUMN */}
@@ -173,21 +340,13 @@ export default function SupplyCenterPage({ setActiveDashboardTab }) {
                 </SleekCard>
               </div>
 
-              {/* RIGHT COLUMN (future content) */}
+              {/* RIGHT COLUMN */}
               <div className="space-y-6">
-                <SleekCard>
-                  <div className="p-4">
-                    <div className="text-lg font-semibold mb-2 text-slate-900 dark:text-slate-100">Fulfillment Snapshot</div>
-                    <div className="text-sm text-slate-600 dark:text-slate-400">Add routes, lead times, and cost tiles here.</div>
-                  </div>
-                </SleekCard>
+                {/* Vendor Regional Breakdown Pie Chart */}
+                <VendorRegionPieCard />
 
-                <SleekCard>
-                  <div className="p-4">
-                    <div className="text-lg font-semibold mb-2 text-slate-900 dark:text-slate-100">Quality & Issues</div>
-                    <div className="text-sm text-slate-600 dark:text-slate-400">Coming soon.</div>
-                  </div>
-                </SleekCard>
+                {/* SLA Suggestions */}
+                <SLASuggestionsCard />
               </div>
             </div>
           </div>

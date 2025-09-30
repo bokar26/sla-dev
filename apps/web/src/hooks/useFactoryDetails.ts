@@ -9,7 +9,7 @@ export function useFactoryDetails() {
     setLoading(true); 
     setError(null);
     try {
-      const base = (import.meta.env.VITE_API_BASE || "/api").replace(/\/+$/,"");
+      const base = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/+$/,"");
       const r = await fetch(`${base}/factories/${factoryId}`);
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const ct = r.headers.get("content-type") || "";

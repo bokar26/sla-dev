@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { http } from "../dataProvider";
+import { apiGet } from "../../lib/api";
 
 interface KPIData {
   signups_7d: number;
@@ -27,7 +27,7 @@ export default function SimpleOverviewPage() {
   const fetchKPIs = async () => {
     try {
       setLoading(true);
-      const { data } = await http.get("/api/admin/kpis");
+      const data = await apiGet("/stats");
       setKpis(data);
     } catch (err: any) {
       setError(err.response?.data?.detail || "Failed to fetch KPIs");

@@ -5,4 +5,8 @@ export const useToast = () => ({
   }
 });
 
+export const toast = (options) => {
+  console.log('Toast:', options);
+};
+
 export default useToast;

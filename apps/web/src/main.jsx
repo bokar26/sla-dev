@@ -1,7 +1,9 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
+import { ThemeProvider } from "./providers/ThemeProvider.jsx";
 
 function BootSplash() {
   return (
@@ -40,10 +42,14 @@ const rootEl =
 
 createRoot(rootEl).render(
   <React.StrictMode>
-    <BootErrorBoundary>
-      <React.Suspense fallback={<BootSplash />}>
-        <App />
-      </React.Suspense>
-    </BootErrorBoundary>
+    <BrowserRouter>
+      <ThemeProvider>
+        <BootErrorBoundary>
+          <React.Suspense fallback={<BootSplash />}>
+            <App />
+          </React.Suspense>
+        </BootErrorBoundary>
+      </ThemeProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

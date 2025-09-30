@@ -25,8 +25,12 @@ export default function SavedCard({ entity, onOpen, selectable=false, selected=f
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 text-[11px] rounded-full bg-neutral-100 text-neutral-700 uppercase tracking-wide">
-                {entity.type === 'supplier' ? 'Supplier' : 'Factory'}
+              <span className={`px-2 py-0.5 text-[11px] rounded-full uppercase tracking-wide ${
+                entity.vendor_type === 'factory' 
+                  ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' 
+                  : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+              }`}>
+                {entity.vendor_type === 'factory' ? 'Factory' : 'Supplier'}
               </span>
               {typeof entity.matchScore === 'number' && (
                 <span className="px-1.5 py-0.5 text-[11px] rounded bg-emerald-50 text-emerald-700">

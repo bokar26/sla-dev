@@ -1,4 +1,5 @@
 // src/services/quotes.ts
+import { apiGet, apiPost, apiPut, apiDelete } from "@/lib/api";
 import type { FulfillmentOrder } from '@/types/fulfillment';
 
 export type QuoteStatus = 'draft' | 'sent' | 'accepted' | 'rejected';
@@ -15,100 +16,82 @@ export interface Quote {
   fulfillment?: Partial<FulfillmentOrder>;
 }
 
-const API_BASE =
-  (import.meta as any).env?.VITE_API_BASE_URL ||
-  (typeof window !== 'undefined' ? `${window.location.origin}/api` : 'http://localhost:8000/api');
-
-async function safeFetch<T>(path: string, init?: RequestInit, fallback: T = [] as unknown as T): Promise<T> {
-  try {
-    const res = await fetch(`${API_BASE}${path}`, { headers: { 'Content-Type': 'application/json' }, ...init });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return (await res.json()) as T;
-  } catch (err) {
-    console.warn(`[quotes.service] Failed ${init?.method || 'GET'} ${path}:`, err);
-    return fallback;
-  }
-}
-
 /** Named export USED by Fulfillment.tsx */
 export async function getQuotes(params?: { factoryId?: string; status?: QuoteStatus }): Promise<Quote[]> {
   const qs = new URLSearchParams();
   if (params?.factoryId) qs.set('factoryId', params.factoryId);
   if (params?.status) qs.set('status', params.status);
   const query = qs.toString() ? `?${qs.toString()}` : '';
-  // Expecting GET /api/quotes — return [] if backend missing
-  return safeFetch<Quote[]>(`/quotes${query}`, undefined, []);
+  try {
+    return await apiGet(`/quotes${query}`);
+  } catch {
+    return []; // Return empty array if backend missing
+  }
 }
 
 export async function createQuote(payload: Partial<Quote>): Promise<Quote | null> {
-  return safeFetch<Quote | null>(`/quotes`, { method: 'POST', body: JSON.stringify(payload) }, null);
+  try {
+    return await apiPost("/quotes/create", payload);
+  } catch {
+    return null;
+  }
 }
 
 export async function updateQuote(id: string, patch: Partial<Quote>): Promise<Quote | null> {
-  return safeFetch<Quote | null>(`/quotes/${id}`, { method: 'PATCH', body: JSON.stringify(patch) }, null);
+  try {
+    return await apiPut(`/quotes/${id}`, patch);
+  } catch {
+    return null;
+  }
 }
 
 export async function getQuoteById(id: string): Promise<Quote | null> {
-  return safeFetch<Quote | null>(`/quotes/${id}`, undefined, null);
+  try {
+    return await apiGet(`/quotes/${id}`);
+  } catch {
+    return null;
+  }
 }
 
 // Optional helpers for "Saved" page
 export async function listSavedQuotes(): Promise<Quote[]> {
-  return safeFetch<Quote[]>(`/saved/quotes`, undefined, []);
+  try {
+    const result = await apiGet("/saved-quotes");
+    return result?.items || [];
+  } catch {
+    return [];
+  }
 }
+
 export async function saveQuoteToSaved(id: string): Promise<boolean> {
-  const ok = await safeFetch<{ ok: boolean }>(`/saved/quotes/${id}`, { method: 'PUT' }, { ok: false });
-  return !!ok?.ok;
+  try {
+    const result = await apiPut(`/saved/quotes/${id}`, {});
+    return !!result;
+  } catch {
+    return false;
+  }
 }
 
 export type { Quote as SLAQuote };
 
 // Additional exports for other components
 export async function generateQuote(payload: any): Promise<any> {
-  // Handle the complex payload structure from QuoteEditor
-  if (payload.factoryId && payload.payload) {
-    // For now, return a mock QuoteCalc object since the backend doesn't have quote generation yet
-    const mockCalc = {
-      unitCost: payload.payload.targetPrice || 5.50,
-      toolingCost: 500,
-      freightEstimate: 200,
-      tariffEstimate: 50,
-      moqAdjustment: 0,
-      marginEstimate: 0.15,
-      currency: 'USD',
-      breakdown: [
-        { label: 'Base Cost', value: payload.payload.targetPrice || 5.50 },
-        { label: 'Tooling', value: 500 },
-        { label: 'Freight', value: 200 },
-        { label: 'Tariff', value: 50 },
-        { label: 'Margin (15%)', value: (payload.payload.targetPrice || 5.50) * 0.15 }
-      ],
-      subtotal: (payload.payload.targetPrice || 5.50) * (payload.payload.quantity || 1000) + 500 + 200 + 50,
-      tax: ((payload.payload.targetPrice || 5.50) * (payload.payload.quantity || 1000) + 500 + 200 + 50) * 0.08,
-      total: ((payload.payload.targetPrice || 5.50) * (payload.payload.quantity || 1000) + 500 + 200 + 50) * 1.08,
-      deliveryTime: `${payload.payload.desiredLeadTimeDays || 30} days`,
-      terms: 'Net 30',
-      validity: '30 days',
-      invoiceNumber: `INV-${Date.now()}`,
-      date: new Date().toISOString().split('T')[0],
-      dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-      notes: payload.payload.notes || ''
+  // Replaced demo/mock with real API call: see services/serviceMap.md
+  try {
+    const response = await apiPost('/quotes/create', payload);
+    return response;
+  } catch (error) {
+    console.error('Failed to generate quote:', error);
+    // Return minimal fallback on error
+    return {
+      unitCost: 0,
+      subtotal: 0,
+      tax: 0,
+      total: 0,
+      deliveryTime: 'N/A',
+      currency: 'USD'
     };
-    
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    return mockCalc;
   }
-  
-  // Fallback for simple payload
-  return {
-    unitCost: 5.50,
-    subtotal: 5500,
-    tax: 440,
-    total: 5940,
-    deliveryTime: '30 days',
-    currency: 'USD'
-  };
 }
 
 export async function saveQuote(payload: any): Promise<Quote | null> {
@@ -142,9 +125,6 @@ export async function saveQuote(payload: any): Promise<Quote | null> {
     } catch (err) {
       console.warn('Failed to save quote to localStorage:', err);
     }
-    
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500));
     
     return savedQuote;
   }
@@ -192,6 +172,10 @@ export async function deleteQuote(id: string): Promise<boolean> {
   }
   
   // Fallback to API
-  const result = await safeFetch<{ success: boolean }>(`/quotes/${id}`, { method: 'DELETE' }, { success: false });
-  return !!result?.success;
+  try {
+    const result = await del(`/api/quotes/${id}`);
+    return !!result?.success;
+  } catch {
+    return false;
+  }
 }

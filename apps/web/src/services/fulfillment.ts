@@ -1,4 +1,38 @@
 // Fulfillment service for managing quotes, shipping routes, and invoices
+import { get, post } from "@/lib/http";
+
+export interface RoutePlanRequest {
+  origin: string;
+  destination: string;
+  freightType: 'air' | 'sea' | 'land';
+  speed: 'standard' | 'express' | 'overnight';
+  weight: number;
+  weightUnit: 'kg' | 'lb';
+  dimensions: {
+    length: number;
+    width: number;
+    height: number;
+    unit: 'cm' | 'in';
+  };
+  pieces?: number;
+  packaging?: string;
+}
+
+export interface RouteOption {
+  id: string;
+  carrier: string;
+  service: string;
+  estimatedDays: number;
+  cost: number;
+  currency: string;
+  features: string[];
+}
+
+export interface RoutePlanResponse {
+  routes: RouteOption[];
+  volumetricWeight?: number;
+  cbm?: number;
+}
 
 export interface ShippingRoute {
   id: string;
@@ -72,68 +106,39 @@ export interface CreateInvoiceRequest {
   notes?: string;
 }
 
+// Route Planning API
+export async function planRoute(request: RoutePlanRequest): Promise<RoutePlanResponse> {
+  return post("/api/fulfillment/plan-route", request);
+}
+
 // Shipping Routes API
 export async function getShippingRoutes(): Promise<ShippingRoute[]> {
   try {
-    const response = await fetch('http://localhost:8000/api/shipping-routes');
-    if (!response.ok) {
-      throw new Error('Failed to fetch shipping routes');
-    }
-    const data = await response.json();
-    return data.routes;
+    const data = await get("/api/shipping-routes");
+    return data.routes || [];
   } catch (error) {
     console.error('Error fetching shipping routes:', error);
-    throw error;
+    return [];
   }
 }
 
 // Invoices API
 export async function createInvoice(request: CreateInvoiceRequest): Promise<Invoice> {
-  try {
-    const response = await fetch('http://localhost:8000/api/invoices', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(request),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to create invoice');
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error creating invoice:', error);
-    throw error;
-  }
+  return post("/api/invoices", request);
 }
 
 export async function getInvoices(): Promise<Invoice[]> {
   try {
-    const response = await fetch('http://localhost:8000/api/invoices');
-    if (!response.ok) {
-      throw new Error('Failed to fetch invoices');
-    }
-    const data = await response.json();
-    return data.invoices;
+    const data = await get("/api/invoices");
+    return data.invoices || [];
   } catch (error) {
     console.error('Error fetching invoices:', error);
-    throw error;
+    return [];
   }
 }
 
 export async function getInvoice(invoiceId: string): Promise<Invoice> {
-  try {
-    const response = await fetch(`http://localhost:8000/api/invoices/${invoiceId}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch invoice');
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching invoice:', error);
-    throw error;
-  }
+  return get(`/api/invoices/${invoiceId}`);
 }
 
 // PDF Generation (placeholder - would integrate with actual PDF service)

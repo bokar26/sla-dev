@@ -11,5 +11,10 @@
   },
   "css.lint.unknownAtRules": "ignore",
   "tailwindCSS.experimental.configFile": "apps/web/tailwind.config.js",
-  "tailwindCSS.emmetCompletions": true
+  "tailwindCSS.emmetCompletions": true,
+  "cursorpyright.analysis.extraPaths": [
+    "${workspaceFolder}",
+    "${workspaceFolder}/sla_ai_components"
+  ],
+  "cursorpyright.analysis.typeCheckingMode": "basic"
 }

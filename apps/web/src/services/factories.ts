@@ -1,4 +1,5 @@
 import { Factory } from '../types/factory';
+import { apiUrl } from '@/lib/api';
 
 export interface FactorySearchParams {
   query?: string;
@@ -16,7 +17,7 @@ export interface FactorySearchResponse {
 }
 
 export async function searchFactories(params: FactorySearchParams): Promise<FactorySearchResponse> {
-  const response = await fetch('http://localhost:8000/api/factories/search', {
+  const response = await fetch(apiUrl('/api/factories/search'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

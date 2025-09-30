@@ -7,7 +7,7 @@ export interface AppConfig {
 
 export async function getConfig(): Promise<AppConfig> {
   try {
-    const response = await fetch('http://localhost:8000/api/config');
+    const response = await fetch('/api/config');
     if (!response.ok) {
       throw new Error('Failed to fetch config');
     }

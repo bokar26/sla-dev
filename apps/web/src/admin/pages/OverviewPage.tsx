@@ -7,6 +7,7 @@ import ChartCard from "../components/ui/ChartCard";
 import ErrorBoundary from "../components/ErrorBoundary";
 // import { useAdminStats } from "../../hooks/useAdminStats";
 import { Download, Users, FileText, Activity, Factory, TrendingUp, UserCheck, Globe } from "lucide-react";
+import { apiGet } from "../../lib/api";
 
 interface KPIData {
   signups_7d: number;
@@ -30,16 +31,8 @@ export default function OverviewPage() {
     const fetchKPIs = async () => {
       try {
         const token = localStorage.getItem("admin_token");
-        const response = await fetch("/api/admin/kpis", {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        
-        if (response.ok) {
-          const data = await response.json();
-          setKpis(data);
-        } else {
-          console.error("Failed to fetch KPIs:", response.status);
-        }
+        const data = await apiGet("/stats");
+        setKpis(data);
       } catch (error) {
         console.error("Error fetching KPIs:", error);
       } finally {

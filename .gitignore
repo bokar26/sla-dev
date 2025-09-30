@@ -1,18 +1,38 @@
-node_modules
+# node / pnpm / vite
+node_modules/
+dist/
+.vite/
+.vercel/
+pnpm-lock.yaml
+
+# python / fastapi
+__pycache__/
+*.pyc
+.venv/
+
+# env / secrets
+.env
+.env.*
+apps/web/.env*
+apps/web/env.*
+api/.env*
+**/secrets/**
+**/*_credentials.*
+
+# system files
 .DS_Store
-dist
-build
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# build artifacts
+build/
 .expo
 .expo-shared
 ios
 android
 coverage
-.env
-.env.*
-*.log
-*.pid
-*.seed
-*.pid.lock
 .npm
 .eslintcache
 .nyc_output
@@ -38,3 +58,11 @@ build/Release
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# database files
+*.db
+*.sqlite
+*.sqlite3
+
+# temporary files
+cookies.txt

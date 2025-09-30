@@ -12,6 +12,15 @@
   <body>
     <div id="root"></div>
     <script>
+      // Prevent theme flash on first paint
+      (function() {
+        const ls = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const wantDark = ls ? (ls === 'dark') : prefersDark;
+        document.documentElement.classList.toggle('dark', wantDark);
+      })();
+    </script>
+    <script>
       (function () {
         function makeOverlay(msg) {
           var d = document.createElement('div');

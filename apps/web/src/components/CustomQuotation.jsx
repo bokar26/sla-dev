@@ -84,7 +84,7 @@ const CustomQuotation = () => {
     setShowProforma(false);
     
     try {
-      const response = await fetch('http://localhost:8000/api/factories/search', {
+      const response = await fetch('/api/factories/search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

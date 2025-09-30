@@ -556,7 +556,7 @@ function SLAFactorySearch() {
 
     try {
       console.log("Starting search with query:", searchForm.query);
-      const response = await fetch("http://localhost:8000/api/factories/search", {
+      const response = await fetch("/api/factories/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -583,9 +583,9 @@ function SLAFactorySearch() {
       setSearchResults(safeArray(data.results));
       
       // Brief delay so users see the animation
-      setTimeout(() => setSearchPhase("shrink"), 250);
+      setTimeout(() => setSearchPhase("shrink"), 100);
       // After shrink, reveal results
-      setTimeout(() => setSearchPhase("results"), 650);
+      setTimeout(() => setSearchPhase("results"), 200);
     } catch (err) {
       console.error("Search error:", err);
       setSearchError(`Failed to fetch search results: ${err.message}. Please ensure the backend API is running.`);
@@ -1007,7 +1007,6 @@ import Saved from "../components/Saved";
 import Fulfillment from "../components/Fulfillment";
 import Orders from "../components/Orders";
 import Finances from "../components/Finances";
-import Integrations from "./Integrations";
 
 export default function Dashboard({ 
   activeDashboardTab, 
@@ -1019,7 +1018,7 @@ export default function Dashboard({
     <>
       {/* Debug banner */}
       <div className="fixed top-2 right-2 z-[9999] px-2 py-1 text-[10px] rounded bg-black/60 text-white">
-        tab: {String(activeDashboardTab || 'undefined')} · v: {process.env.NODE_ENV} · {Date.now()}
+        tab: {String(activeDashboardTab || 'undefined')} · v: {import.meta.env.DEV ? 'development' : 'production'} · {Date.now()}
       </div>
       
       {activeDashboardTab === 'Supply Center' && (
@@ -1054,9 +1053,6 @@ export default function Dashboard({
         <Finances />
       )}
 
-      {activeDashboardTab === 'Integrations' && (
-        <Integrations />
-      )}
 
       {activeDashboardTab === 'Production Portfolio' && (
         <ProductionPortfolio />
@@ -1072,7 +1068,6 @@ export default function Dashboard({
        activeDashboardTab !== 'Orders' && 
        activeDashboardTab !== 'Contacts' && 
        activeDashboardTab !== 'Finances' && 
-       activeDashboardTab !== 'Integrations' && 
        activeDashboardTab !== 'Supply Center' && (
         <div className="p-6 text-center">
           <h2 className="text-xl font-semibold text-gray-600 mb-2">Tab not found</h2>

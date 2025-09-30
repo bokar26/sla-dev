@@ -1,5 +1,5 @@
 export async function createQuote(payload: any) {
-  const base = (import.meta.env.VITE_API_BASE || "/api").replace(/\/+$/,"");
+  const base = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/+$/,"");
   const r = await fetch(`${base}/quotes/create`, {
     method: "POST", 
     headers: {"Content-Type":"application/json"},

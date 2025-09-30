@@ -1,11 +1,18 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "composite": true,
-    "tsBuildInfoFile": "./node_modules/.tsbuildinfo.node",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "allowSyntheticDefaultImports": true,
-    "types": ["node"]
+    "types": ["node", "vite/client"],
+    "skipLibCheck": true
   },
-  "include": ["vite.config.js"]
+  "include": [
+    "vite.config.ts",
+    "vite.config.js",
+    "env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": ["node_modules", "dist"]
 }
