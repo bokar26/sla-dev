@@ -1,13 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import DangerZoneFactoryReset from "../../components/admin/DangerZoneFactoryReset";
 
 // API base URL
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 // Colors for charts
 const COLORS = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4', '#84CC16', '#F97316', '#EC4899', '#6366F1'];
+
+// Local inline placeholder to unblock builds. Replace later with the real component file.
+function DangerZoneFactoryReset({ onReset }) {
+  return (
+    <div className="rounded-xl border border-red-300/50 bg-red-50 p-4">
+      <h3 className="text-red-700 font-semibold">Danger Zone</h3>
+      <p className="text-red-600/80 text-sm mt-1">
+        This will clear cached factory analytics and refresh admin data (placeholder component).
+      </p>
+      <div className="mt-3">
+        <button
+          type="button"
+          className="px-3 py-2 rounded bg-red-600 text-white hover:bg-red-700"
+          onClick={() => onReset?.()}
+          aria-label="Reset factory analytics cache"
+        >
+          Reset Factory Analytics Cache
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
