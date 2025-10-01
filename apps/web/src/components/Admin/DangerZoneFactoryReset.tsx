@@ -1,18 +1,13 @@
+// apps/web/src/components/admin/DangerZoneFactoryReset.tsx
 import React from "react";
 
 export default function DangerZoneFactoryReset() {
-  // For demo/production safety, this is a non-destructive placeholder.
-  // You can wire real destructive actions later behind admin auth.
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-      <h3 className="text-sm font-semibold text-red-600">Danger Zone</h3>
-      <p className="mt-2 text-sm text-gray-600">
-        Factory reset actions are disabled in this demo build. Contact an admin to
-        perform maintenance tasks.
+    <div className="rounded-xl border border-red-200 bg-red-50 p-4">
+      <h3 className="text-red-700 font-semibold">Danger zone</h3>
+      <p className="text-sm text-red-700/80">
+        Resetting factory data is irreversible. Use only on non-production data.
       </p>
-      <div className="mt-3 text-xs text-gray-400">
-        Component: <code>DangerZoneFactoryReset</code>
-      </div>
     </div>
   );
 }

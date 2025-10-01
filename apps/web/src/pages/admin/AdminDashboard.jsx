@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import DangerZoneFactoryReset from "@/components/admin/DangerZoneFactoryReset";
+
+const DangerZoneFactoryReset = React.lazy(() =>
+  import("@/components/admin/DangerZoneFactoryReset").catch(() => ({
+    default: () => null,
+  }))
+);
 
 // API base URL
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
@@ -302,7 +307,9 @@ export default function AdminDashboard() {
         {/* Danger Zone */}
         <div className="mt-12">
           <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">Danger Zone</h2>
-          <DangerZoneFactoryReset />
+          <Suspense fallback={null}>
+            <DangerZoneFactoryReset />
+          </Suspense>
         </div>
       </main>
     </div>
