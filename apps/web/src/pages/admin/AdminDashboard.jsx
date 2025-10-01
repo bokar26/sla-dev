@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import DangerZoneFactoryReset from "@/components/admin/DangerZoneFactoryReset.tsx";
+import DangerZoneFactoryReset from "@/components/admin/DangerZoneFactoryReset";
 
 // API base URL
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
