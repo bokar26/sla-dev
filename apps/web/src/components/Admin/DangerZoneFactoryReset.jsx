@@ -1,17 +1,23 @@
+// apps/web/src/components/admin/DangerZoneFactoryReset.jsx
 import React from "react";
+import { Button } from "@/components/ui/button";
 
-/**
- * Admin "Danger Zone" panel.
- * Keep this component self-contained (no external imports) so CI builds never fail
- * due to missing design systems or env-specific code.
- */
-export default function DangerZoneFactoryReset() {
+export default function DangerZoneFactoryReset({ onReset }) {
   return (
-    <div className="rounded-xl border border-red-200/70 bg-red-50 p-4">
-      <h3 className="text-red-700 font-semibold">Danger zone</h3>
-      <p className="mt-1 text-sm text-red-700/80">
-        Resetting factory data is irreversible. Use only on non-production data.
+    <div className="rounded-xl border border-red-300/50 bg-red-50 p-4">
+      <h3 className="text-red-700 font-semibold">Danger Zone</h3>
+      <p className="text-red-600/80 text-sm mt-1">
+        This will remove cached factory metrics and refresh admin data. This action cannot be undone.
       </p>
+      <div className="mt-3">
+        <Button
+          variant="destructive"
+          onClick={() => onReset?.()}
+          aria-label="Reset factory analytics cache"
+        >
+          Reset Factory Analytics Cache
+        </Button>
+      </div>
     </div>
   );
 }
