@@ -25,27 +25,27 @@ const Hero: React.FC = () => {
 
       {/* Main Content Container */}
       <div className="relative z-10 min-h-screen flex flex-col justify-between py-12 sm:py-16 lg:py-20">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 sm:mt-28 md:mt-0">
           {/* Navigation */}
           <div className="mb-16 sm:mb-24 lg:mb-36">
-            <nav className="text-xs sm:text-sm font-light tracking-wider">
-              <a href="#about" className="hover:text-green-600 transition-colors">ABOUT</a>
-              <span className="mx-2 sm:mx-3 text-gray-400">|</span>
-              <a href="#features" className="hover:text-green-600 transition-colors">FEATURES</a>
-              <span className="mx-2 sm:mx-3 text-gray-400">|</span>
-              <a href="#demo" className="hover:text-green-600 transition-colors">DEMO</a>
-              <span className="mx-2 sm:mx-3 text-gray-400">|</span>
+            <nav className="text-xs sm:text-sm font-medium tracking-wide">
+              <a href="#about" className="text-slate-800 md:text-slate-800 dark:text-slate-100 hover:text-slate-900 dark:hover:text-white transition-colors">ABOUT</a>
+              <span className="mx-2 sm:mx-3 text-slate-400 md:text-slate-400 dark:text-slate-300">|</span>
+              <a href="#features" className="text-slate-800 md:text-slate-800 dark:text-slate-100 hover:text-slate-900 dark:hover:text-white transition-colors">FEATURES</a>
+              <span className="mx-2 sm:mx-3 text-slate-400 md:text-slate-400 dark:text-slate-300">|</span>
+              <a href="#demo" className="text-slate-800 md:text-slate-800 dark:text-slate-100 hover:text-slate-900 dark:hover:text-white transition-colors">DEMO</a>
+              <span className="mx-2 sm:mx-3 text-slate-400 md:text-slate-400 dark:text-slate-300">|</span>
               {isAuthenticated ? (
                 <button
                   onClick={logout}
-                  className="hover:text-green-600 transition-colors"
+                  className="text-slate-800 md:text-slate-800 dark:text-slate-100 hover:text-slate-900 dark:hover:text-white transition-colors"
                 >
                   LOGOUT
                 </button>
               ) : (
                 <button
                   onClick={() => setLoginOpen(true)}
-                  className="hover:text-green-600 transition-colors"
+                  className="text-slate-800 md:text-slate-800 dark:text-slate-100 hover:text-slate-900 dark:hover:text-white transition-colors"
                 >
                   LOGIN
                 </button>
