@@ -4,6 +4,8 @@ import { estimateQuote } from "../../services/quotesService";
 import SaveVendorButton from "./SaveVendorButton";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/use-toast";
+import { getSupplier, getSupplierDetails } from "../../lib/api";
+import type { SupplierListItem, SupplierProfile } from "../../types/supplier";
 
 type VendorLike = {
   name?: string;
@@ -31,27 +33,20 @@ function normalizeVendor(v: Partial<VendorLike>) {
 type Props = {
   open: boolean;
   onOpenChange: (v: boolean) => void;
-  factoryId?: string;
-  initialSummary?: {
-    name?: string;
-    region?: string;
-    capabilities?: string[];
-    certs?: string[];
-    score?: number;
-    explanation?: string;
-    country?: string;
-    vendor_type?: string;
-  };
+  initialItem?: SupplierListItem;
   onSaved?: () => void; // Callback to refresh saved vendors list
 };
 
 export default function FactoryDetailsDrawer({
-  open, onOpenChange, factoryId, initialSummary, onSaved
+  open, onOpenChange, initialItem, onSaved
 }: Props): JSX.Element {
+  const supplierId = initialItem?.id || null;
   const navigate = useNavigate();
-  const [details, setDetails] = useState<any | null>(null);
+  const [item, setItem] = useState<SupplierListItem | null>(initialItem || null);
+  const [profile, setProfile] = useState<SupplierProfile | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  const [liveError, setLiveError] = useState<string | null>(null);
   const [quoteMode, setQuoteMode] = useState(false);
   const [saving, setSaving] = useState(false);
   const [estimate, setEstimate] = useState<null | {
@@ -59,6 +54,7 @@ export default function FactoryDetailsDrawer({
   }>(null);
   const [estimateLoading, setEstimateLoading] = useState(false);
   const [estimateError, setEstimateError] = useState<string | null>(null);
+  const [showReasoning, setShowReasoning] = useState(false);
   const [form, setForm] = useState({
     inquiry_text: "",
     product_type: "",
@@ -69,117 +65,82 @@ export default function FactoryDetailsDrawer({
     materials_required: ""
   });
 
-  // Race-safe fetch with cache
-  const ctrRef = useRef<AbortController | null>(null);
-  const tokenRef = useRef(0);
+  // Smart merge function to preserve reasoning from clicked results
+  function smartMerge(prev: any, full: any) {
+    if (!prev) return full;
+    // Keep prev reasoning if full doesn't have it
+    const merged = { ...full, ...prev }; // prev wins for missing keys in full
+    if (!full?.reasons?.length && prev?.reasons?.length) merged.reasons = prev.reasons;
+    if (!full?.explain && prev?.explain) merged.explain = prev.explain;
+    if (!full?.contributions && prev?.contributions) merged.contributions = prev.contributions;
+    if (typeof full?.score !== "number" && typeof prev?.score === "number") merged.score = prev.score;
+    return merged;
+  }
 
+  // Load supplier details using new unified endpoint
   useEffect(() => {
-    if (!open || !factoryId) return;
-
-    setDetails(null);
-    setError(null);
-    setLoading(true);
-
-    tokenRef.current += 1;
-    const myToken = tokenRef.current;
-
-    if (ctrRef.current) ctrRef.current.abort();
-    const ctr = new AbortController();
-    ctrRef.current = ctr;
-
-    // Optional immediate hydrate from initialSummary
-    const hydratedFromSummary = initialSummary
-      ? { factoryId, ...initialSummary }
-      : null;
-    if (hydratedFromSummary) setDetails(hydratedFromSummary);
-
-    getVendor(factoryId, { signal: ctr.signal })
-      .then((data) => {
-        if (myToken !== tokenRef.current) return;
-        setDetails(data);
-        setLoading(false);
-      })
-      .catch((e) => {
-        if (e.name === 'AbortError') return;
-        if (myToken !== tokenRef.current) return;
+    let alive = true;
+    async function load() {
+      if (!initialItem) return;
+      
+      setLoading(true); 
+      setErr(null);
+      setLiveError(null);
+      setProfile(null);
+      
+      try {
+        const details = await getSupplierDetails({
+          id: initialItem.id,
+          name: initialItem.name,
+          url: initialItem.sourceUrl || initialItem.url || undefined,
+          source: initialItem.source,
+          country: initialItem.country,
+          product_type: initialItem.productTypes?.[0]
+        });
         
-        // Better error messages
-        let errorMessage = 'Could not load vendor';
-        if (e.status === 404) {
-          errorMessage = 'Vendor not found';
-        } else if (e.status >= 500) {
-          errorMessage = 'Server error - please try again';
-        } else if (e.message?.includes('fetch')) {
-          errorMessage = 'Network error - check connection';
+        if (alive) {
+          // Set the enriched profile
+          setProfile(details.profile || null);
+          
+          // Show live error as warning, not blocking error
+          if (details.live_error) {
+            setLiveError(details.live_error);
+          }
         }
-        
-        setError(errorMessage);
-        setLoading(false);
-      });
-
-    return () => ctr.abort();
-  }, [open, factoryId]);
+      } catch (e: any) {
+        if (alive) {
+          setErr(String(e?.message || e));
+        }
+      } finally {
+        if (alive) setLoading(false);
+      }
+    }
+    load();
+    return () => { alive = false; };
+  }, [initialItem]);
 
   const title = useMemo(
-    () => details?.name || initialSummary?.name || "Factory Details",
-    [details, initialSummary]
+    () => profile?.name || item?.name || "Supplier",
+    [profile, item]
   );
   const loc = useMemo(
-    () => details?.region || initialSummary?.region || "Unknown location",
-    [details, initialSummary]
+    () => profile?.country || profile?.region || item?.country || item?.region || "Unknown location",
+    [profile, item]
   );
-
-  // Retry function for failed loads
-  const retry = () => {
-    if (!factoryId) return;
-    setError(null);
-    setLoading(true);
-    
-    tokenRef.current += 1;
-    const myToken = tokenRef.current;
-
-    if (ctrRef.current) ctrRef.current.abort();
-    const ctr = new AbortController();
-    ctrRef.current = ctr;
-
-    getVendor(factoryId, { signal: ctr.signal })
-      .then((data) => {
-        if (myToken !== tokenRef.current) return;
-        setDetails(data);
-        setLoading(false);
-      })
-      .catch((e) => {
-        if (e.name === 'AbortError') return;
-        if (myToken !== tokenRef.current) return;
-        
-        let errorMessage = 'Could not load vendor';
-        if (e.status === 404) {
-          errorMessage = 'Vendor not found';
-        } else if (e.status >= 500) {
-          errorMessage = 'Server error - please try again';
-        } else if (e.message?.includes('fetch')) {
-          errorMessage = 'Network error - check connection';
-        }
-        
-        setError(errorMessage);
-        setLoading(false);
-      });
-  };
 
   if (!open) return <></>;
 
-
   const onCreateQuote = async (e?: any) => {
     e?.preventDefault?.();
-    if (!factoryId) {
-      console.error('No factory ID available for quote creation');
+    if (!supplierId) {
+      console.error('No supplier ID available for quote creation');
       return;
     }
     try {
       setSaving(true);
       const payload = {
-        factory_id: factoryId,
-        vendor_name: details?.name || initialSummary?.name || "Unknown Vendor", 
+        factory_id: supplierId,
+        vendor_name: item?.name || "Unknown Vendor", 
         ...form 
       };
       const res = await createQuote(payload);
@@ -194,8 +155,8 @@ export default function FactoryDetailsDrawer({
   };
 
   const onEstimateQuote = async () => {
-    if (!factoryId) {
-      console.error('No factory ID available for estimate');
+    if (!supplierId) {
+      console.error('No supplier ID available for estimate');
       return;
     }
     try {
@@ -203,7 +164,7 @@ export default function FactoryDetailsDrawer({
       setEstimateError(null);
       
       const payload = {
-        vendor_id: factoryId,
+        vendor_id: supplierId,
         product: {
           type: form.product_type || "General",
           materials: form.materials_required || "Standard",
@@ -231,10 +192,10 @@ export default function FactoryDetailsDrawer({
   };
 
   const onViewDetails = async () => {
-    if (!estimate || !factoryId) return;
+    if (!estimate || !supplierId) return;
     try {
       const payload = {
-        vendor_id: factoryId,
+        vendor_id: supplierId,
         product: {
           type: form.product_type || "General",
           materials: form.materials_required || "Standard",
@@ -285,9 +246,50 @@ export default function FactoryDetailsDrawer({
         <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 backdrop-blur">
           <div className="flex items-start justify-between">
             <div>
-              <div className="text-xs text-slate-500">{details?.factoryId || "—"}</div>
+              <div className="text-xs text-slate-500">{item?.id || "—"}</div>
               <h3 className="text-xl font-semibold">{title}</h3>
               <div className="text-xs text-slate-500">{loc || "Location unknown"}</div>
+              
+              {/* Error notice */}
+              {err && (
+                <div className="text-xs text-rose-600 mb-2">
+                  Live profile unavailable ({err}). Showing cached result.
+                </div>
+              )}
+              
+              {/* Loading indicator */}
+              {loading && <div className="text-xs text-slate-500 mt-2">Loading live profile…</div>}
+              
+              {/* Source link and badges */}
+              {(profile?.sourceUrl || profile?.url || item?.sourceUrl || item?.url) && (
+                <a 
+                  href={profile?.sourceUrl || profile?.url || item?.sourceUrl || item?.url || "#"} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="text-xs underline text-blue-600 hover:text-blue-700 mt-1 inline-block"
+                >
+                  Open site →
+                </a>
+              )}
+              <div className="flex flex-wrap gap-2 mt-2">
+                {item?.source && (
+                  <span className="text-[11px] px-2 py-1 rounded border bg-slate-50 dark:bg-slate-800">Source: {item.source}</span>
+                )}
+                {/* Alibaba statuses if present */}
+                {item?.marketplaceMeta?.alibaba?.gold_member ? (
+                  <span className="text-[11px] px-2 py-1 rounded border bg-amber-50 text-amber-900">Alibaba: Gold Member</span>
+                ) : null}
+                {typeof item?.marketplaceMeta?.alibaba?.export_to_us === "number" ? (
+                  <span className="text-[11px] px-2 py-1 rounded border bg-slate-50 dark:bg-slate-800">
+                    Exports to US: {item.marketplaceMeta.alibaba.export_to_us}
+                  </span>
+                ) : null}
+                {typeof item?.marketplaceMeta?.alibaba?.export_companies === "number" ? (
+                  <span className="text-[11px] px-2 py-1 rounded border bg-slate-50 dark:bg-slate-800">
+                    US Companies: {item.marketplaceMeta.alibaba.export_companies}
+                  </span>
+                ) : null}
+              </div>
             </div>
             <button className="text-slate-500 hover:text-slate-700" onClick={() => onOpenChange(false)}>✕</button>
           </div>
@@ -295,116 +297,112 @@ export default function FactoryDetailsDrawer({
 
         {/* Content (scrolls) */}
         <div className="flex-1 overflow-y-auto">
-          {loading && <Skeleton />}
-          {!loading && error && (
+          {!item && (
             <div className="flex flex-col items-center gap-3 py-8">
-              <p className="text-red-600 dark:text-red-400">
-                Failed to load vendor details{error?.includes('not found') ? ': Not found' : ''}.
-              </p>
-              <button 
-                onClick={retry}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-              >
-                Retry
-              </button>
+              <p className="text-slate-600 dark:text-slate-400">No supplier data available</p>
             </div>
           )}
-          {!loading && !error && (
+          {item && (
             <div className="p-4 space-y-6">
-              {/* Overview chips */}
-              <Section title="Overview">
+              {/* Live error warning (non-blocking) */}
+              {liveError && (
+                <div className="p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+                  <div className="text-sm text-amber-800 dark:text-amber-200">
+                    ⚠️ Live profile enrichment failed — showing cached/internal data: {liveError}
+                  </div>
+                </div>
+              )}
+              
+              {/* Key facts */}
+              <Section title="Key Facts">
                 <div className="grid grid-cols-2 gap-3">
-                  <Metric label="MOQ" value={details?.moq !== null && details?.moq !== undefined ? String(details.moq) : "—"} />
-                  <Metric label="Lead Time" value={details?.leadTimeDays !== null && details?.leadTimeDays !== undefined ? `${details.leadTimeDays} days` : "—"} />
-                  <Metric label="On-Time Rate" value={details?.onTimeRate ? `${Math.round(details.onTimeRate * 100)}%` : "—"} />
-                  <Metric label="Defect Rate" value={details?.defectRate ? `${Math.round(details.defectRate * 100)}%` : "—"} />
-                  <Metric label="Avg Quote" value={details?.avgQuoteUsd ? `$${details.avgQuoteUsd.toFixed(2)}` : "—"} />
-                  <Metric label="Certifications" value={details?.certs?.length ? `${details.certs.length}` : "—"} />
+                  {(profile?.materials || item?.materials)?.length ? (
+                    <div className="text-sm">
+                      <div className="text-xs text-slate-500">Materials</div>
+                      <div>{(profile?.materials || item?.materials)?.join(", ")}</div>
+                    </div>
+                  ) : null}
+                  {(profile?.certs || item?.certs)?.length ? (
+                    <div className="text-sm">
+                      <div className="text-xs text-slate-500">Certifications</div>
+                      <div>{(profile?.certs || item?.certs)?.join(", ")}</div>
+                    </div>
+                  ) : null}
+                  {(profile?.moq || item?.moq) ? (
+                    <div className="text-sm">
+                      <div className="text-xs text-slate-500">MOQ</div>
+                      <div>{profile?.moq || item?.moq}</div>
+                    </div>
+                  ) : null}
+                  {(profile?.leadDays || profile?.leadTime || item?.leadDays) ? (
+                    <div className="text-sm">
+                      <div className="text-xs text-slate-500">Lead Time</div>
+                      <div>{profile?.leadDays || profile?.leadTime || item?.leadDays} days</div>
+                    </div>
+                  ) : null}
+                  {(profile?.priceUsd || item?.priceUsd) ? (
+                    <div className="text-sm">
+                      <div className="text-xs text-slate-500">Ref. Price</div>
+                      <div>${profile?.priceUsd || item?.priceUsd}</div>
+                    </div>
+                  ) : null}
+                  <div className="text-sm">
+                    <div className="text-xs text-slate-500">Score</div>
+                    <div>{Math.round((profile?.score || item?.score) || 0)}/100</div>
+                  </div>
                 </div>
               </Section>
 
-              {/* Capabilities */}
-              {Array.isArray(details?.capabilities) && details.capabilities.length > 0 && (
-                <Section title="Capabilities">
-                  <ChipList items={details.capabilities} empty="No capabilities listed" />
-                </Section>
-              )}
-
-              {/* Certifications */}
-              {Array.isArray(details?.certs) && details.certs.length > 0 && (
-                <Section title="Certifications">
-                  <ChipList items={details.certs} scheme="indigo" empty="No certifications on file" />
-                </Section>
-              )}
-
-              {/* Materials */}
-              {Array.isArray(details?.materials) && details.materials.length > 0 && (
-                <Section title="Materials">
-                  <ChipList items={details.materials} scheme="emerald" empty="No materials listed" />
-                </Section>
-              )}
-
-              {/* Recent Buyers */}
-              {Array.isArray(details?.recentBuyers) && details.recentBuyers.length > 0 && (
-                <Section title="Recent Buyers">
-                  <ChipList items={details.recentBuyers} scheme="slate" empty="No buyers listed" />
-                </Section>
-              )}
-
-              {/* Compliance */}
-              {details?.compliance && (
-                <Section title="Compliance">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="flex items-center gap-2">
-                      <div className={`w-2 h-2 rounded-full ${details.compliance.iso9001 ? 'bg-green-500' : 'bg-gray-300'}`} />
-                      <span className="text-sm">ISO 9001</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className={`w-2 h-2 rounded-full ${details.compliance.wrap ? 'bg-green-500' : 'bg-gray-300'}`} />
-                      <span className="text-sm">WRAP</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className={`w-2 h-2 rounded-full ${details.compliance.sedex ? 'bg-green-500' : 'bg-gray-300'}`} />
-                      <span className="text-sm">SEDEX</span>
-                    </div>
-                  </div>
-                </Section>
-              )}
-
-              {/* Gallery */}
-              {Array.isArray(details?.images) && details.images.length > 0 && (
-                <Section title="Gallery">
-                  <div className="grid grid-cols-3 gap-2">
-                    {details.images.map((src: string, i: number) => (
-                      <img key={i} src={src} alt={`factory-${i}`} className="rounded-lg border border-slate-200 dark:border-slate-800 object-cover aspect-[4/3]" />
-                    ))}
-                  </div>
-                </Section>
-              )}
-
-              {/* Contacts */}
-              {details?.contacts && details.contacts.length > 0 && (
-                <Section title="Contacts">
-                  <div className="space-y-2">
-                    {details.contacts.map((contact: any, i: number) => (
-                      <div key={i} className="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                        <div className="font-medium text-slate-900 dark:text-slate-100">{contact.name}</div>
-                        <div className="text-sm text-slate-600 dark:text-slate-400">{contact.email}</div>
-                        {contact.phone && (
-                          <div className="text-sm text-slate-600 dark:text-slate-400">{contact.phone}</div>
-                        )}
+              {/* SLA Reasoning */}
+              <Section title="">
+                <button 
+                  onClick={()=>setShowReasoning(v=>!v)} 
+                  className="text-xs underline text-slate-500 dark:text-slate-400 mt-3"
+                >
+                  {showReasoning ? "Hide SLA Reasoning" : "SLA Reasoning"}
+                </button>
+                {showReasoning && (
+                  <div className="mt-2 border rounded-md p-3 bg-slate-50 dark:bg-slate-800 space-y-3">
+                    {(profile?.reasoning || item?.reasoning) ? <p className="text-sm">{profile?.reasoning || item?.reasoning}</p> : null}
+                    
+                    {/* Contributions bar chart */}
+                    {(profile?.contributions || item?.contributions) && Object.keys(profile?.contributions || item?.contributions || {}).length > 0 && (
+                      <div>
+                        <div className="text-xs font-medium mb-2">Score contributions:</div>
+                        <div className="space-y-2">
+                          {Object.entries(profile?.contributions || item?.contributions || {})
+                            .sort(([,a], [,b]) => (b as number) - (a as number))
+                            .map(([factor, score]) => (
+                            <div key={factor} className="flex items-center gap-2">
+                              <div className="text-xs w-20 text-slate-600 dark:text-slate-400 capitalize">
+                                {factor.replace(/_/g, ' ')}
+                              </div>
+                              <div className="flex-1 bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+                                <div 
+                                  className="bg-emerald-500 h-2 rounded-full transition-all duration-300"
+                                  style={{ width: `${Math.max(0, Math.min(100, (score as number) * 100))}%` }}
+                                />
+                              </div>
+                              <div className="text-xs w-8 text-slate-600 dark:text-slate-400 text-right">
+                                {Math.round((score as number) * 100)}%
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    ))}
+                    )}
+                    
+                    {Array.isArray(item.reasons) && item.reasons.length ? (
+                      <>
+                        <div className="text-xs font-medium mb-1">Key factors:</div>
+                        <ul className="list-disc pl-5 text-xs space-y-1">
+                          {item.reasons.map((r,i)=><li key={i}>{r}</li>)}
+                        </ul>
+                      </>
+                    ) : <div className="text-xs text-slate-500">No extra reasoning available.</div>}
                   </div>
-                </Section>
-              )}
-
-              {/* Notes */}
-              {details?.notes && (
-                <Section title="Notes">
-                  <p className="text-sm text-slate-600 dark:text-slate-400">{details.notes}</p>
-                </Section>
-              )}
+                )}
+              </Section>
 
               {/* Quote block (inline, above footer buttons) */}
               {quoteMode && (
@@ -520,8 +518,8 @@ export default function FactoryDetailsDrawer({
               {quoteMode ? "Close Quote Form" : "Create Quote"}
             </button>
             <SaveVendorButton 
-              factoryId={factoryId}
-              snapshot={normalizeVendor(details || initialSummary || {})}
+              factoryId={supplierId || undefined}
+              snapshot={normalizeVendor(item || {})}
             />
           </div>
         </div>

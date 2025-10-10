@@ -1,9 +1,9 @@
 // @ts-nocheck
 import React, { useEffect, useState } from "react";
-import { api, debug, integrations } from "../../lib/api";
+import { apiFetch, debug, integrations, API_BASE } from "../../lib/api";
 
 export default function AlibabaDiagnostics() {
-  const [info, setInfo] = useState({ base: api.base, prefix: api.prefix });
+  const [info, setInfo] = useState({ base: API_BASE, prefix: "/api" });
   const [health, setHealth] = useState(null);
   const [routes, setRoutes] = useState(null);
   const [ping, setPing] = useState(null);

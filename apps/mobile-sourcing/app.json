@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "SLA – Sourcing Simplified",
+    "slug": "sla-sourcing-simplified",
+    "scheme": "sla-sourcing",
+    "ios": { "bundleIdentifier": "com.yourco.sla.sourcing", "supportsTablet": true },
+    "plugins": ["expo-router"]
+  }
+}

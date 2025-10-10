@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { apiFetch } from "@/lib/api";
+import { apiGet } from "@/lib/api";
 import GoalManagerDrawer from "./GoalManagerDrawer";
 import { onGoalsChanged } from "./goalsBus";
 
@@ -10,7 +10,7 @@ export default function GoalBar() {
 
   async function load() {
     try {
-      const rows = await apiFetch('goals/progress');
+      const rows = await apiGet('goals/progress');
       setGoals(rows || []);
     } catch (e) {
       console.warn("goals/progress unavailable", e);

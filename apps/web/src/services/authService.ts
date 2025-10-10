@@ -28,22 +28,30 @@ export async function login(opts: { email: string; password: string; remember?: 
   try {
     // Try real API first
     const data = await apiPost('/auth/login', { email, password });
-    // Expecting something like { token, user }
-    const token = data?.token ?? 'server-token';
+    // Expecting something like { access_token, user }
+    const token = data?.access_token ?? data?.token ?? 'server-token';
     const user: User = data?.user ?? { email, name: 'SLA User', role: 'user' };
     saveSession(token, user, remember);
     return { token, user };
   } catch (err: any) {
-    // Fallback to demo credential if API not available / 404 / Not Found
-    const msg = (err?.message || '').toLowerCase();
-    const isNotFound = msg.includes('not found') || msg.includes('404') || msg.includes('failed');
-    // Removed hardcoded login bypass - must use real API
-    if (false) {
-      const token = 'demo-token';
-      const user: User = { email, name: 'SLA User', role: 'user' };
-      saveSession(token, user, remember);
-      return { token, user };
+    // Handle specific error cases
+    if (err?.response?.status === 401) {
+      const errorDetail = err?.response?.data?.detail;
+      if (errorDetail === 'INVALID_CREDENTIALS') {
+        throw new Error('Email or password is incorrect.');
+      } else if (errorDetail === 'ACCOUNT_INACTIVE') {
+        throw new Error('Account is inactive. Please contact support.');
+      } else {
+        throw new Error('Email or password is incorrect.');
+      }
     }
-    throw new Error('Invalid email or password');
+    
+    // Network or other errors
+    const msg = (err?.message || '').toLowerCase();
+    if (msg.includes('network') || msg.includes('fetch')) {
+      throw new Error('Network error. Please check your connection and try again.');
+    }
+    
+    throw new Error('Login failed. Please try again.');
   }
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from './contexts/AuthContext';
 import Landing from "./pages/Landing.jsx";
+import Ecommerce from "./pages/Ecommerce.tsx";
 import DashboardLayout from "./pages/dashboard/DashboardLayout.jsx";
 import { lazySafe } from "./router/lazySafe.jsx";
 
@@ -29,6 +30,9 @@ export default function App() {
       <Routes>
       {/* Home */}
       <Route path="/" element={<Landing />} />
+      
+      {/* E-Commerce */}
+      <Route path="/ecommerce" element={<Ecommerce />} />
 
       {/* Dashboard */}
       <Route path="/app" element={<DashboardLayout />}>

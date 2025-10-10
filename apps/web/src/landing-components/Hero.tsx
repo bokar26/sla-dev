@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
-import LoginDialog from '../components/auth/LoginDialog';
+import LoginDialog from '../components/auth/LoginDialog.jsx';
 
 const Hero: React.FC = () => {
   const { user, logout } = useAuth();
@@ -34,6 +34,8 @@ const Hero: React.FC = () => {
               <a href="#features" className="text-black hover:text-black/80 focus:text-black/90 transition-colors">FEATURES</a>
               <span className="mx-2 sm:mx-3 text-black/60">|</span>
               <a href="#demo" className="text-black hover:text-black/80 focus:text-black/90 transition-colors">DEMO</a>
+              <span className="mx-2 sm:mx-3 text-black/60">|</span>
+              <a href="#ecommerce" className="text-black hover:text-black/80 focus:text-black/90 transition-colors">E-COMMERCE</a>
               <span className="mx-2 sm:mx-3 text-black/60">|</span>
               {isAuthenticated ? (
                 <button

@@ -9,6 +9,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from database import get_db
 from models import User, Role
 
@@ -74,8 +75,9 @@ def verify_token(token: str) -> Dict[str, Any]:
         )
 
 def get_user_by_email(db: Session, email: str) -> Optional[User]:
-    """Get a user by email."""
-    return db.query(User).filter(User.email == email).first()
+    """Get a user by email (case-insensitive)."""
+    email_lower = email.lower().strip()
+    return db.query(User).filter(func.lower(User.email) == email_lower).first()
 
 def get_user_by_id(db: Session, user_id: int) -> Optional[User]:
     """Get a user by ID."""
@@ -83,7 +85,8 @@ def get_user_by_id(db: Session, user_id: int) -> Optional[User]:
 
 def authenticate_user(db: Session, email: str, password: str) -> Optional[User]:
     """Authenticate a user with email and password."""
-    user = get_user_by_email(db, email)
+    email_lower = email.lower().strip()
+    user = get_user_by_email(db, email_lower)
     if not user:
         return None
     if not verify_password(password, user.hashed_password):

@@ -16,6 +16,11 @@ from schemas import LoginRequest, LoginResponse, RefreshTokenRequest, UserOut
 # Create auth router
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
 
+@auth_router.get("/test")
+def test_endpoint():
+    """Test endpoint to verify auth router is working"""
+    return {"message": "Auth router is working", "status": "ok"}
+
 @auth_router.post("/login", response_model=LoginResponse)
 def login(
     login_data: LoginRequest,
@@ -23,20 +28,31 @@ def login(
     request: Request = None
 ):
     """Authenticate user and return tokens."""
-    user = authenticate_user(db, login_data.email, login_data.password)
+    import logging
+    log = logging.getLogger("auth")
+    
+    # Normalize email
+    email = login_data.email.strip().lower()
+    log.info("🔐 Login attempt for %s", email)
+    
+    user = authenticate_user(db, email, login_data.password)
     if not user:
+        log.info("❌ LOGIN_FAIL reason=user_not_found_or_bad_password email=%s", email)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
+            detail="INVALID_CREDENTIALS",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
     if not user.is_active:
+        log.info("❌ LOGIN_FAIL reason=account_inactive email=%s", email)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Account is inactive",
+            detail="ACCOUNT_INACTIVE",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    
+    log.info("✅ LOGIN_SUCCESS email=%s role=%s", email, user.role)
     
     # Update last seen
     user.last_seen_at = datetime.utcnow()
@@ -49,7 +65,7 @@ def login(
     return LoginResponse(
         access_token=access_token,
         refresh_token=refresh_token,
-        user=user
+        user=UserOut.model_validate(user)
     )
 
 @auth_router.post("/refresh", response_model=LoginResponse)
@@ -87,7 +103,7 @@ def refresh_token(
         return LoginResponse(
             access_token=access_token,
             refresh_token=new_refresh_token,
-            user=user
+            user=UserOut.model_validate(user)
         )
         
     except HTTPException:

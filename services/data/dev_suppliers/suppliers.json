@@ -1,0 +1,1380 @@
+[
+  {
+    "id": "dev_0",
+    "name": "Hanoi Garment JV #1000",
+    "country": "China",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 300,
+    "lead_days": 35,
+    "price_usd": 2.2,
+    "url": "https://example.com/0",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "China OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_1",
+    "name": "Zhejiang Outerwear #1001",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 100,
+    "lead_days": 25,
+    "price_usd": 4.2,
+    "url": "https://example.com/1",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "China OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_2",
+    "name": "Jiangsu Garments Co. #1002",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 300,
+    "lead_days": 35,
+    "price_usd": 2.2,
+    "url": "https://example.com/2",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "Vietnam OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_3",
+    "name": "Jiangsu Garments Co. #1003",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 1000,
+    "lead_days": 25,
+    "price_usd": 2.2,
+    "url": "https://example.com/3",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "Vietnam OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_4",
+    "name": "Guangzhou Knit Co. #1004",
+    "country": "China",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 100,
+    "lead_days": 15,
+    "price_usd": 3.5,
+    "url": "https://example.com/4",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "China OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_5",
+    "name": "Guangzhou Knit Co. #1005",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 1000,
+    "lead_days": 15,
+    "price_usd": 4.2,
+    "url": "https://example.com/5",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "China OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_6",
+    "name": "Guangzhou Knit Co. #1006",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 500,
+    "lead_days": 15,
+    "price_usd": 4.2,
+    "url": "https://example.com/6",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "Vietnam OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_7",
+    "name": "Jiangsu Garments Co. #1007",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 1000,
+    "lead_days": 25,
+    "price_usd": 2.2,
+    "url": "https://example.com/7",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "Vietnam OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_8",
+    "name": "Dongguan OEM Works #1008",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 300,
+    "lead_days": 15,
+    "price_usd": 1.8,
+    "url": "https://example.com/8",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "Vietnam OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_9",
+    "name": "Hanoi Garment JV #1009",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 300,
+    "lead_days": 35,
+    "price_usd": 2.2,
+    "url": "https://example.com/9",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "Vietnam OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_10",
+    "name": "Hanoi Garment JV #1010",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 500,
+    "lead_days": 25,
+    "price_usd": 2.2,
+    "url": "https://example.com/10",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "Vietnam OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_11",
+    "name": "Shenzhen Apparel Ltd. #1011",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 1000,
+    "lead_days": 15,
+    "price_usd": 4.2,
+    "url": "https://example.com/11",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "China OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_12",
+    "name": "Saigon Wearhouse #1012",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 1000,
+    "lead_days": 25,
+    "price_usd": 1.8,
+    "url": "https://example.com/12",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "China OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_13",
+    "name": "Dongguan OEM Works #1013",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 500,
+    "lead_days": 35,
+    "price_usd": 1.8,
+    "url": "https://example.com/13",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "Vietnam OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_14",
+    "name": "Haiphong Denim #1014",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 300,
+    "lead_days": 25,
+    "price_usd": 4.2,
+    "url": "https://example.com/14",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "Vietnam OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_15",
+    "name": "Saigon Wearhouse #1015",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 500,
+    "lead_days": 15,
+    "price_usd": 2.2,
+    "url": "https://example.com/15",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "Vietnam OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_16",
+    "name": "Ningbo Textiles #1016",
+    "country": "China",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 1000,
+    "lead_days": 25,
+    "price_usd": 4.2,
+    "url": "https://example.com/16",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "China OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_17",
+    "name": "Dongguan OEM Works #1017",
+    "country": "China",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 300,
+    "lead_days": 25,
+    "price_usd": 4.2,
+    "url": "https://example.com/17",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "China OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_18",
+    "name": "Guangzhou Knit Co. #1018",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 300,
+    "lead_days": 15,
+    "price_usd": 2.9,
+    "url": "https://example.com/18",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "Vietnam OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_19",
+    "name": "Jiangsu Garments Co. #1019",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 1000,
+    "lead_days": 25,
+    "price_usd": 2.9,
+    "url": "https://example.com/19",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "Vietnam OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_20",
+    "name": "Jiangsu Garments Co. #1020",
+    "country": "China",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 1000,
+    "lead_days": 35,
+    "price_usd": 1.8,
+    "url": "https://example.com/20",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "China OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_21",
+    "name": "Hanoi Garment JV #1021",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 100,
+    "lead_days": 25,
+    "price_usd": 2.9,
+    "url": "https://example.com/21",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "Vietnam OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_22",
+    "name": "Dongguan OEM Works #1022",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 500,
+    "lead_days": 15,
+    "price_usd": 3.5,
+    "url": "https://example.com/22",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "China OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_23",
+    "name": "Shenzhen Apparel Ltd. #1023",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 300,
+    "lead_days": 25,
+    "price_usd": 1.8,
+    "url": "https://example.com/23",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "China OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_24",
+    "name": "Shenzhen Apparel Ltd. #1024",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 300,
+    "lead_days": 15,
+    "price_usd": 2.9,
+    "url": "https://example.com/24",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "Vietnam OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_25",
+    "name": "Ningbo Textiles #1025",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 300,
+    "lead_days": 25,
+    "price_usd": 1.8,
+    "url": "https://example.com/25",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "Vietnam OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_26",
+    "name": "Hanoi Garment JV #1026",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 500,
+    "lead_days": 35,
+    "price_usd": 2.9,
+    "url": "https://example.com/26",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "Vietnam OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_27",
+    "name": "Jiangsu Garments Co. #1027",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 500,
+    "lead_days": 15,
+    "price_usd": 2.2,
+    "url": "https://example.com/27",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "Vietnam OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_28",
+    "name": "Zhejiang Outerwear #1028",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 300,
+    "lead_days": 35,
+    "price_usd": 2.9,
+    "url": "https://example.com/28",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "Vietnam OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_29",
+    "name": "Saigon Wearhouse #1029",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 100,
+    "lead_days": 15,
+    "price_usd": 2.9,
+    "url": "https://example.com/29",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "Vietnam OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_30",
+    "name": "Guangzhou Knit Co. #1030",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 500,
+    "lead_days": 35,
+    "price_usd": 1.8,
+    "url": "https://example.com/30",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "Vietnam OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_31",
+    "name": "Haiphong Denim #1031",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 1000,
+    "lead_days": 25,
+    "price_usd": 2.9,
+    "url": "https://example.com/31",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "China OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_32",
+    "name": "Saigon Wearhouse #1032",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 1000,
+    "lead_days": 25,
+    "price_usd": 2.2,
+    "url": "https://example.com/32",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "China OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_33",
+    "name": "Hunan Fabrics #1033",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 1000,
+    "lead_days": 15,
+    "price_usd": 3.5,
+    "url": "https://example.com/33",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "China OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_34",
+    "name": "Jiangsu Garments Co. #1034",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 500,
+    "lead_days": 15,
+    "price_usd": 2.9,
+    "url": "https://example.com/34",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "China OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_35",
+    "name": "Haiphong Denim #1035",
+    "country": "China",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 1000,
+    "lead_days": 25,
+    "price_usd": 1.8,
+    "url": "https://example.com/35",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "China OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_36",
+    "name": "Haiphong Denim #1036",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 500,
+    "lead_days": 35,
+    "price_usd": 4.2,
+    "url": "https://example.com/36",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "Vietnam OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_37",
+    "name": "Guangzhou Knit Co. #1037",
+    "country": "China",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 500,
+    "lead_days": 15,
+    "price_usd": 3.5,
+    "url": "https://example.com/37",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "China OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_38",
+    "name": "Ningbo Textiles #1038",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 300,
+    "lead_days": 25,
+    "price_usd": 1.8,
+    "url": "https://example.com/38",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "Vietnam OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_39",
+    "name": "Hunan Fabrics #1039",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 300,
+    "lead_days": 15,
+    "price_usd": 2.9,
+    "url": "https://example.com/39",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "Vietnam OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_40",
+    "name": "Zhejiang Outerwear #1040",
+    "country": "China",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 100,
+    "lead_days": 25,
+    "price_usd": 3.5,
+    "url": "https://example.com/40",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "China OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_41",
+    "name": "Jiangsu Garments Co. #1041",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 100,
+    "lead_days": 15,
+    "price_usd": 2.2,
+    "url": "https://example.com/41",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "China OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_42",
+    "name": "Haiphong Denim #1042",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 300,
+    "lead_days": 25,
+    "price_usd": 2.2,
+    "url": "https://example.com/42",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "China OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_43",
+    "name": "Ningbo Textiles #1043",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 1000,
+    "lead_days": 25,
+    "price_usd": 3.5,
+    "url": "https://example.com/43",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "Vietnam OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_44",
+    "name": "Hunan Fabrics #1044",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 100,
+    "lead_days": 25,
+    "price_usd": 1.8,
+    "url": "https://example.com/44",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "Vietnam OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_45",
+    "name": "Jiangsu Garments Co. #1045",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 300,
+    "lead_days": 35,
+    "price_usd": 2.2,
+    "url": "https://example.com/45",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "Vietnam OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_46",
+    "name": "Hanoi Garment JV #1046",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 500,
+    "lead_days": 25,
+    "price_usd": 1.8,
+    "url": "https://example.com/46",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "Vietnam OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_47",
+    "name": "Dongguan OEM Works #1047",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 1000,
+    "lead_days": 35,
+    "price_usd": 3.5,
+    "url": "https://example.com/47",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "China OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_48",
+    "name": "Ningbo Textiles #1048",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 500,
+    "lead_days": 25,
+    "price_usd": 2.9,
+    "url": "https://example.com/48",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "China OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_49",
+    "name": "Shenzhen Apparel Ltd. #1049",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 300,
+    "lead_days": 35,
+    "price_usd": 2.2,
+    "url": "https://example.com/49",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "China OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_50",
+    "name": "Jiangsu Garments Co. #1050",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 100,
+    "lead_days": 15,
+    "price_usd": 1.8,
+    "url": "https://example.com/50",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "Vietnam OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  },
+  {
+    "id": "dev_51",
+    "name": "Guangzhou Knit Co. #1051",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 1000,
+    "lead_days": 35,
+    "price_usd": 3.5,
+    "url": "https://example.com/51",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "China OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_52",
+    "name": "Hanoi Garment JV #1052",
+    "country": "China",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 1000,
+    "lead_days": 15,
+    "price_usd": 4.2,
+    "url": "https://example.com/52",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "China OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_53",
+    "name": "Dongguan OEM Works #1053",
+    "country": "China",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 1000,
+    "lead_days": 25,
+    "price_usd": 2.2,
+    "url": "https://example.com/53",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "China OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_54",
+    "name": "Ningbo Textiles #1054",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 500,
+    "lead_days": 15,
+    "price_usd": 2.9,
+    "url": "https://example.com/54",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "Vietnam OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_55",
+    "name": "Haiphong Denim #1055",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 500,
+    "lead_days": 25,
+    "price_usd": 3.5,
+    "url": "https://example.com/55",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "Vietnam OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_56",
+    "name": "Dongguan OEM Works #1056",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001"
+    ],
+    "moq": 500,
+    "lead_days": 15,
+    "price_usd": 3.5,
+    "url": "https://example.com/56",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "Vietnam OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_57",
+    "name": "Hanoi Garment JV #1057",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 300,
+    "lead_days": 15,
+    "price_usd": 1.8,
+    "url": "https://example.com/57",
+    "supports_customization": true,
+    "product_types": [
+      "Jeans",
+      "Denim"
+    ],
+    "description": "Vietnam OEM/ODM for Jeans, Denim; strong export capacity."
+  },
+  {
+    "id": "dev_58",
+    "name": "Ningbo Textiles #1058",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester",
+      "Spandex"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI",
+      "OEKO-TEX"
+    ],
+    "moq": 100,
+    "lead_days": 35,
+    "price_usd": 1.8,
+    "url": "https://example.com/58",
+    "supports_customization": true,
+    "product_types": [
+      "Outerwear",
+      "Jackets"
+    ],
+    "description": "Vietnam OEM/ODM for Outerwear, Jackets; strong export capacity."
+  },
+  {
+    "id": "dev_59",
+    "name": "Haiphong Denim #1059",
+    "country": "Vietnam",
+    "materials": [
+      "Cotton",
+      "Polyester"
+    ],
+    "certs": [
+      "ISO9001",
+      "BSCI"
+    ],
+    "moq": 1000,
+    "lead_days": 35,
+    "price_usd": 4.2,
+    "url": "https://example.com/59",
+    "supports_customization": true,
+    "product_types": [
+      "T-Shirts",
+      "Casualwear"
+    ],
+    "description": "Vietnam OEM/ODM for T-Shirts, Casualwear; strong export capacity."
+  }
+]

@@ -43,7 +43,7 @@ export default function LoginDialog({ open, onClose }) {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 outline-none focus:ring"
+              className="w-full rounded-lg border border-slate-200 px-3 py-2 outline-none focus:ring text-gray-900 placeholder-gray-500"
               placeholder="you@company.com"
             />
           </label>
@@ -55,7 +55,7 @@ export default function LoginDialog({ open, onClose }) {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 outline-none focus:ring"
+              className="w-full rounded-lg border border-slate-200 px-3 py-2 outline-none focus:ring text-gray-900 placeholder-gray-500"
               placeholder="••••••••"
             />
           </label>

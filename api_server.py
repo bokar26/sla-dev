@@ -81,10 +81,10 @@ app = FastAPI(
     redirect_slashes=True  # Handle /path <-> /path/ gracefully
 )
 
-# Add rate limiting middleware
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-app.add_middleware(SlowAPIMiddleware)
+# Add rate limiting middleware - temporarily disabled for debugging
+# app.state.limiter = limiter
+# app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+# app.add_middleware(SlowAPIMiddleware)
 
 # Add trusted host middleware for production
 if os.getenv("NODE_ENV") == "production":
@@ -94,30 +94,30 @@ if os.getenv("NODE_ENV") == "production":
 # CORS configuration for production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.getenv("CLIENT_ORIGIN", "")],
+    allow_origins=["*"] if os.getenv("NODE_ENV") != "production" else [os.getenv("CLIENT_ORIGIN", "http://localhost:5173")],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["Content-Type", "Authorization", "x-csrf-token"],
     max_age=86400
 )
 
-# Add security headers middleware
-@app.middleware("http")
-async def add_security_headers(request: Request, call_next):
-    response = await call_next(request)
-    
-    # Security headers
-    response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["X-Frame-Options"] = "DENY"
-    response.headers["X-XSS-Protection"] = "1; mode=block"
-    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-    response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
-    
-    # HSTS for production
-    if os.getenv("NODE_ENV") == "production":
-        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
-    
-    return response
+# Add security headers middleware - temporarily disabled for debugging
+# @app.middleware("http")
+# async def add_security_headers(request: Request, call_next):
+#     response = await call_next(request)
+#     
+#     # Security headers
+#     response.headers["X-Content-Type-Options"] = "nosniff"
+#     response.headers["X-Frame-Options"] = "DENY"
+#     response.headers["X-XSS-Protection"] = "1; mode=block"
+#     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+#     response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
+#     
+#     # HSTS for production
+#     if os.getenv("NODE_ENV") == "production":
+#         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
+#     
+#     return response
 
 # Health check endpoints
 @app.get("/healthz")
@@ -130,13 +130,7 @@ async def readiness_check():
     """Readiness check endpoint for Kubernetes"""
     return {"status": "ready", "timestamp": datetime.utcnow().isoformat()}
 
-# Rate limiting for authentication endpoints
-@app.post(f"{API_PREFIX}/auth/login")
-@limiter.limit("10/minute")
-async def login_with_rate_limit(request: Request):
-    """Login endpoint with rate limiting"""
-    # This will be handled by the actual login route
-    pass
+# Rate limiting for authentication endpoints - handled by auth_router
 
 # Global exception handler
 @app.exception_handler(Exception)
@@ -144,6 +138,8 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
     """Global exception handler for unhandled errors"""
     # Log full stack trace to server logs
     print(f"UNHANDLED ERROR: {repr(exc)}")
+    print(f"Request path: {request.url.path}")
+    print(f"Request method: {request.method}")
     traceback.print_exc()
     
     # Return normalized JSON error response
@@ -2768,9 +2764,7 @@ async def get_integration_status():
 app.include_router(portfolio_router)
 # app.include_router(alibaba_router)  # Temporarily disabled due to import issues
 app.include_router(alibaba_routes)
-app.include_router(algo_outputs_router, prefix=API_PREFIX, tags=["algo-outputs"])
-app.include_router(integrations_alibaba_router, prefix=API_PREFIX, tags=["integrations:alibaba"])
-# Removed goals_router - using real goals API
+# Include routers in order of priority
 app.include_router(auth_router, prefix="/api", tags=["auth"])
 app.include_router(admin_router, prefix="/api", tags=["admin"])
 app.include_router(ranking_router, prefix="/api/rank", tags=["ranking"])

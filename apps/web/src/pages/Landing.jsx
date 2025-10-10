@@ -40,6 +40,26 @@ export default function Landing() {
         <About />
         <KeyFeatures />
         <Demo />
+        
+        {/* E-Commerce Solutions Section */}
+        <section id="ecommerce" className="border-t mt-24 pt-20 pb-24">
+          <div className="mx-auto max-w-6xl px-4">
+            <h2 className="text-3xl md:text-4xl font-extrabold">E-Commerce Solutions</h2>
+            <p className="mt-3 text-lg text-gray-600">
+              Find and maximize margins on winning products instantly this Q4.
+            </p>
+
+            <div className="mt-8">
+              <a
+                href="/ecommerce"
+                className="inline-flex items-center rounded-xl border border-gray-900 px-5 py-3 font-semibold hover:bg-gray-900 hover:text-white transition"
+                aria-label="Open mobile app landing page"
+              >
+                Explore the Mobile App
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
       <ScrollNavigation />
     </div>

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import ContentContainer from "../../components/layout/ContentContainer";
 import SleekProgressBar from "../../components/ui/SleekProgressBar";
 import { useFulfillmentTimeSaved } from "../../hooks/useFulfillmentTimeSaved";
-import NewRouteForm from "../../components/fulfillment/NewRouteForm";
 import RouteResults from "../../components/fulfillment/RouteResults";
+import SLAFulfillmentForm from "../../components/fulfillment/SLAFulfillmentForm";
 import { planRoute } from "../../services/fulfillmentService";
 import { toast } from "../../components/ui/use-toast";
 import { Button } from "../../components/ui/button";
@@ -48,9 +48,9 @@ export default function FulfillmentPage() {
   return (
     <ContentContainer>
       <div className="mb-6">
-        <h1 className="text-[28px] font-semibold leading-tight text-slate-900 dark:text-slate-100">Fulfillment</h1>
+        <h1 className="text-[28px] font-semibold leading-tight text-slate-900 dark:text-slate-100">SLA Fulfillment Center</h1>
         <p className="mt-1 text-[14px] text-slate-600 dark:text-slate-400">
-          Track shipments and plan routes. This shell wires navigation and scroll behavior.
+          Track shipments and plan routes with intelligent logistics planning.
         </p>
       </div>
 
@@ -111,7 +111,7 @@ export default function FulfillmentPage() {
         <div className="rounded-xl border bg-card">
           <div className="flex items-center justify-between px-4 py-3 border-b">
             <h2 className="text-sm font-medium text-foreground">
-              {routeResults ? "Route Options" : "Plan a New Route"}
+              {routeResults ? "Route Options" : "Route Planning"}
             </h2>
             {routeResults && (
               <Button variant="outline" size="sm" onClick={resetToForm}>
@@ -122,7 +122,7 @@ export default function FulfillmentPage() {
 
           <div className="p-4">
             {!routeResults ? (
-              <NewRouteForm onSubmit={handlePlanRoute} isSubmitting={routeLoading} />
+              <SLAFulfillmentForm />
             ) : (
               <RouteResults 
                 results={routeResults} 

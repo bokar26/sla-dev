@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useEffect, useMemo, useState } from "react";
-import { adminAlgo, debugRoutes, api } from "../../lib/api";
+import { adminAlgo, debugRoutes, apiFetch } from "../../lib/api";
 import { Download, Copy, X } from "lucide-react";
 
 const COLS = [

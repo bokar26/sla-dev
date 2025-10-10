@@ -27,6 +27,7 @@
     "@refinedev/react-router-v6": "^4.6.2",
     "@sla/shared": "workspace:*",
     "@tanstack/react-query": "^5.0.0",
+    "@typeform/embed-react": "^4.6.0",
     "axios": "^1.12.1",
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",

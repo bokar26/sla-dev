@@ -1,15 +1,23 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
 import GlobeLoader from "../../components/GlobeLoader";
 import SavingsMiniCard from "../../components/savings/SavingsMiniCard";
-import { searchFactories } from "../../services/slaSearch";
+import DropZone from "../../components/DropZone";
+import { searchFactories as localSearchFactories } from "../../services/slaSearch";
 import { getVendor, prefetchVendor, saveVendor, createQuote } from "../../services/vendors";
 import { getSavedVendorIds } from "../../services/uploadsService";
 import { useSavedVendorIds } from "../../stores/savedVendorIds";
 import { extractFactoryId, debugFactoryId } from "../../utils/idUtils";
 import { getSupplyCenterMetrics } from "../../services/metricsService";
+import { ingestSearchWithFile, searchFactoriesUnified as apiSearchFactories, unifiedSearch, llmSearch, apiPost, uploadImageForCaption } from "../../lib/api";
+import { COUNTRIES, PRODUCT_TYPES } from "../../constants/catalog";
 
 // TODO: Revert to live API values after the demo.
 // Replaced demo/mock with real API call: see services/serviceMap.md
+
+// Null-safe utilities
+const asArray = (v) => (Array.isArray(v) ? v : v == null ? [] : [v]);
+const safeJoin = (v, sep = ", ") =>
+  Array.isArray(v) ? v.join(sep) : typeof v === "string" ? v : "";
 
 const fmtCurrency = (n) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
@@ -23,10 +31,24 @@ const RESULTS_HEIGHT = 'clamp(320px, 60vh, calc(100vh - 240px))';
 
 export default function SLASearchPage() {
   const [searching, setSearching] = useState(false);
+  const [loadingMsg, setLoadingMsg] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchError, setSearchError] = useState(null);
+  
+  // Search form state
+  const [location, setLocation] = useState("China");
+  const [productType, setProductType] = useState("");
+  const [quantity, setQuantity] = useState(500);           // default
+  const [customization, setCustomization] = useState(null); // null=Any, true=Yes, false=No
+  const [meta, setMeta] = useState(null);
+  
+  // Upload state for DropZone
+  const [uploads, setUploads] = useState([]);
+  
+  // Image caption state
+  const [imageCaption, setImageCaption] = useState("");
   
   // Real metrics from API
   const [metrics, setMetrics] = useState(null);
@@ -65,8 +87,7 @@ export default function SLASearchPage() {
   // Vendor details panel state
   const [vendorPanel, setVendorPanel] = useState({ 
     open: false, 
-    factoryId: undefined, 
-    initialSummary: undefined 
+    initialItem: undefined 
   });
 
 
@@ -76,20 +97,31 @@ export default function SLASearchPage() {
     
     setHasSearched(true);
     setSearching(true);
+    setLoadingMsg("Deep search (multi-provider)…");
     setSearchError(null);
     
     // Keep previous results visible during search (smooth loading)
     // Don't clear results immediately to prevent layout jump
     
     try {
-      const response = await searchFactories(searchQuery, {
-        topK: 25,
-        filters: {
-          ingestedOnly: true
-        }
+      const response = await llmSearch({
+        q: searchQuery,
+        country: location || undefined,
+        product_type: productType === 'Any' ? undefined : productType,
+        quantity: quantity || undefined,
+        customization: customization || "any",
+        image_label: meta?.image_label || undefined,
+        min_score: 80
       });
       
-      setSearchResults(response.results);
+      setLoadingMsg("");
+      setSearchResults(Array.isArray(response.items) ? response.items : []);
+      setMeta(response.meta || null);
+      
+      // Log search passes for debugging
+      if (response.meta?.passes) {
+        console.log('Search passes:', response.meta.passes);
+      }
     } catch (error) {
       console.error('Search error:', error);
       if (error.message === 'Request superseded') {
@@ -103,8 +135,63 @@ export default function SLASearchPage() {
       }
     } finally {
       setSearching(false);
+      setLoadingMsg("");
     }
   }
+
+  // Handle file uploads from DropZone
+  const handleInlineFiles = async (files) => {
+    const f = files[0];
+    setUploads((u) => [{ name: f.name, status: "uploading" }, ...u]);
+    
+    // Check if it's an image file
+    const isImage = f.type.startsWith('image/');
+    let caption = "";
+    
+    if (isImage) {
+      try {
+        const captionResult = await uploadImageForCaption(f);
+        caption = captionResult.caption || "";
+        setImageCaption(caption);
+        setUploads((u) => u.map(item => 
+          item.name === f.name ? { ...item, status: "done", caption } : item
+        ));
+      } catch (error) {
+        console.error("Image caption error:", error);
+        setUploads((u) => u.map(item => 
+          item.name === f.name ? { ...item, status: "error", err: error.message } : item
+        ));
+        return;
+      }
+    }
+    
+    try {
+      setUploads((u) => u.map(x => x.name === f.name ? { ...x, status: "extracting" } : x));
+      
+      const data = await ingestSearchWithFile(f, { 
+        include_freshness: true, 
+        location: location,
+        product_type_hint: productType || undefined
+      });
+
+      if (data.query_text) setSearchQuery(data.query_text);
+      if (!productType && data.extract?.product_type) {
+        setProductType(data.extract.product_type);
+      }
+      if ((data.extract?.materials || []).length) {
+        // Could add materials state if needed
+        console.log('Extracted materials:', data.extract.materials);
+      }
+      if (data.search?.items?.length) {
+        setSearchResults(Array.isArray(data.search.items) ? data.search.items : []);
+        setHasSearched(true);
+      }
+      
+      setUploads((u) => u.map(x => x.name === f.name ? { ...x, status: "done" } : x));
+    } catch (e) {
+      setUploads((u) => u.map(x => x.name === f.name ? { ...x, status: "error", err: String(e.message || e) } : x));
+    }
+  };
 
   // Use real search results
   const results = hasSearched && !searching ? searchResults : [];
@@ -117,29 +204,11 @@ export default function SLASearchPage() {
     }
   };
 
-  // Open vendor details panel with normalized ID
+  // Open vendor details panel with the clicked item
   const openVendor = (item) => {
-    const factoryId = extractFactoryId(item);
-    
-    // Debug in development
-    debugFactoryId(item, 'openVendor');
-    
-    if (!factoryId) {
-      console.error('No valid factory ID found in item:', item);
-      return;
-    }
-    
     setVendorPanel({
       open: true,
-      factoryId,
-      initialSummary: {
-        name: item.name,
-        region: item.region,
-        capabilities: item.capabilities,
-        certs: item.certs,
-        score: item.score,
-        explanation: item.explanation
-      }
+      initialItem: item
     });
   };
 
@@ -160,6 +229,9 @@ export default function SLASearchPage() {
   // Dev smoke test (development only)
   useEffect(() => {
     if (import.meta.env.DEV) {
+      // Quick sanity check for ingestSearchWithFile
+      console.log("has ingestSearchWithFile:", typeof ingestSearchWithFile === "function");
+      
       window.__sla_ping = async () => {
         try {
           const r = await apiPost('/ai/search', { 
@@ -192,6 +264,19 @@ export default function SLASearchPage() {
             className="rounded-xl border bg-white dark:bg-slate-900 dark:border-slate-800 transition-colors p-4 md:p-5 shadow-sm"
           >
             <label className="text-xs font-medium text-slate-600">SEARCH QUERY</label>
+            
+            {/* NEW: DropZone ABOVE the text input */}
+            <DropZone variant="compact" onFiles={handleInlineFiles} className="mb-2" />
+            
+            {/* Image label display */}
+            {meta?.image_label && (
+              <div className="mt-1 text-[11px] text-red-500">
+                Identified (image): {meta.image_label}
+              </div>
+            )}
+            
+            <p className="text-xs text-slate-500 mb-2">Drop an image/spec PDF above, or type a query below.</p>
+            
             <input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -199,22 +284,102 @@ export default function SLASearchPage() {
               placeholder="t shirt"
             />
 
+            {/* Compact upload status */}
+            {uploads.length > 0 && (
+              <div className="mt-2 text-xs text-slate-500">
+                {uploads.slice(0,1).map(u => (
+                  <div key={u.name}>
+                    <span>
+                      {u.name}:{" "}
+                      <span className={u.status==="done" ? "text-emerald-500" : u.status==="error" ? "text-rose-500" : "text-slate-500"}>
+                        {u.status}{u.err ? ` — ${u.err}` : ""}
+                      </span>
+                    </span>
+                    {u.caption && (
+                      <div className="mt-1 text-red-600 font-medium">
+                        Image: {u.caption}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+            
+                 {/* Show current image caption */}
+                 {imageCaption && (
+                   <div className="mt-2 text-xs text-red-600 font-medium">
+                     Current image: {imageCaption}
+                   </div>
+                 )}
+                 
+                 {/* Show identified product from image */}
+                 {meta?.image_summary && (
+                   <div className="mt-1 text-[11px] text-red-500">
+                     Image: {meta.image_summary}
+                   </div>
+                 )}
+
             <div className="mt-4 grid grid-cols-2 gap-3">
               <div>
                 <label className="text-xs font-medium text-slate-600">LOCATION</label>
-                <select className="mt-2 w-full rounded-md border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 px-3 py-2 text-sm focus:border-slate-400">
-                  <option>China</option>
-                  <option>Vietnam</option>
-                  <option>India</option>
+                <select 
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="mt-2 w-full rounded-md border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 px-3 py-2 text-sm focus:border-slate-400"
+                >
+                  {COUNTRIES.map(country => (
+                    <option key={country} value={country === "Any" ? "" : country}>
+                      {country}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>
                 <label className="text-xs font-medium text-slate-600">PRODUCT TYPE</label>
-                <select className="mt-2 w-full rounded-md border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 px-3 py-2 text-sm focus:border-slate-400">
-                  <option>Activewear</option>
-                  <option>Footwear</option>
-                  <option>Outerwear</option>
+                <select 
+                  value={productType}
+                  onChange={(e) => setProductType(e.target.value)}
+                  className="mt-2 w-full rounded-md border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 px-3 py-2 text-sm focus:border-slate-400"
+                >
+                  {PRODUCT_TYPES.map(type => (
+                    <option key={type} value={type === "Any" ? "" : type}>
+                      {type}
+                    </option>
+                  ))}
                 </select>
+              </div>
+            </div>
+
+            <div className="mt-3">
+              <label className="text-xs font-medium text-slate-600">QUANTITY</label>
+              <input
+                type="number"
+                min={1}
+                value={quantity}
+                onChange={(e)=> setQuantity(Number(e.target.value || 0))}
+                className="mt-2 w-full rounded-md border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 px-3 py-2 text-sm focus:border-slate-400"
+                placeholder="500"
+              />
+            </div>
+
+            <div className="mt-3">
+              <label className="text-xs font-medium text-slate-600">CUSTOMIZATION</label>
+              <div className="mt-2 flex gap-2">
+                <button
+                  type="button"
+                  onClick={()=> setCustomization(null)}
+                  className={`px-3 py-1 rounded border text-sm ${customization===null ? "bg-emerald-50 border-emerald-300 text-emerald-700" : "border-slate-200 text-slate-600 hover:border-slate-300"}`}
+                >Any</button>
+                <button
+                  type="button"
+                  onClick={()=> setCustomization(true)}
+                  className={`px-3 py-1 rounded border text-sm ${customization===true ? "bg-emerald-50 border-emerald-300 text-emerald-700" : "border-slate-200 text-slate-600 hover:border-slate-300"}`}
+                >Yes</button>
+                <button
+                  type="button"
+                  onClick={()=> setCustomization(false)}
+                  className={`px-3 py-1 rounded border text-sm ${customization===false ? "bg-emerald-50 border-emerald-300 text-emerald-700" : "border-slate-200 text-slate-600 hover:border-slate-300"}`}
+                >No</button>
               </div>
             </div>
 
@@ -275,6 +440,8 @@ export default function SLASearchPage() {
                 setHasSearched(false);
                 setSearching(false);
                 setSearchQuery("");
+                setLocation("China");
+                setProductType("");
                 setSearchResults([]);
                 setSearchError(null);
               }}
@@ -316,7 +483,7 @@ export default function SLASearchPage() {
                 <div className="absolute inset-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm z-10 flex items-center justify-center">
                   <div className="flex items-center gap-3 text-slate-600 dark:text-slate-400">
                     <div className="w-5 h-5 border-2 border-slate-300 border-t-slate-600 rounded-full animate-spin" />
-                    <span className="text-sm font-medium">Searching...</span>
+                    <span className="text-sm font-medium">{loadingMsg || "Searching across internal & live sources…"}</span>
                   </div>
                 </div>
               )}
@@ -327,14 +494,20 @@ export default function SLASearchPage() {
                   </div>
                 </div>
               ) : results?.length ? (
-                <ul className="space-y-3">
-                  {results.map((r, i) => {
+                <>
+                  {meta?.warning && (
+                    <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md text-sm text-yellow-800">
+                      {meta.warning}
+                    </div>
+                  )}
+                  <ul className="space-y-3">
+                  {(Array.isArray(results) ? results : []).map((r, i) => {
                     const factoryId = extractFactoryId(r);
                     const isSaved = factoryId && savedVendorIds.has(factoryId);
                     return (
                       <li 
                         key={factoryId || r.name || i} 
-                        className="rounded-lg border bg-white dark:bg-slate-900 dark:border-slate-800 transition-colors p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
+                        className={`relative rounded-lg border bg-white dark:bg-slate-900 dark:border-slate-800 transition-colors p-4 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer ${r?.is_best ? "ring-2 ring-emerald-500" : ""}`}
                         onClick={() => openVendor(r)}
                         onMouseEnter={() => handleVendorHover(r)}
                         onKeyDown={(e) => {
@@ -345,11 +518,11 @@ export default function SLASearchPage() {
                         }}
                         role="button"
                         tabIndex={0}
-                        aria-label={`View details for ${r.name}`}
+                        aria-label={`View details for ${r?.name || "Supplier"}`}
                       >
                       <div className="flex items-center justify-between">
                         <div className="text-[15px] font-semibold text-slate-900 dark:text-slate-100">
-                          {r.name}
+                          {r?.name || "Supplier"}
                         </div>
                         <div className="flex items-center gap-2">
                           {isSaved && (
@@ -360,7 +533,7 @@ export default function SLASearchPage() {
                               Saved
                             </span>
                           )}
-                          {i === 0 && (
+                          {r?.is_best && (
                             <span className="rounded-full bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1 text-[12px] font-medium text-emerald-700 dark:text-emerald-400">
                               Best match
                             </span>
@@ -371,34 +544,97 @@ export default function SLASearchPage() {
                         </div>
                       </div>
                       <div className="mt-1 text-[13px] text-slate-600 dark:text-slate-400">
-                        {r.region} • Score: {Math.round(r.score * 100)}%
+                        {r?.country || "Unknown"} • 
+                        <span className={`ml-1 px-2 py-0.5 rounded text-xs font-medium ${
+                          (r?.score || 0) >= 90 ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400' :
+                          (r?.score || 0) >= 80 ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400' :
+                          (r?.score || 0) >= 70 ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400' :
+                          'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'
+                        }`}>
+                          Score: {Math.round(r?.score || 0)}
+                        </span>
                       </div>
                       <div className="mt-1 text-[12px] text-slate-500 dark:text-slate-500">
-                        Capabilities: {r.capabilities.join(", ")}
+                        Materials: {safeJoin(r.materials)}
                       </div>
                       {r.certs?.length > 0 && (
                         <div className="mt-1 text-[12px] text-slate-500 dark:text-slate-500">
-                          Certifications: {r.certs.join(", ")}
+                          Certifications: {safeJoin(r.certs)}
                         </div>
                       )}
-                      {r.moq > 0 && (
+                      {(r?.moq || 0) > 0 && (
                         <div className="mt-1 text-[12px] text-slate-500 dark:text-slate-500">
-                          MOQ: {r.moq} units • Lead time: {r.leadTimeDays} days
+                          MOQ: {r?.moq || 0} units • Lead time: {r?.leadDays || 0} days
                         </div>
                       )}
-                      {r.explanation && (
+                      {(r?.rationale || r?.reasoning) && (
                         <div className="mt-2 p-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded text-[12px] text-blue-800 dark:text-blue-200">
-                          <strong>Why this:</strong> {r.explanation}
+                          <strong>SLA Reasoning:</strong> {r.rationale || r.reasoning}
                         </div>
                       )}
+                             {(() => {
+                               const siteUrl = r?.url ?? r?.source?.url ?? r?.raw?.url ?? r?.raw?.website ?? null;
+                               return siteUrl ? (
+                                 <div className="mt-2">
+                                   <a href={siteUrl} target="_blank" rel="noreferrer" className="text-xs underline text-blue-600 dark:text-blue-400">
+                                     Open site →
+                                   </a>
+                                 </div>
+                               ) : (
+                                 <div className="mt-2">
+                                   <span className="text-xs text-slate-400 dark:text-slate-500">No website</span>
+                                 </div>
+                               );
+                             })()}
+                      
+                      {/* Source badge bottom-right */}
+                      <div className="absolute right-2 bottom-2 text-[11px] px-2 py-1 rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
+                        Source: {r?.source || "internal"}
+                        {r?.sourceUrl ? (
+                          <>
+                            {" "}
+                            • <a className="underline" href={r.sourceUrl} target="_blank" rel="noreferrer">Open</a>
+                          </>
+                        ) : null}
+                      </div>
                     </li>
                     );
                   })}
                 </ul>
+                  {meta && (
+                    <div className="mt-4 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg text-xs text-slate-600 dark:text-slate-400">
+                      {meta.relaxed && (
+                        <div className="mb-2 p-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded text-amber-800 dark:text-amber-200">
+                          ⚠️ Showing best available matches; threshold relaxed from {meta.min_score} to {meta.final_threshold}
+                        </div>
+                      )}
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <strong>Search Stats:</strong><br/>
+                          Internal candidates: {meta.internal_candidates || 0}<br/>
+                          Web search used: {meta.used_web ? "Yes" : "No"}<br/>
+                          Elapsed: {meta.elapsed_ms}ms
+                        </div>
+                        <div>
+                          <strong>Results:</strong><br/>
+                          Returned: {results.length}/{meta.top_k}<br/>
+                          Min score: {meta.min_score}<br/>
+                          Final threshold: {meta.final_threshold}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
               ) : hasSearched && !searching ? (
                 <div className="text-center py-8">
                   <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-                    No matches found. Try adjusting your search terms.
+                    No factories scored ≥ 80 after deep search.<br/>
+                    {meta?.passes && (
+                      <span className="text-xs">
+                        Pass stats: {meta.passes.map(p=>`#${p.pass} kept ${p.kept}/${p.candidates}`).join(" · ")} ·
+                        Providers: {meta.providers_used ? Object.entries(meta.providers_used).map(([k,v])=>`${k}:${v}`).join(", ") : "—"}
+                      </span>
+                    )}
                   </p>
                   <div className="text-xs text-slate-400 dark:text-slate-500">
                     <p>Suggestions:</p>
@@ -406,6 +642,7 @@ export default function SLASearchPage() {
                       <li>• Broaden your search terms</li>
                       <li>• Try different product categories</li>
                       <li>• Check spelling</li>
+                      <li>• Remove filters to see more results</li>
                     </ul>
                   </div>
                 </div>
@@ -423,15 +660,14 @@ export default function SLASearchPage() {
         </div>
       </div>}>
         <FactoryDetailsDrawer
-          key={vendorPanel.factoryId}
+          key={vendorPanel.initialItem?.id}
           open={vendorPanel.open}
           onOpenChange={(o) => setVendorPanel(v => ({ ...v, open: o }))}
-          factoryId={vendorPanel.factoryId}
-          initialSummary={vendorPanel.initialSummary}
+          initialItem={vendorPanel.initialItem}
           onSaved={() => {
             // Add the vendor ID to the saved IDs store
-            if (vendorPanel.factoryId) {
-              addId(vendorPanel.factoryId);
+            if (vendorPanel.initialItem?.id) {
+              addId(vendorPanel.initialItem.id);
             }
             console.log("Vendor saved - refresh saved vendors list");
           }}

@@ -5,11 +5,13 @@ import {
   Download, 
   Clock, 
   MapPin,
-  ArrowRight
+  ArrowRight,
+  FileText
 } from 'lucide-react';
 import type { Quote, ShippingRoute, Invoice, FulfillmentOrder } from '../types/quote';
 import { getShippingRoutes, createInvoice, downloadInvoicePDF } from '@/services/fulfillment';
 import { getQuotes } from '@/services/quotes';
+import IncotermsForm from './fulfillment/IncotermsForm';
 import ShippingWizard from '@/features/fulfillment/ShippingWizard';
 
 // Mock data for demonstration
@@ -127,7 +129,6 @@ const Fulfillment = () => {
 
     loadData();
   }, []);
-
 
   const handleQuoteSelect = (quote) => {
     setSelectedQuote(quote);
@@ -364,6 +365,24 @@ const Fulfillment = () => {
         </div>
           </section>
         )}
+
+        {/* Incoterms Section */}
+        <section className="mb-8">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                  <FileText className="text-blue-600" size={16} />
+                </div>
+                <h2 className="text-xl font-semibold text-gray-900">Incoterms Configuration</h2>
+              </div>
+            </div>
+            
+            <div className="p-6">
+              <IncotermsForm onPlan={(res) => console.debug("Incoterm plan", res)} />
+            </div>
+          </div>
+        </section>
 
         {/* Step 2: Create Invoice */}
         {step === 2 && selectedQuote && selectedRoute && (

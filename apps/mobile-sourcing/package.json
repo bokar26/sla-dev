@@ -1,0 +1,74 @@
+{
+  "name": "mobile-sourcing",
+  "private": true,
+  "version": "0.0.1",
+  "main": "expo-router/entry",
+  "scripts": {
+    "dev": "expo start --clear",
+    "ios": "expo run:ios",
+    "android": "expo run:android",
+    "build": "expo export",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "^6.1.2",
+    "@expo/vector-icons": "^15.0.2",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@sla/shared": "workspace:*",
+    "expo": "^51.0.0",
+    "expo-blur": "~15.0.7",
+    "expo-constants": "*",
+    "expo-image-picker": "~17.0.8",
+    "expo-linking": "~8.0.8",
+    "expo-router": "^3.5.0",
+    "expo-secure-store": "~15.0.7",
+    "expo-status-bar": "~3.0.8",
+    "react": "18.2.0",
+    "react-native": "0.74.0",
+    "@tanstack/react-query": "^5.51.0",
+    "zustand": "^4.5.4",
+    "react-native-reanimated": "^3.10.0",
+    "react-native-gesture-handler": "^2.17.1",
+    "@react-navigation/drawer": "^6.6.7",
+    "three": "^0.164.0",
+    "@react-three/fiber": "^8.16.0",
+    "expo-three": "^7.0.0",
+    "zod": "^3.23.8",
+    "react-native-web": "^0.19.0",
+    "dayjs": "^1.11.11",
+    "react-native-svg": "^15.2.0",
+    "react-native-safe-area-context": "~5.6.1",
+    "react-native-screens": "~4.16.0",
+    "react-native-worklets": "^0.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.28",
+    "@types/react-native": "^0.73.0",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "eslint": "^9.4.0",
+    "typescript": "^5.4.0"
+  },
+  "expo": {
+    "name": "SLA – Sourcing Simplified",
+    "slug": "sla-sourcing-simplified",
+    "scheme": "sla-sourcing",
+    "ios": {
+      "bundleIdentifier": "com.yourco.sla.sourcing",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.yourco.sla.sourcing"
+    },
+    "plugins": [
+      "expo-router",
+      "react-native-reanimated"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "REPLACE_WITH_EAS_PROJECT_ID"
+      }
+    }
+  }
+}
