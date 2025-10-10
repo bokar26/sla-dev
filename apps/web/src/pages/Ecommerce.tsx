@@ -160,32 +160,50 @@ export default function Ecommerce() {
             </PopupButton>
           </div>
 
-          {/* Mobile-only product images below CTA */}
-          <div className="md:hidden mt-6 flex items-center justify-center gap-5 px-4">
-            {/* Use the same imported assets as desktop decor */}
-            <div className="relative">
+          {/* Mobile-only floating product previews (below CTA) */}
+          <div className="md:hidden mt-6 px-6 relative h-36 pointer-events-none select-none">
+            {/* LEFT item */}
+            <div
+              className="absolute left-0 top-8 animate-[float_6s_ease-in-out_infinite] drop-shadow-xl"
+              style={{ animationDelay: "0.0s" }}
+            >
+              {/* colored glow */}
+              <span className="absolute -z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-20 rounded-full blur-2xl opacity-50 bg-sky-300"></span>
+              {/* product image — no borders */}
               <img
                 src="/images/ProductImage1.1.png"
-                alt="Featured product"
-                className="h-20 w-20 rounded-2xl object-contain ring-1 ring-black/10"
+                alt="Preview product"
+                className="h-16 w-16 rounded-[18px] object-contain"
                 loading="lazy"
                 decoding="async"
               />
             </div>
-            <div className="relative">
+
+            {/* CENTER item */}
+            <div
+              className="absolute left-1/2 -translate-x-1/2 top-2 animate-[float_5.5s_ease-in-out_infinite] drop-shadow-xl"
+              style={{ animationDelay: "0.25s" }}
+            >
+              <span className="absolute -z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-24 rounded-full blur-2xl opacity-50 bg-emerald-300"></span>
               <img
                 src="/images/ProductImage1.2.png"
-                alt="Featured product"
-                className="h-20 w-20 rounded-2xl object-contain ring-1 ring-black/10"
+                alt="Preview product"
+                className="h-18 w-18 rounded-[18px] object-contain"
                 loading="lazy"
                 decoding="async"
               />
             </div>
-            <div className="relative">
+
+            {/* RIGHT item */}
+            <div
+              className="absolute right-0 top-12 animate-[float_6.5s_ease-in-out_infinite] drop-shadow-xl"
+              style={{ animationDelay: "0.5s" }}
+            >
+              <span className="absolute -z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-20 rounded-full blur-2xl opacity-50 bg-lime-300"></span>
               <img
                 src="/images/ProductImage1.3.png"
-                alt="Featured product"
-                className="h-20 w-20 rounded-2xl object-contain ring-1 ring-black/10"
+                alt="Preview product"
+                className="h-16 w-16 rounded-[18px] object-contain"
                 loading="lazy"
                 decoding="async"
               />
