@@ -159,6 +159,38 @@ export default function Ecommerce() {
               Join the Waitlist
             </PopupButton>
           </div>
+
+          {/* Mobile-only product images below CTA */}
+          <div className="md:hidden mt-6 flex items-center justify-center gap-5 px-4">
+            {/* Use the same imported assets as desktop decor */}
+            <div className="relative">
+              <img
+                src="/images/ProductImage1.1.png"
+                alt="Featured product"
+                className="h-20 w-20 rounded-2xl object-contain ring-1 ring-black/10"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div className="relative">
+              <img
+                src="/images/ProductImage1.2.png"
+                alt="Featured product"
+                className="h-20 w-20 rounded-2xl object-contain ring-1 ring-black/10"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div className="relative">
+              <img
+                src="/images/ProductImage1.3.png"
+                alt="Featured product"
+                className="h-20 w-20 rounded-2xl object-contain ring-1 ring-black/10"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
