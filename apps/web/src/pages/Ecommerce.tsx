@@ -161,16 +161,14 @@ export default function Ecommerce() {
           </div>
 
           {/* Mobile-only floating product previews (below CTA) */}
-          <div className="md:hidden mt-6 px-6 relative h-36 pointer-events-none select-none">
+          <div className="md:hidden mt-7 px-6 relative h-40 pointer-events-none select-none">
             {/* LEFT item (sunglasses) */}
             <div
-              className="absolute left-0 top-8 animate-[float_6s_ease-in-out_infinite] drop-shadow-xl"
+              className="absolute left-0 top-6 animate-[float_6s_ease-in-out_infinite] drop-shadow-xl"
               style={{ animationDelay: "0s" }}
             >
-              {/* colored glow */}
-              <span className="absolute -z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-20 rounded-full blur-2xl opacity-50 bg-sky-300"></span>
-              {/* unified box size; slight scale for better visual weight */}
-              <div className="h-16 w-16 rounded-[18px] overflow-hidden">
+              <span className="absolute -z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-24 rounded-full blur-2xl opacity-50 bg-sky-300"></span>
+              <div className="h-20 w-20 rounded-[18px] overflow-hidden">
                 <img
                   src="/images/ProductImage1.1.png"
                   alt="Preview product"
@@ -181,30 +179,30 @@ export default function Ecommerce() {
               </div>
             </div>
 
-            {/* CENTER item (razors) */}
+            {/* CENTER item (razors) — keep perfectly centered */}
             <div
-              className="absolute left-1/2 -translate-x-1/2 top-2 animate-[float_5.5s_ease-in-out_infinite] drop-shadow-xl"
+              className="absolute left-1/2 -translate-x-1/2 top-0 animate-[float_5.5s_ease-in-out_infinite] drop-shadow-xl"
               style={{ animationDelay: "0.25s" }}
             >
-              <span className="absolute -z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-24 rounded-full blur-2xl opacity-50 bg-emerald-300"></span>
-              <div className="h-16 w-16 rounded-[18px] overflow-hidden">
+              <span className="absolute -z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-28 w-28 rounded-full blur-2xl opacity-50 bg-emerald-300"></span>
+              <div className="h-20 w-20 rounded-[18px] overflow-hidden">
                 <img
                   src="/images/ProductImage1.2.png"
                   alt="Preview product"
-                  className="h-full w-full object-contain scale-90"
+                  className="h-full w-full object-contain scale-95"
                   loading="lazy"
                   decoding="async"
                 />
               </div>
             </div>
 
-            {/* RIGHT item (vac) */}
+            {/* RIGHT item (vacuum) */}
             <div
-              className="absolute right-0 top-12 animate-[float_6.5s_ease-in-out_infinite] drop-shadow-xl"
+              className="absolute right-0 top-10 animate-[float_6.5s_ease-in-out_infinite] drop-shadow-xl"
               style={{ animationDelay: "0.5s" }}
             >
-              <span className="absolute -z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-20 rounded-full blur-2xl opacity-50 bg-lime-300"></span>
-              <div className="h-16 w-16 rounded-[18px] overflow-hidden">
+              <span className="absolute -z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-24 rounded-full blur-2xl opacity-50 bg-lime-300"></span>
+              <div className="h-20 w-20 rounded-[18px] overflow-hidden">
                 <img
                   src="/images/ProductImage1.3.png"
                   alt="Preview product"
